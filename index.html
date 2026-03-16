@@ -1,0 +1,2318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ASSEMBLY REQUIRED</title>
+<link rel="icon" type="image/png" href="favicon.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #000000;
+  --tube-light: #f2f2f2;
+  --tube-mid: #c7ccd1;
+  --tube-dark: #8f969d;
+  --beam: 10px;
+  --side-gap: 32px;
+  --pulley-gap: 24px;
+  --orange: #F05323;
+  --screw-size: 16px;
+  --inner-padding: 24px;
+  --max-width: 1000px;
+}
+
+* { box-sizing: border-box; cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52' viewBox='0 0 52 52'%3E%3Cdefs%3E%3ClinearGradient id='s' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%235a6068'/%3E%3Cstop offset='25%25' stop-color='%23b0b6bc'/%3E%3Cstop offset='50%25' stop-color='%23e8ecef'/%3E%3Cstop offset='75%25' stop-color='%23b0b6bc'/%3E%3Cstop offset='100%25' stop-color='%235a6068'/%3E%3C/linearGradient%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23003070'/%3E%3Cstop offset='25%25' stop-color='%230050A4'/%3E%3Cstop offset='50%25' stop-color='%230068CC'/%3E%3Cstop offset='75%25' stop-color='%230050A4'/%3E%3Cstop offset='100%25' stop-color='%23003070'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg transform='rotate(-45 26 26)'%3E%3Crect x='23' y='0' width='6' height='5' rx='1' fill='%23777e86'/%3E%3Crect x='24' y='5' width='4' height='12' fill='url(%23s)' stroke='%23555' stroke-width='0.5'/%3E%3Crect x='22' y='17' width='8' height='5' rx='1.5' fill='%23888' stroke='%23666' stroke-width='0.5'/%3E%3Crect x='20' y='22' width='12' height='28' rx='4' fill='url(%23g)' stroke='%23002850' stroke-width='0.6'/%3E%3Cellipse cx='26' cy='50' rx='5' ry='2.5' fill='%23002850' opacity='0.4'/%3E%3C/g%3E%3C/svg%3E") 2 1, auto; }
+
+:root {
+  --cursor-pointer: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='20' viewBox='0 0 60 20'%3E%3Cdefs%3E%3ClinearGradient id='s2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%235a6068'/%3E%3Cstop offset='25%25' stop-color='%23b0b6bc'/%3E%3Cstop offset='50%25' stop-color='%23e8ecef'/%3E%3Cstop offset='75%25' stop-color='%23b0b6bc'/%3E%3Cstop offset='100%25' stop-color='%235a6068'/%3E%3C/linearGradient%3E%3ClinearGradient id='g2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23003070'/%3E%3Cstop offset='25%25' stop-color='%230050A4'/%3E%3Cstop offset='50%25' stop-color='%230068CC'/%3E%3Cstop offset='75%25' stop-color='%230050A4'/%3E%3Cstop offset='100%25' stop-color='%23003070'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='7' width='5' height='6' rx='1' fill='%23777e86'/%3E%3Crect x='5' y='8' width='12' height='4' fill='url(%23s2)' stroke='%23555' stroke-width='0.5'/%3E%3Crect x='17' y='6' width='5' height='8' rx='1.5' fill='%23888' stroke='%23666' stroke-width='0.5'/%3E%3Crect x='22' y='4' width='28' height='12' rx='4' fill='url(%23g2)' stroke='%23002850' stroke-width='0.6'/%3E%3Cellipse cx='50' cy='10' rx='2.5' ry='5' fill='%23002850' opacity='0.4'/%3E%3C/svg%3E") 1 10, auto;
+}
+
+.filter-btn,
+.mesh-toggle,
+.info-btn,
+.cell,
+.detail-screw,
+.detail-info-cell.links-cell a,
+.pulley-carriage,
+[role="button"] {
+  cursor: var(--cursor-pointer) !important;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  font-family: 'Work Sans', sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body.no-scroll,
+html.no-scroll {
+  overflow: hidden !important;
+  height: 100vh;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+* {
+  scrollbar-width: none;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* ================= OUTER CONTAINER ================= */
+
+.outer-container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100vh;
+}
+
+/* ================= FILTER BAR ================= */
+
+:root {
+  --filter-stroke: clamp(1px, 0.35vw, 3px);
+}
+
+.bottom-bar {
+  display: grid;
+  grid-template: 1fr / 1fr;
+}
+
+.bottom-bar > * {
+  grid-area: 1 / 1;
+}
+
+.filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: clamp(8px, 3vw, 2px);
+  padding: clamp(20px, 4vw, 10px) calc(var(--side-gap) + var(--pulley-gap)) clamp(20px, 4vw, 10px) var(--side-gap);
+}
+
+.filter-left,
+.filter-right {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 3vw, 2px);
+}
+
+.filter-btn {
+  width: clamp(44px, 6vw, 64px);
+  height: clamp(44px, 6vw, 64px);
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  border: var(--filter-stroke) solid var(--orange);
+  background: transparent;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--orange);
+}
+
+.filter-btn::after,
+.filter-btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--orange);
+}
+
+.filter-btn:hover::after,
+.filter-btn.active::after,
+.filter-btn:hover::before,
+.filter-btn.active::before {
+  background: var(--bg);
+}
+
+/* ================= SCREW DRIVE ICONS ================= */
+
+/* SLOTTED */
+
+.filter-btn[data-drive="slotted"]::after {
+  width: 60%;
+  height: var(--filter-stroke);
+}
+
+/* CROSS */
+
+.filter-btn[data-drive="cross"]::after {
+  width: 60%;
+  height: var(--filter-stroke);
+}
+.filter-btn[data-drive="cross"]::before {
+  width: var(--filter-stroke);
+  height: 60%;
+}
+
+/* ROBERTSON */
+
+.filter-btn[data-drive="robertson"]::after {
+  width: 30%;
+  height: 30%;
+}
+
+/* HEX */
+
+.filter-btn[data-drive="hex"]::after {
+  width: 42%;
+  height: 42%;
+  clip-path: polygon(
+    25% 0%, 75% 0%,
+    100% 50%, 75% 100%,
+    25% 100%, 0% 50%
+  );
+}
+
+/* SPANNER */
+
+.filter-btn[data-drive="spanner"]::after {
+  width: 60%;
+  height: 60%;
+  background:
+    radial-gradient(circle at 18% 50%, var(--orange) 18%, transparent 19%),
+    radial-gradient(circle at 82% 50%, var(--orange) 18%, transparent 19%);
+  background-repeat: no-repeat;
+}
+
+.filter-btn[data-drive="spanner"]:hover::after,
+.filter-btn[data-drive="spanner"].active::after {
+  background:
+    radial-gradient(circle at 18% 50%, var(--bg) 18%, transparent 19%),
+    radial-gradient(circle at 82% 50%, var(--bg) 18%, transparent 19%);
+}
+
+/* ================= RIGHT BUTTONS ================= */
+
+.mesh-toggle {
+  width: clamp(70px, 8vw, 100px);
+  height: clamp(44px, 6vw, 64px);
+  border-radius: 14px;
+  border: var(--filter-stroke) solid var(--orange);
+  cursor: pointer;
+  position: relative;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mesh-toggle::before {
+  content: "";
+  position: absolute;
+  width: 75%;
+  height: 75%;
+  background:
+    /* VERTICAL BARS */
+    linear-gradient(var(--orange), var(--orange)) 20% 0 / 2px 100% no-repeat,
+    linear-gradient(var(--orange), var(--orange)) 40% 0 / 2px 100% no-repeat,
+    linear-gradient(var(--orange), var(--orange)) 60% 0 / 2px 100% no-repeat,
+    linear-gradient(var(--orange), var(--orange)) 80% 0 / 2px 100% no-repeat,
+    /* HORIZONTAL BARS */
+    linear-gradient(var(--orange), var(--orange)) 0 20% / 100% 2px no-repeat,
+    linear-gradient(var(--orange), var(--orange)) 0 40% / 100% 2px no-repeat,
+    linear-gradient(var(--orange), var(--orange)) 0 60% / 100% 2px no-repeat,
+    linear-gradient(var(--orange), var(--orange)) 0 80% / 100% 2px no-repeat;
+}
+
+.mesh-toggle:hover,
+.mesh-toggle.active {
+  background: var(--orange);
+}
+
+.mesh-toggle:hover::before,
+.mesh-toggle.active::before {
+  background:
+    linear-gradient(var(--bg), var(--bg)) 20% 0 / 2px 100% no-repeat,
+    linear-gradient(var(--bg), var(--bg)) 40% 0 / 2px 100% no-repeat,
+    linear-gradient(var(--bg), var(--bg)) 60% 0 / 2px 100% no-repeat,
+    linear-gradient(var(--bg), var(--bg)) 80% 0 / 2px 100% no-repeat,
+    linear-gradient(var(--bg), var(--bg)) 0 20% / 100% 2px no-repeat,
+    linear-gradient(var(--bg), var(--bg)) 0 40% / 100% 2px no-repeat,
+    linear-gradient(var(--bg), var(--bg)) 0 60% / 100% 2px no-repeat,
+    linear-gradient(var(--bg), var(--bg)) 0 80% / 100% 2px no-repeat;
+}
+
+.info-btn {
+  width: clamp(44px, 6vw, 64px);
+  height: clamp(44px, 6vw, 64px);
+  border-radius: 50%;
+  border: var(--filter-stroke) solid var(--orange);
+  background: transparent;
+  color: var(--orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: clamp(28px, 3vw, 38px);
+  cursor: pointer;
+  user-select: none;
+  line-height: 1;
+}
+
+.info-btn:hover,
+.info-btn.active {
+  background: var(--orange);
+  color: var(--bg);
+}
+
+.info-btn.active {
+  z-index: 301;
+  position: relative;
+}
+
+/* ================= GRID ================= */
+
+.wrapper {
+  width: 100%;
+  padding-left: var(--side-gap);
+  padding-right: calc(var(--side-gap) + var(--pulley-gap));
+  display: grid;
+  gap: 0;
+  position: relative;
+  margin-top: auto;
+}
+
+.cell {
+  position: relative;
+  background: #000000;
+  overflow: hidden;
+}
+
+/* ================= MESH ================= */
+
+.mesh {
+  position: absolute;
+  inset: 0;
+  background: var(--orange);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 6px;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mesh div {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.cell:hover .mesh {
+  opacity: 1;
+}
+
+.wrapper.filtering .cell.match .mesh {
+  opacity: 1;
+}
+
+.wrapper.filtering .cell.match .screw-left,
+.wrapper.filtering .cell.match .screw-right {
+  display: none;
+}
+
+.cell.hidden {
+  display: none;
+}
+
+.force-mesh .mesh {
+  opacity: 1 !important;
+}
+
+.force-mesh .screw-left,
+.force-mesh .screw-right {
+  display: none !important;
+}
+
+/* ================= SCREWS ================= */
+
+.screw-left,
+.screw-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--screw-size);
+  height: var(--screw-size);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 35%, #fff8d0 0%, #ffcd00 30%, #d4a800 65%, #a08000 100%);
+  box-shadow:
+    inset -2px -2px 4px rgba(0,0,0,0.3),
+    inset 2px 2px 4px rgba(255,255,200,0.5);
+  z-index: 2;
+}
+
+.screw-left { left: var(--inner-padding); }
+.screw-right { right: var(--inner-padding); }
+
+.screw-left::after,
+.screw-right::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #8a6800;
+}
+
+/* ================= SCREW TYPES ================= */
+
+[data-drive="slotted"] .screw-left::after,
+[data-drive="slotted"] .screw-right::after {
+  width: 60%;
+  height: 2px;
+}
+
+[data-drive="cross"] .screw-left::after,
+[data-drive="cross"] .screw-right::after {
+  width: 60%;
+  height: 2px;
+}
+
+[data-drive="cross"] .screw-left::before,
+[data-drive="cross"] .screw-right::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 60%;
+  background: #8a6800;
+  transform: translate(-50%, -50%);
+}
+
+[data-drive="robertson"] .screw-left::after,
+[data-drive="robertson"] .screw-right::after {
+  width: 6px;
+  height: 6px;
+}
+
+[data-drive="hex"] .screw-left::after,
+[data-drive="hex"] .screw-right::after {
+  width: 10px;
+  height: 10px;
+  clip-path: polygon(
+    25% 0%, 75% 0%,
+    100% 50%, 75% 100%,
+    25% 100%, 0% 50%
+  );
+}
+
+[data-drive="spanner"] .screw-left::after,
+[data-drive="spanner"] .screw-right::after {
+  width: 12px;
+  height: 12px;
+  background:
+    radial-gradient(circle at 30% 50%, #8a6800 3px, transparent 3.5px),
+    radial-gradient(circle at 70% 50%, #8a6800 3px, transparent 3.5px);
+  background-repeat: no-repeat;
+}
+
+.cell:hover .screw-left,
+.cell:hover .screw-right {
+  display: none;
+}
+
+/* ================= BEAMS ================= */
+
+.cell::before,
+.cell::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--beam);
+  background: linear-gradient(
+    to right,
+    var(--tube-dark),
+    var(--tube-mid),
+    var(--tube-light),
+    var(--tube-mid),
+    var(--tube-dark)
+  );
+  z-index: 3;
+}
+
+.cell::before { left: 0; }
+.cell::after { right: 0; }
+
+.beam-top,
+.beam-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--beam);
+  background: linear-gradient(
+    to bottom,
+    var(--tube-dark),
+    var(--tube-mid),
+    var(--tube-light),
+    var(--tube-mid),
+    var(--tube-dark)
+  );
+  z-index: 3;
+}
+
+.beam-top { top: 0; }
+.beam-bottom { bottom: 0; }
+
+.braces {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to bottom right,
+      transparent calc(50% - var(--beam)/2),
+      var(--tube-mid) calc(50% - var(--beam)/2),
+      var(--tube-light) 50%,
+      var(--tube-mid) calc(50% + var(--beam)/2),
+      transparent calc(50% + var(--beam)/2)
+    ),
+    linear-gradient(
+      to top right,
+      transparent calc(50% - var(--beam)/2),
+      var(--tube-mid) calc(50% - var(--beam)/2),
+      var(--tube-light) 50%,
+      var(--tube-mid) calc(50% + var(--beam)/2),
+      transparent calc(50% + var(--beam)/2)
+    );
+  z-index: 1;
+}
+
+.info-panel {
+  display: none;
+}
+
+/* ================= SAFETY TAPE OVERLAY ================= */
+
+.safety-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.safety-overlay.active {
+  display: flex;
+}
+
+/* Block all interaction behind */
+.safety-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.safety-tape {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Top stripe bar */
+.safety-stripe {
+  width: 100%;
+  height: clamp(20px, 3vw, 32px);
+  background: repeating-linear-gradient(
+    -45deg,
+    #FFCD00,
+    #FFCD00 20px,
+    #000000 20px,
+    #000000 40px
+  );
+  flex-shrink: 0;
+}
+
+.safety-content {
+  width: 100%;
+  background: #000000;
+  padding: clamp(24px, 5vw, 48px) clamp(32px, 8vw, 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.safety-content p {
+  margin: 0;
+  color: #ffffff;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 600;
+  font-size: clamp(16px, 2.2vw, 28px);
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+  max-width: 800px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .safety-content {
+    padding: 20px 24px;
+  }
+
+  .safety-content p {
+    font-size: 15px;
+    text-align: left;
+  }
+}
+
+/* ================= ASSEMBLY BUTTON ================= */
+
+.assembly-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  z-index: 50;
+  user-select: none;
+  padding: clamp(20px, 4vw, 10px) calc(var(--side-gap) + var(--pulley-gap)) clamp(20px, 4vw, 10px) var(--side-gap);
+  pointer-events: none;
+}
+
+.assembly-btn .assembly-text {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 600;
+  font-size: clamp(14px, 2.5vw, 22px);
+  color: var(--orange);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.assembly-btn .assembly-text.left {
+  padding-right: 12px;
+}
+
+.assembly-btn .assembly-text.right {
+  padding-left: 12px;
+}
+
+.assembly-btn .assembly-screw {
+  width: clamp(44px, 6vw, 64px);
+  height: clamp(44px, 6vw, 64px);
+  border-radius: 50%;
+  border: var(--filter-stroke) solid var(--orange);
+  background: transparent;
+  position: relative;
+  flex-shrink: 0;
+  transform: rotate(45deg);
+  pointer-events: auto;
+  cursor: var(--cursor-pointer) !important;
+}
+
+/* Cross drive on the assembly screw */
+.assembly-btn .assembly-screw::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: var(--filter-stroke);
+  background: var(--orange);
+}
+
+.assembly-btn .assembly-screw::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--filter-stroke);
+  height: 60%;
+  background: var(--orange);
+}
+
+.assembly-btn .assembly-screw:hover {
+  background: var(--orange);
+  transform: rotate(0deg);
+}
+
+.assembly-btn .assembly-screw:hover::after,
+.assembly-btn .assembly-screw:hover::before {
+  background: var(--bg);
+}
+
+.assembly-btn.hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ================= UNASSEMBLED STATE ================= */
+
+.wrapper.unassembled .braces {
+  opacity: 0;
+}
+
+.wrapper.unassembled .screw-left,
+.wrapper.unassembled .screw-right {
+  opacity: 0;
+}
+
+.wrapper.unassembled .cell {
+  pointer-events: none;
+}
+
+.wrapper.unassembled .cell:hover .mesh {
+  opacity: 0;
+}
+
+.wrapper.unassembled .cell:hover .screw-left,
+.wrapper.unassembled .cell:hover .screw-right {
+  display: block;
+  opacity: 0;
+}
+
+/* Assembly animation: cells start hidden, reveal per-row */
+.cell.assembling .braces,
+.cell.assembling .screw-left,
+.cell.assembling .screw-right {
+  opacity: 0;
+}
+
+.cell.assembled-reveal .braces,
+.cell.assembled-reveal .screw-left,
+.cell.assembled-reveal .screw-right {
+  opacity: 1;
+}
+
+.filter-bar.unassembled {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.pulley.unassembled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .assembly-btn {
+    padding: 16px var(--side-gap);
+  }
+
+  .assembly-btn .assembly-screw {
+    width: 30px;
+    height: 30px;
+    border-width: 2px;
+  }
+}
+
+/* ================= BLUE TARP ================= */
+
+.blue-tarp {
+  position: absolute;
+  left: calc(var(--side-gap) - 10px);
+  right: calc(var(--side-gap) + var(--pulley-gap) - 10px);
+  background: #0050A4;
+  z-index: 5;
+  pointer-events: none;
+  clip-path: inset(0 0 0 0);
+  display: none;
+  box-shadow:
+    0 6px 20px rgba(0,0,0,0.5),
+    0 2px 8px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  border-bottom: 3px solid #003d80;
+}
+
+.blue-tarp.hidden {
+  display: none;
+}
+
+/* Woven tarp texture + subtle wrinkle effect */
+.blue-tarp::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 6px,
+      rgba(255,255,255,0.04) 6px,
+      rgba(255,255,255,0.04) 7px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 6px,
+      rgba(255,255,255,0.04) 6px,
+      rgba(255,255,255,0.04) 7px
+    );
+}
+
+/* Highlight along the top edge for depth */
+.blue-tarp::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(100, 170, 255, 0.15);
+}
+
+@media (max-width: 768px) {
+  .blue-tarp {
+    left: calc(var(--side-gap) - 8px);
+    right: calc(var(--side-gap) - 8px);
+  }
+}
+
+/* ================= LOADER ================= */
+
+#loader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#loader svg {
+  overflow: visible;
+}
+
+#loader .wrench-group {
+  transform-origin: 110px 110px;
+  animation: hex-ratchet 0.9s steps(1, end) infinite;
+}
+
+@keyframes hex-ratchet {
+  0%   { transform: rotate(0deg); }
+  16%  { transform: rotate(60deg); }
+  33%  { transform: rotate(120deg); }
+  50%  { transform: rotate(180deg); }
+  66%  { transform: rotate(240deg); }
+  83%  { transform: rotate(300deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ================= MOBILE OVERRIDE ================= */
+
+@media (max-width: 768px) {
+  .filter-bar {
+    gap: 4px;
+    padding: 16px var(--side-gap);
+    justify-content: flex-end;
+  }
+
+  .wrapper {
+    padding-right: var(--side-gap);
+  }
+
+  .info-panel {
+    margin-right: var(--side-gap);
+    width: min(600px, calc(100% - var(--side-gap) - var(--side-gap)));
+  }
+
+  .filter-btn {
+    width: 30px;
+    height: 30px;
+    border-width: 2px;
+  }
+
+  .filter-left {
+    display: none;
+  }
+
+  .mesh-toggle,
+  .info-btn {
+    width: 30px;
+    height: 30px;
+    border-width: 2px;
+  }
+
+  .info-btn {
+    font-size: 16px;
+  }
+
+  .mesh-toggle {
+    width: 52px;
+  }
+
+  .pulley {
+    display: none !important;
+  }
+}
+/* ================= PULLEY SCROLLBAR ================= */
+
+.pulley {
+  position: fixed;
+  right: max(3px, calc(50% - var(--max-width) / 2 + 3px));
+  top: 0;
+  bottom: 0;
+  width: 36px;
+  z-index: 100;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pulley-wheel {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 35%, #e8ecef 0%, #b0b6bc 35%, #6b7278 70%, #3a4048 100%);
+  box-shadow: inset -1px -1px 3px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(255,255,255,0.3);
+  position: absolute;
+  z-index: 3;
+  flex-shrink: 0;
+}
+
+.pulley-wheel::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #8f969d, #3a4048);
+  box-shadow: inset 0 0 2px rgba(0,0,0,0.6);
+}
+
+.pulley-wheel-top {
+  top: 12px;
+}
+
+.pulley-wheel-bottom {
+  bottom: 12px;
+}
+
+.pulley-rope {
+  position: absolute;
+  top: 26px;
+  bottom: 26px;
+  width: 3px;
+  background: linear-gradient(to right, #5a6068, #8f969d, #5a6068);
+  border-radius: 2px;
+  z-index: 1;
+}
+
+.pulley-rope-right {
+  position: absolute;
+  top: 26px;
+  bottom: 26px;
+  width: 2px;
+  right: 4px;
+  background: linear-gradient(to right, #4a5058, #6b7278, #4a5058);
+  border-radius: 2px;
+  z-index: 1;
+  opacity: 0.5;
+}
+
+.pulley-carriage {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 44px;
+  z-index: 4;
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;
+}
+
+.pulley-carriage:active {
+  cursor: grabbing;
+}
+
+.pulley-carriage-body {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  background: linear-gradient(to right, var(--tube-dark), var(--tube-mid), var(--tube-light), var(--tube-mid), var(--tube-dark));
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.pulley-carriage-grip {
+  width: 14px;
+  height: 2px;
+  background: var(--tube-dark);
+  border-radius: 1px;
+}
+
+.pulley-carriage-hook {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 10px solid var(--tube-mid);
+}
+
+.pulley.hidden {
+  display: none;
+}
+
+/* ================= EXPANDED DETAIL VIEW ================= */
+
+:root {
+  --beam-thick: 16px;
+  --detail-screw-size: clamp(24px, 3.5vw, 36px);
+}
+
+.detail-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 200;
+  overflow: hidden;
+}
+
+.detail-overlay.active {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-inner {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--side-gap);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* The scaffold frame that holds everything */
+.detail-frame {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ---- Screws at intersections ---- */
+
+.detail-screw {
+  position: absolute;
+  width: var(--detail-screw-size);
+  height: var(--detail-screw-size);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff8d0 0%, #ffcd00 30%, #d4a800 65%, #a08000 100%);
+  box-shadow:
+    inset -2px -2px 4px rgba(0,0,0,0.3),
+    inset 2px 2px 4px rgba(255,255,200,0.5),
+    0 2px 6px rgba(0,0,0,0.6);
+  z-index: 10;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+}
+
+.detail-screw::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #8a6800;
+}
+
+.detail-screw::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #8a6800;
+}
+
+/* ---- Screw drive types (all sizes relative to screw) ---- */
+
+.detail-frame[data-drive="slotted"] .detail-screw::after {
+  width: 60%;
+  height: 12%;
+}
+.detail-frame[data-drive="slotted"] .detail-screw::before {
+  display: none;
+}
+
+.detail-frame[data-drive="cross"] .detail-screw::after {
+  width: 60%;
+  height: 12%;
+}
+.detail-frame[data-drive="cross"] .detail-screw::before {
+  width: 12%;
+  height: 60%;
+}
+
+.detail-frame[data-drive="robertson"] .detail-screw::after {
+  width: 30%;
+  height: 30%;
+}
+.detail-frame[data-drive="robertson"] .detail-screw::before {
+  display: none;
+}
+
+.detail-frame[data-drive="hex"] .detail-screw::after {
+  width: 42%;
+  height: 42%;
+  clip-path: polygon(
+    25% 0%, 75% 0%,
+    100% 50%, 75% 100%,
+    25% 100%, 0% 50%
+  );
+}
+.detail-frame[data-drive="hex"] .detail-screw::before {
+  display: none;
+}
+
+.detail-frame[data-drive="spanner"] .detail-screw::after {
+  width: 60%;
+  height: 60%;
+  background:
+    radial-gradient(circle at 30% 50%, #8a6800 22%, transparent 23%),
+    radial-gradient(circle at 70% 50%, #8a6800 22%, transparent 23%);
+  background-repeat: no-repeat;
+}
+.detail-frame[data-drive="spanner"] .detail-screw::before {
+  display: none;
+}
+
+/* ---- Simultaneous hover/active via class on frame ---- */
+
+.detail-frame.screws-hover .detail-screw,
+.detail-frame.screws-active .detail-screw {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* ---- Beam styles (all same thickness) ---- */
+
+.detail-beam-h {
+  height: var(--beam-thick);
+  flex-shrink: 0;
+  background: linear-gradient(
+    to bottom,
+    var(--tube-dark),
+    var(--tube-mid),
+    var(--tube-light),
+    var(--tube-mid),
+    var(--tube-dark)
+  );
+}
+
+.detail-beam-v {
+  width: var(--beam-thick);
+  flex-shrink: 0;
+  background: linear-gradient(
+    to right,
+    var(--tube-dark),
+    var(--tube-mid),
+    var(--tube-light),
+    var(--tube-mid),
+    var(--tube-dark)
+  );
+}
+
+/* Top image area: one big cell spanning 3/4 of height */
+.detail-top-row {
+  display: flex;
+  flex: 3;
+  min-height: 0;
+  position: relative;
+}
+
+.detail-image-area {
+  flex: 1;
+  background: #000000;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detail-image-area img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.detail-image-area .img-placeholder {
+  color: #333;
+  font-size: 14px;
+  font-family: 'Work Sans', sans-serif;
+}
+
+/* Nav screws (prev/next) on the vertical beams */
+.detail-nav-screw {
+  position: absolute;
+  top: 50%;
+  width: var(--detail-screw-size);
+  height: var(--detail-screw-size);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, var(--tube-light) 25%, var(--tube-mid) 55%, var(--tube-dark) 85%);
+  box-shadow:
+    inset -2px -2px 4px rgba(0,0,0,0.5),
+    inset 2px 2px 4px rgba(255,255,255,0.4),
+    0 2px 6px rgba(0,0,0,0.6);
+  z-index: 10;
+  cursor: var(--cursor-pointer) !important;
+  transform: translate(-50%, -50%);
+}
+
+.detail-nav-screw::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: solid var(--tube-dark);
+}
+
+.detail-nav-screw.prev-screw {
+  left: calc(var(--beam-thick) / 2);
+}
+
+.detail-nav-screw.prev-screw::after {
+  border-width: 7px 10px 7px 0;
+  border-color: transparent var(--tube-dark) transparent transparent;
+  transform: translate(calc(-50% - 2px), -50%);
+}
+
+.detail-nav-screw.next-screw {
+  right: calc(var(--beam-thick) / 2);
+  transform: translate(50%, -50%);
+}
+
+.detail-nav-screw.next-screw::after {
+  border-width: 7px 0 7px 10px;
+  border-color: transparent transparent transparent var(--tube-dark);
+  transform: translate(calc(-50% + 2px), -50%);
+}
+
+/* Bottom info row: 1/4 of height, cells with beam dividers */
+.detail-bottom-row {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.detail-info-cell {
+  background: #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: clamp(10px, 2.5vw, 20px);
+  color: var(--tube-light);
+  font-family: 'Work Sans', sans-serif;
+  overflow: hidden;
+}
+
+/* Split container for title and links (desktop: 2 rows, no padding) */
+.detail-split {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.detail-split .detail-info-cell {
+  flex: 1;
+  min-height: 0;
+}
+
+.detail-info-cell.desc-cell {
+  flex: 2;
+}
+
+.detail-info-cell .student-name {
+  font-size: clamp(11px, 1.3vw, 16px);
+  font-weight: 600;
+  color: var(--orange);
+  line-height: 1.2;
+}
+
+.detail-info-cell .project-title {
+  font-size: clamp(11px, 1.3vw, 16px);
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.detail-info-cell.desc-cell p {
+  margin: 0;
+  font-size: clamp(11px, 1.3vw, 16px);
+  color: #ffffff;
+  line-height: 1.4;
+}
+
+.detail-info-cell.link-cell {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.detail-info-cell.link-cell a {
+  color: var(--orange);
+  text-decoration: none;
+  font-size: clamp(11px, 1.3vw, 16px);
+  font-weight: 500;
+}
+
+.detail-info-cell.link-cell a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .detail-overlay.active {
+    overflow-y: hidden;
+  }
+
+  .detail-inner {
+    padding: 16px;
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .detail-frame {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Hide desktop layout elements on mobile */
+  .detail-top-row,
+  .detail-bottom-row {
+    display: none;
+  }
+
+  /* Show mobile layout */
+  .detail-mobile {
+    display: none;
+  }
+
+  :root {
+    --detail-screw-size: 22px;
+  }
+}
+
+/* Mobile detail layout — hidden on desktop */
+.detail-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .detail-mobile {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .detail-mobile-row {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+  }
+
+  .detail-mobile-row.image-row {
+    flex: 3;
+    position: relative;
+  }
+
+  .detail-mobile-cell {
+    flex: 1;
+    background: #000000;
+    padding: clamp(12px, 4vw, 20px);
+    font-family: 'Work Sans', sans-serif;
+    overflow: hidden;
+  }
+
+  .detail-mobile-cell.title-cell .student-name,
+  .detail-mobile-cell.name-cell .student-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--orange);
+    line-height: 1.2;
+  }
+
+  .detail-mobile-cell.title-cell .project-title,
+  .detail-mobile-cell.project-cell .project-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 1.2;
+  }
+
+  .detail-mobile-cell.image-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .detail-mobile-cell.image-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .detail-mobile-row.image-row .detail-nav-screw.prev-screw {
+    left: calc(var(--beam-thick) / 2);
+    transform: translate(-50%, -50%);
+  }
+
+  .detail-mobile-row.image-row .detail-nav-screw.next-screw {
+    right: calc(var(--beam-thick) / 2);
+    transform: translate(50%, -50%);
+  }
+
+  .detail-mobile-cell.image-cell .img-placeholder {
+    color: #333;
+    font-size: 14px;
+    font-family: 'Work Sans', sans-serif;
+  }
+
+  .detail-mobile-cell.desc-cell p {
+    margin: 0;
+    font-size: 14px;
+    color: #ffffff;
+    line-height: 1.5;
+  }
+
+  .detail-mobile-cell.link-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .detail-mobile-cell.link-cell a {
+    color: var(--orange);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .detail-mobile-cell.link-cell a:hover {
+    text-decoration: underline;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <svg width="210" height="310" viewBox="0 0 220 330">
+    <defs>
+      <linearGradient id="g-steel" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%"   stop-color="#5a6068"/>
+        <stop offset="20%"  stop-color="#b0b6bc"/>
+        <stop offset="50%"  stop-color="#f2f2f2"/>
+        <stop offset="80%"  stop-color="#b0b6bc"/>
+        <stop offset="100%" stop-color="#5a6068"/>
+      </linearGradient>
+      <linearGradient id="g-steel-v" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#5a6068"/>
+        <stop offset="20%"  stop-color="#b0b6bc"/>
+        <stop offset="50%"  stop-color="#f2f2f2"/>
+        <stop offset="80%"  stop-color="#b0b6bc"/>
+        <stop offset="100%" stop-color="#5a6068"/>
+      </linearGradient>
+      <radialGradient id="g-screw" cx="38%" cy="32%" r="65%">
+        <stop offset="0%"   stop-color="#e8ecef"/>
+        <stop offset="50%"  stop-color="#8f969d"/>
+        <stop offset="100%" stop-color="#3a4048"/>
+      </radialGradient>
+    </defs>
+
+    <!-- ── WRENCH GROUP (spins around screw center 110,110) ── -->
+    <g class="wrench-group">
+
+      <!-- HANDLE + RING drawn first so jaw renders on top -->
+      <rect x="94" y="110" width="32" height="170" rx="8"
+        fill="url(#g-steel-v)" stroke="#2a2e32" stroke-width="1"/>
+      <circle cx="110" cy="292" r="24"
+        fill="url(#g-steel-v)" stroke="#2a2e32" stroke-width="1.5"/>
+      <circle cx="110" cy="292" r="13" fill="#000000"/>
+      <circle cx="110" cy="292" r="11.5" fill="none" stroke="#3a4048" stroke-width="1"/>
+
+      <!-- JAW on top, covers handle start -->
+      <path d="
+        M 110,68.83    L 145.65,89.42  L 145.65,130.58 L 110,151.17  L 74.35,130.58  L 74.35,89.42  Z
+        M 110,85       L 131.65,97.5   L 131.65,122.5  L 110,135     L 88.35,122.5   L 88.35,97.5   Z
+      " fill="url(#g-steel-v)" stroke="none" fill-rule="evenodd"/>
+      <polygon points="130,96 147,88 147,132 130,124" fill="#000000" stroke="none"/>
+
+    </g>
+
+    <!-- SCREW: static hex, same vertices as jaw inner hex -->
+    <polygon
+      points="110,85 131.65,97.5 131.65,122.5 110,135 88.35,122.5 88.35,97.5"
+      fill="url(#g-screw)" stroke="#5a6068" stroke-width="1"
+    />
+    <line x1="110" y1="85"  x2="110" y2="135" stroke="#6b7278" stroke-width="0.6" opacity="0.5"/>
+    <line x1="88.35" y1="97.5"  x2="131.65" y2="122.5" stroke="#6b7278" stroke-width="0.6" opacity="0.5"/>
+    <line x1="131.65" y1="97.5"  x2="88.35" y2="122.5" stroke="#6b7278" stroke-width="0.6" opacity="0.5"/>
+    <circle cx="110" cy="110" r="5" fill="#3e4347"/>
+    <circle cx="110" cy="110" r="2.5" fill="#7d848b"/>
+  </svg>
+</div>
+
+<div class="outer-container">
+
+  <div class="wrapper unassembled"></div>
+  <div class="blue-tarp" id="blueTarp"></div>
+
+  <div class="bottom-bar">
+    <div class="filter-bar unassembled">
+      <div class="filter-left"></div>
+      <div class="filter-right">
+        <div class="mesh-toggle" role="button" aria-label="Toggle all safety mesh"></div>
+        <div class="info-btn" role="button" aria-label="Toggle info panel">i</div>
+      </div>
+    </div>
+
+    <div class="assembly-btn" id="assemblyBtn">
+      <div class="assembly-text left">ASSEMBLY</div>
+      <div class="assembly-screw"></div>
+      <div class="assembly-text right">REQUIRED</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="detail-overlay" id="detailOverlay">
+  <div class="detail-inner" id="detailInner"></div>
+</div>
+
+<div class="safety-overlay" id="safetyOverlay">
+  <div class="safety-tape">
+    <div class="safety-stripe"></div>
+    <div class="safety-content">
+      <p>ASSEMBLY REQUIRED is an assemblage of 68 works by VCUarts BFA Graphic Design students, Class of 2026. The exhibition brings these projects together within a shared structural system, where each unit occupies a distinct position while contributing to a larger collective framework.</p>
+    </div>
+    <div class="safety-stripe"></div>
+  </div>
+</div>
+
+<div class="pulley unassembled" id="pulley">
+    <div class="pulley-wheel pulley-wheel-top" id="pulleyWheelTop"></div>
+    <div class="pulley-rope"></div>
+    <div class="pulley-rope-right"></div>
+    <div class="pulley-carriage" id="pulleyCarriage">
+      <div class="pulley-carriage-body">
+        <div class="pulley-carriage-grip"></div>
+        <div class="pulley-carriage-grip"></div>
+        <div class="pulley-carriage-grip"></div>
+      </div>
+      <div class="pulley-carriage-hook"></div>
+    </div>
+    <div class="pulley-wheel pulley-wheel-bottom" id="pulleyWheelBottom"></div>
+  </div>
+
+<script>
+  const wrapper = document.querySelector('.wrapper');
+  const filterLeft = document.querySelector('.filter-left');
+  const meshToggle = document.querySelector('.mesh-toggle');
+  const infoBtn = document.querySelector('.info-btn');
+  const outerContainer = document.querySelector('.outer-container');
+
+  const MIN_CELLS = 68;
+  const screwTypes = ["slotted", "cross", "robertson", "hex", "spanner"];
+
+  const palettes = [
+    ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51'],
+    ['#003049', '#d62828', '#f77f00', '#fcbf49', '#eae2b7'],
+    ['#606c38', '#283618', '#fefae0', '#dda15e', '#bc6c25'],
+    ['#0d1b2a', '#1b263b', '#415a77', '#778da9', '#e0e1dd'],
+    ['#f72585', '#7209b7', '#3a0ca3', '#4361ee', '#4cc9f0'],
+  ];
+
+  let activeFilters = [];
+  let meshForced = false;
+  let infoOpen = false;
+
+  const detailOverlay = document.getElementById('detailOverlay');
+  const detailInner = document.getElementById('detailInner');
+
+  /* ================= STUDENT DATA (PLACEHOLDER) ================= */
+
+  const projectImages = [
+    'example_image_01.png',
+    'example_image_02.png',
+    'example_image_03.png',
+    'example_image_04.png',
+    'example_image_05.png',
+    'example_image_06.png',
+    'example_image_07.png'
+  ];
+
+  const students = Array.from({ length: 68 }, (_, i) => ({
+    id: i + 1,
+    name: `Student ${i + 1}`,
+    projectTitle: `Project ${i + 1}`,
+    description: `Clank, clank, clank. Bolt by bolt, beam by beam, each piece locks into something bigger than itself. What you see here was built from the ground up, assembled by hand, held together by the structure around it. Assembly required.`,
+    descriptionShort: `Clank, clank, clank. Built from the ground up. Assembly required.`,
+    links: [
+      { label: '@handle', url: '#' },
+      { label: 'Portfolio', url: '#' }
+    ],
+    images: projectImages
+  }));
+
+  /* ================= DETAIL VIEW ================= */
+
+  function openDetail(studentIndex, driveType) {
+    const student = students[studentIndex];
+    if (!student) return;
+
+    currentDetailIndex = studentIndex;
+    currentDetailDrive = driveType;
+
+    const isMobile = window.innerWidth <= 768;
+    const bH = `<div class="detail-beam-h"></div>`;
+    const bV = `<div class="detail-beam-v"></div>`;
+
+    let html = `<div class="detail-frame" data-drive="${driveType}">`;
+
+    if (isMobile) {
+      // Mobile: vertical stack — title, image, description, links
+      // Each row: bV | cell | bV, separated by bH
+      html += bH;
+
+      // Title row — split into 2 columns: name | beam | project
+      html += `<div class="detail-mobile-row">`;
+      html += bV;
+      html += `<div class="detail-mobile-cell name-cell">
+        <div class="student-name">${student.name}</div>
+      </div>`;
+      html += bV;
+      html += `<div class="detail-mobile-cell project-cell">
+        <div class="project-title">${student.projectTitle}</div>
+      </div>`;
+      html += bV;
+      html += `</div>`;
+
+      html += bH;
+
+      // Image row
+      html += `<div class="detail-mobile-row image-row">`;
+      html += bV;
+      html += `<div class="detail-mobile-cell image-cell">
+        <img id="detailImg" src="${student.images[0]}" alt="Project image 1">
+      </div>`;
+      html += bV;
+      html += `<div class="detail-nav-screw prev-screw" id="imgPrev"></div>`;
+      html += `<div class="detail-nav-screw next-screw" id="imgNext"></div>`;
+      html += `</div>`;
+
+      html += bH;
+
+      // Description row
+      html += `<div class="detail-mobile-row">`;
+      html += bV;
+      html += `<div class="detail-mobile-cell desc-cell"><p>${student.descriptionShort}</p></div>`;
+      html += bV;
+      html += `</div>`;
+
+      html += bH;
+
+      // Links row — split into 2 columns: handle | beam | portfolio
+      html += `<div class="detail-mobile-row">`;
+      html += bV;
+      html += `<div class="detail-mobile-cell link-cell">
+        <a href="${student.links[0].url}" target="_blank">${student.links[0].label}</a>
+      </div>`;
+      html += bV;
+      html += `<div class="detail-mobile-cell link-cell">
+        <a href="${student.links[1].url}" target="_blank">${student.links[1].label}</a>
+      </div>`;
+      html += bV;
+      html += `</div>`;
+
+      html += bH;
+
+    } else {
+      // Desktop: original 4x4 layout
+      html += bH;
+
+      html += `<div class="detail-top-row">`;
+      html += bV;
+      html += `<div class="detail-image-area">
+        <img id="detailImg" src="${student.images[0]}" alt="Project image 1">
+      </div>`;
+      html += bV;
+      html += `<div class="detail-nav-screw prev-screw" id="imgPrev"></div>`;
+      html += `<div class="detail-nav-screw next-screw" id="imgNext"></div>`;
+      html += `</div>`;
+
+      html += bH;
+
+      html += `<div class="detail-bottom-row">`;
+      html += bV;
+      html += `
+        <div class="detail-split">
+          <div class="detail-info-cell name-cell">
+            <div class="student-name">${student.name}</div>
+          </div>
+          ${bH}
+          <div class="detail-info-cell project-cell">
+            <div class="project-title">${student.projectTitle}</div>
+          </div>
+        </div>
+      `;
+      html += bV;
+      html += `
+        <div class="detail-info-cell desc-cell">
+          <p>${student.description}</p>
+        </div>
+      `;
+      html += bV;
+      html += `
+        <div class="detail-split">
+          <div class="detail-info-cell link-cell">
+            <a href="${student.links[0].url}" target="_blank">${student.links[0].label}</a>
+          </div>
+          ${bH}
+          <div class="detail-info-cell link-cell">
+            <a href="${student.links[1].url}" target="_blank">${student.links[1].label}</a>
+          </div>
+        </div>
+      `;
+      html += bV;
+      html += `</div>`;
+
+      html += bH;
+    }
+
+    html += `</div>`; // close detail-frame
+
+    detailInner.innerHTML = html;
+    detailOverlay.classList.add('active');
+    detailOverlay.scrollTop = 0;
+
+    const frame = detailInner.querySelector('.detail-frame');
+
+    // Image carousel
+    let currentImgIndex = 0;
+    const imgEl = document.getElementById('detailImg');
+    const prevBtn = document.getElementById('imgPrev');
+    const nextBtn = document.getElementById('imgNext');
+
+    function updateImage() {
+      if (imgEl && student.images.length > 0) {
+        imgEl.src = student.images[currentImgIndex];
+        imgEl.alt = `Project image ${currentImgIndex + 1}`;
+      }
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentImgIndex = (currentImgIndex - 1 + student.images.length) % student.images.length;
+        updateImage();
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentImgIndex = (currentImgIndex + 1) % student.images.length;
+        updateImage();
+      });
+    }
+
+    // Place screws at every beam intersection after layout
+    requestAnimationFrame(() => {
+      const frameRect = frame.getBoundingClientRect();
+      const beamT = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--beam-thick'));
+
+      function addScrew(x, y) {
+        const s = document.createElement('div');
+        s.className = 'detail-screw';
+        s.style.left = x + 'px';
+        s.style.top = y + 'px';
+        frame.appendChild(s);
+      }
+
+      // Collect all horizontal beams with their Y center and horizontal span
+      const hBeams = frame.querySelectorAll('.detail-beam-h');
+      const hInfos = Array.from(hBeams).map(hb => {
+        const r = hb.getBoundingClientRect();
+        return {
+          y: r.top + r.height / 2 - frameRect.top,
+          left: r.left - frameRect.left,
+          right: r.right - frameRect.left
+        };
+      });
+
+      // Collect all vertical beams with their X center and vertical span
+      const vBeams = frame.querySelectorAll('.detail-beam-v');
+      const vInfos = Array.from(vBeams).map(vb => {
+        const r = vb.getBoundingClientRect();
+        return {
+          x: r.left + r.width / 2 - frameRect.left,
+          top: r.top - frameRect.top,
+          bottom: r.bottom - frameRect.top
+        };
+      });
+
+      // Place screw at every intersection where beams overlap
+      const placed = new Set();
+      hInfos.forEach(h => {
+        vInfos.forEach(v => {
+          // Check if the v-beam's vertical span overlaps the h-beam's Y
+          // and the h-beam's horizontal span overlaps the v-beam's X
+          const vOverlap = v.top <= h.y + beamT && v.bottom >= h.y - beamT;
+          const hOverlap = h.left <= v.x + beamT && h.right >= v.x - beamT;
+          if (vOverlap && hOverlap) {
+            const key = `${Math.round(v.x)},${Math.round(h.y)}`;
+            if (!placed.has(key)) {
+              placed.add(key);
+              addScrew(v.x, h.y);
+            }
+          }
+        });
+      });
+    });
+
+    // Simultaneous hover/click on all screws
+    frame.addEventListener('mouseover', (e) => {
+      if (e.target.classList.contains('detail-screw')) {
+        frame.classList.add('screws-hover');
+      }
+    });
+
+    frame.addEventListener('mouseout', (e) => {
+      if (e.target.classList.contains('detail-screw')) {
+        frame.classList.remove('screws-hover');
+      }
+    });
+
+    frame.addEventListener('mousedown', (e) => {
+      if (e.target.classList.contains('detail-screw')) {
+        frame.classList.add('screws-active');
+      }
+    });
+
+    frame.addEventListener('mouseup', (e) => {
+      if (e.target.classList.contains('detail-screw')) {
+        frame.classList.remove('screws-active');
+        closeDetail();
+      }
+    });
+
+    // Touch support
+    frame.addEventListener('touchstart', (e) => {
+      if (e.target.classList.contains('detail-screw')) {
+        frame.classList.add('screws-hover');
+        frame.classList.add('screws-active');
+      }
+    }, { passive: true });
+
+    frame.addEventListener('touchend', (e) => {
+      if (e.target.classList.contains('detail-screw')) {
+        closeDetail();
+      }
+    });
+  }
+
+  function closeDetail() {
+    detailOverlay.classList.remove('active');
+    detailInner.innerHTML = '';
+    currentDetailIndex = null;
+    currentDetailDrive = null;
+  }
+
+  let currentDetailIndex = null;
+  let currentDetailDrive = null;
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && detailOverlay.classList.contains('active')) {
+      closeDetail();
+    }
+  });
+
+  /* ================= FILTER SYSTEM ================= */
+
+  function createFilters() {
+    screwTypes.forEach(type => {
+
+      const btn = document.createElement('div');
+      btn.className = 'filter-btn';
+      btn.setAttribute('data-drive', type);
+
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('active');
+        updateFilters();
+      });
+
+      filterLeft.appendChild(btn);
+    });
+  }
+
+  function updateFilters() {
+    activeFilters = Array.from(
+      document.querySelectorAll('.filter-btn.active')
+    ).map(btn => btn.dataset.drive);
+
+    const filtering = activeFilters.length > 0;
+    wrapper.classList.toggle('filtering', filtering);
+
+    document.querySelectorAll('.cell').forEach(cell => {
+      cell.classList.remove('match');
+
+      if (!filtering) return;
+
+      const match = activeFilters.includes(cell.dataset.drive);
+      if (match) cell.classList.add('match');
+    });
+  }
+
+  /* ================= GRID LAYOUT ================= */
+
+  function layoutGrid() {
+
+    const isMobile = window.innerWidth <= 768;
+    const columns = isMobile ? 2 : 6;
+
+    const sideGap = 32;
+    const pulleyGap = isMobile ? 0 : 24;
+    // Use the container's actual width instead of viewport width
+    const containerWidth = Math.min(window.innerWidth, 1000);
+    const availableWidth = containerWidth - sideGap - sideGap - pulleyGap;
+    const cellSize = Math.floor(availableWidth / columns);
+
+    wrapper.style.gridTemplateColumns = `repeat(${columns}, ${cellSize}px)`;
+
+    document.querySelectorAll('.cell').forEach(cell => {
+      cell.style.width = cellSize + "px";
+      cell.style.height = cellSize + "px";
+    });
+  }
+
+  /* ================= GRID GENERATION ================= */
+
+  function fillGrid() {
+
+    wrapper.innerHTML = "";
+
+    // Preserve unassembled state
+    if (!assembled) {
+      wrapper.classList.add('unassembled');
+    }
+
+    const isMobile = window.innerWidth <= 768;
+    const columns = isMobile ? 2 : 6;
+    const remainder = MIN_CELLS % columns;
+    const emptyCount = remainder === 0 ? 0 : columns - remainder;
+
+    // Add empty spacer cells so the partial row is at the top
+    for (let i = 0; i < emptyCount; i++) {
+      const spacer = document.createElement('div');
+      spacer.className = 'cell spacer';
+      spacer.style.visibility = 'hidden';
+      wrapper.appendChild(spacer);
+    }
+
+    for (let i = 1; i <= MIN_CELLS; i++) {
+
+      const driveType = screwTypes[(i - 1) % screwTypes.length];
+      const palette = palettes[i % palettes.length];
+
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.setAttribute("data-drive", driveType);
+
+      const gradient = `url('fifth-harmony.png')`;
+
+      const meshHTML = Array.from({ length: 24 }, (_, idx) => {
+        const col = idx % 4;
+        const row = Math.floor(idx / 4);
+        const bgPosX = (col / 3) * 100;
+        const bgPosY = (row / 5) * 100;
+        return `<div style="background-image: url('fifth-harmony.png'); background-size: 400% 600%; background-position: ${bgPosX}% ${bgPosY}%;"></div>`;
+      }).join("");
+
+      cell.innerHTML = `
+        <div class="beam-top"></div>
+        <div class="beam-bottom"></div>
+        <div class="braces"></div>
+        <div class="mesh">${meshHTML}</div>
+        <div class="screw-left"></div>
+        <div class="screw-right"></div>
+      `;
+
+      cell.style.cursor = 'pointer';
+      cell.addEventListener('click', () => openDetail(i - 1, driveType));
+
+      wrapper.appendChild(cell);
+    }
+
+    layoutGrid();
+    updateFilters();
+  }
+
+  /* ================= RIGHT BUTTONS ================= */
+
+  meshToggle.addEventListener('click', () => {
+    meshForced = !meshForced;
+    meshToggle.classList.toggle('active', meshForced);
+    wrapper.classList.toggle('force-mesh', meshForced);
+  });
+
+  const safetyOverlay = document.getElementById('safetyOverlay');
+
+  infoBtn.addEventListener('click', () => {
+    infoOpen = !infoOpen;
+    infoBtn.classList.toggle('active', infoOpen);
+
+    if (infoOpen) {
+      safetyOverlay.classList.add('active');
+    } else {
+      safetyOverlay.classList.remove('active');
+    }
+  });
+
+  /* ================= INIT ================= */
+
+  let assembled = false;
+  const assemblyBtn = document.getElementById('assemblyBtn');
+  const assemblyScrewEl = assemblyBtn.querySelector('.assembly-screw');
+  const filterBar = document.querySelector('.filter-bar');
+
+  assemblyScrewEl.addEventListener('click', () => {
+    assembled = true;
+    assemblyBtn.classList.add('hidden');
+
+    // Scroll to bottom first so user sees the animation
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
+
+    const blueTarp = document.getElementById('blueTarp');
+
+    const isMobile = window.innerWidth <= 768;
+    const columns = isMobile ? 2 : 6;
+
+    // Get ALL cells (including spacers) to group into proper rows
+    const allCells = Array.from(wrapper.querySelectorAll('.cell'));
+    const realCells = allCells.filter(c => !c.classList.contains('spacer'));
+
+    // Group all cells into rows of `columns`
+    const rows = [];
+    for (let i = 0; i < allCells.length; i += columns) {
+      const rowCells = allCells.slice(i, i + columns).filter(c => !c.classList.contains('spacer'));
+      if (rowCells.length > 0) rows.push(rowCells);
+    }
+
+    // Tarp position — use positionTarp's logic for consistency
+    // (tarp is already positioned by positionTarp, just ensure clip reset)
+    blueTarp.style.clipPath = 'inset(0 0 0 0)';
+
+    // Reverse so we animate from bottom row to top row
+    rows.reverse();
+
+    // On mobile, group every 2 rows together for faster assembly
+    const animGroups = [];
+    if (isMobile) {
+      for (let i = 0; i < rows.length; i += 2) {
+        const group = [...rows[i]];
+        if (rows[i + 1]) group.push(...rows[i + 1]);
+        animGroups.push(group);
+      }
+    } else {
+      rows.forEach(r => animGroups.push(r));
+    }
+
+    // Mark all real cells as assembling
+    realCells.forEach(cell => cell.classList.add('assembling'));
+
+    // Remove the wrapper unassembled class
+    wrapper.classList.remove('unassembled');
+
+    const ROW_DELAY = 200;
+    const totalGroups = animGroups.length;
+
+    // Tarp snaps every 1 anim group
+    animGroups.forEach((groupCells, groupIndex) => {
+      setTimeout(() => {
+        groupCells.forEach(cell => {
+          cell.classList.remove('assembling');
+          cell.classList.add('assembled-reveal');
+        });
+
+        // Snap tarp every group
+        const revealPercent = ((groupIndex + 1) / totalGroups) * 100;
+        blueTarp.style.clipPath = `inset(0 0 ${revealPercent}% 0)`;
+
+      }, groupIndex * ROW_DELAY);
+    });
+
+    // After all rows are done, show filter bar, pulley, hide tarp, enable scrolling
+    const totalTime = totalGroups * ROW_DELAY + 300;
+    setTimeout(() => {
+      blueTarp.classList.add('hidden');
+      filterBar.classList.remove('unassembled');
+      pulley.classList.remove('unassembled');
+      window.removeEventListener('wheel', preventScroll);
+      window.removeEventListener('touchmove', preventScroll);
+      window.removeEventListener('keydown', preventKeyScroll);
+      updatePulley();
+    }, totalTime);
+  });
+
+  function positionTarp() {
+    const blueTarp = document.getElementById('blueTarp');
+    if (!blueTarp || assembled) return;
+
+    const isMobile = window.innerWidth <= 768;
+    const columns = isMobile ? 2 : 6;
+    const allCells = Array.from(wrapper.querySelectorAll('.cell'));
+    const rows = [];
+    for (let i = 0; i < allCells.length; i += columns) {
+      const rowCells = allCells.slice(i, i + columns).filter(c => !c.classList.contains('spacer'));
+      if (rowCells.length > 0) rows.push(rowCells);
+    }
+
+    if (rows.length < 4) return;
+
+    // Use offsetTop relative to outer-container (the positioned parent)
+    const wrapperTop = wrapper.offsetTop;
+    const tarpEndRowIndex = rows.length - 3;
+    const tarpEndCell = rows[tarpEndRowIndex][0];
+    const tarpBottomY = tarpEndCell.offsetTop + tarpEndCell.offsetHeight / 2 + wrapperTop;
+
+    // On desktop: tarp covers from grid top to mid of 3rd-from-bottom row
+    // On mobile: tarp covers about 60% of visible viewport height above the tarp bottom edge
+    let tarpTopY;
+    if (isMobile) {
+      tarpTopY = Math.max(wrapperTop, tarpBottomY - window.innerHeight * 0.55);
+    } else {
+      tarpTopY = wrapperTop;
+    }
+
+    const containerHeight = wrapper.parentElement.offsetHeight;
+    blueTarp.style.top = tarpTopY + 'px';
+    blueTarp.style.bottom = (containerHeight - tarpBottomY) + 'px';
+    blueTarp.style.display = 'block';
+    blueTarp.style.clipPath = 'inset(0 0 0 0)';
+  }
+
+  window.addEventListener("resize", () => {
+    fillGrid();
+    positionTarp();
+    // Re-render detail view if open (handles desktop ↔ mobile switch)
+    if (currentDetailIndex !== null && detailOverlay.classList.contains('active')) {
+      openDetail(currentDetailIndex, currentDetailDrive);
+    }
+    // Snap to bottom to avoid blank space after layout change
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
+      updatePulley();
+    });
+  });
+
+  // Disable scrolling until assembled
+  function lockScroll() {
+    document.body.classList.add('no-scroll');
+    document.documentElement.classList.add('no-scroll');
+  }
+  function unlockScroll() {
+    document.body.classList.remove('no-scroll');
+    document.documentElement.classList.remove('no-scroll');
+  }
+
+  // Block wheel and touch scroll events
+  function preventScroll(e) {
+    // Allow scrolling on detail overlay and safety overlay
+    if (e.target.closest('.detail-overlay') || e.target.closest('.safety-overlay')) return;
+    e.preventDefault();
+  }
+  
+  // Also prevent keyboard scrolling
+  function preventKeyScroll(e) {
+    if (!assembled && [32, 33, 34, 35, 36, 38, 40].includes(e.keyCode)) {
+      e.preventDefault();
+    }
+  }
+
+  window.addEventListener('wheel', preventScroll, { passive: false });
+  window.addEventListener('touchmove', preventScroll, { passive: false });
+  window.addEventListener('keydown', preventKeyScroll);
+
+  createFilters();
+  fillGrid();
+
+  // Show loader for 3s, then snap to bottom and show tarp
+  const loader = document.getElementById('loader');
+  setTimeout(() => {
+    loader.style.display = 'none';
+    // Scroll to bottom so the assembly button is visible
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
+    positionTarp();
+    updatePulley();
+  }, 3000);
+
+  /* ================= PULLEY SCROLLBAR ================= */
+
+  const pulley = document.getElementById('pulley');
+  const carriage = document.getElementById('pulleyCarriage');
+  const wheelTop = document.getElementById('pulleyWheelTop');
+  const wheelBottom = document.getElementById('pulleyWheelBottom');
+
+  const WHEEL_SIZE = 28;
+  const CARRIAGE_H = 44;
+  const TRACK_TOP = 12 + WHEEL_SIZE; // below top wheel
+  const TRACK_BOTTOM_OFFSET = 12 + WHEEL_SIZE; // above bottom wheel
+
+  let dragging = false;
+  let dragStartY = 0;
+  let dragStartScroll = 0;
+
+  function getTrackHeight() {
+    return window.innerHeight - TRACK_TOP - TRACK_BOTTOM_OFFSET - CARRIAGE_H;
+  }
+
+  function updatePulley() {
+    const scrollH = document.documentElement.scrollHeight;
+    const viewH = window.innerHeight;
+    const maxScroll = scrollH - viewH;
+
+    // Hide pulley if no scrolling needed
+    if (maxScroll <= 0) {
+      pulley.classList.add('hidden');
+      return;
+    }
+    pulley.classList.remove('hidden');
+
+    const scrollFraction = window.scrollY / maxScroll;
+    const trackH = getTrackHeight();
+    const carriageY = TRACK_TOP + scrollFraction * trackH;
+
+    carriage.style.top = carriageY + 'px';
+
+    // Spin wheels based on scroll position
+    const totalRotation = scrollFraction * 720; // two full turns over full scroll
+    wheelTop.style.transform = `rotate(${totalRotation}deg)`;
+    wheelBottom.style.transform = `rotate(${totalRotation}deg)`;
+  }
+
+  window.addEventListener('scroll', updatePulley, { passive: true });
+  window.addEventListener('resize', updatePulley);
+
+  // Drag to scroll
+  carriage.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    dragging = true;
+    dragStartY = e.clientY;
+    dragStartScroll = window.scrollY;
+    document.body.style.userSelect = 'none';
+  });
+
+  carriage.addEventListener('touchstart', (e) => {
+    dragging = true;
+    dragStartY = e.touches[0].clientY;
+    dragStartScroll = window.scrollY;
+  }, { passive: true });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    handleDrag(e.clientY);
+  });
+
+  window.addEventListener('touchmove', (e) => {
+    if (!dragging) return;
+    handleDrag(e.touches[0].clientY);
+  }, { passive: true });
+
+  window.addEventListener('mouseup', () => {
+    dragging = false;
+    document.body.style.userSelect = '';
+  });
+
+  window.addEventListener('touchend', () => {
+    dragging = false;
+  });
+
+  function handleDrag(clientY) {
+    const deltaY = clientY - dragStartY;
+    const trackH = getTrackHeight();
+    const scrollH = document.documentElement.scrollHeight;
+    const viewH = window.innerHeight;
+    const maxScroll = scrollH - viewH;
+
+    const scrollDelta = (deltaY / trackH) * maxScroll;
+    window.scrollTo({ top: dragStartScroll + scrollDelta, behavior: 'instant' });
+  }
+
+  // Click on rope to jump scroll
+  pulley.addEventListener('click', (e) => {
+    if (e.target === carriage || carriage.contains(e.target)) return;
+
+    const rect = pulley.getBoundingClientRect();
+    const clickY = e.clientY - rect.top;
+    const trackH = getTrackHeight();
+    const fraction = Math.max(0, Math.min(1, (clickY - TRACK_TOP) / trackH));
+
+    const scrollH = document.documentElement.scrollHeight;
+    const viewH = window.innerHeight;
+    const maxScroll = scrollH - viewH;
+
+    window.scrollTo({ top: fraction * maxScroll, behavior: 'smooth' });
+  });
+
+  // Initial position
+  requestAnimationFrame(updatePulley);
+</script>
+
+</body>
+</html>
