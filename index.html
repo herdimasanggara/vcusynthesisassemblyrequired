@@ -19,14 +19,14 @@
 }
 
 :root {
-  --bg: #F05323;
+  --bg: #FE5000;
   --tube-light: #c2d7fc;
   --tube-mid: #4b77c4;
   --tube-dark: #004ccb;
   --beam: 10px;
   --side-gap: 32px;
   --pulley-gap: 24px;
-  --orange: #F05323;
+  --orange: #FE5000;
   --btn-color: #FFCD00;
   --btn-color-dark: #8a6800;
   --screw-size: 16px;
@@ -1107,24 +1107,6 @@ body {
   pointer-events: none;
 }
 
-.assembly-btn .assembly-text {
-  font-family: 'AssemblyRequired', 'Work Sans', sans-serif;
-  font-weight: 400;
-  font-size: clamp(50px, 5.8vw, 70px);
-  color: #ffffff;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  line-height: 1;
-}
-
-.assembly-btn .assembly-text.left {
-  padding-right: 12px;
-}
-
-.assembly-btn .assembly-text.right {
-  padding-left: 12px;
-}
-
 .assembly-btn .assembly-screw {
   width: clamp(44px, 6vw, 64px);
   height: clamp(44px, 6vw, 64px);
@@ -1174,6 +1156,133 @@ body {
 .assembly-btn.hidden {
   visibility: hidden;
   pointer-events: none;
+}
+
+/* ================= LANDING I-BEAMS ================= */
+
+.landing-beams {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--max-width);
+  height: 100vh;
+  z-index: 48;
+  pointer-events: none;
+}
+
+.landing-beam-group {
+  position: absolute;
+  width: clamp(240px, 28vw, 340px);
+  transition: none;
+}
+
+.landing-beam-assembly {
+  left: calc(50% - var(--pulley-gap)/2 - 40px - clamp(240px, 28vw, 340px));
+  bottom: calc(clamp(20px, 4vw, 10px) + clamp(22px, 3vw, 32px) - 29px);
+  z-index: 2;
+}
+
+.landing-beam-required {
+  left: calc(50% - var(--pulley-gap)/2 + 40px);
+  bottom: calc(clamp(20px, 4vw, 10px) + clamp(22px, 3vw, 32px) - 29px);
+  z-index: 1;
+}
+
+.landing-beam-group .landing-chain {
+  position: absolute;
+  bottom: calc(100% + 20px);
+  width: 14px;
+  transform: translateX(-50%);
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Crect x='2' y='0' width='10' height='11' rx='5' fill='none' stroke='%23888' stroke-width='2'/%3E%3Crect x='4' y='7' width='6' height='7' rx='3' fill='none' stroke='%23aaa' stroke-width='1.5'/%3E%3C/svg%3E")
+    repeat-y center top;
+  background-size: 14px 12px;
+  height: 100vh;
+}
+
+.landing-chain-left { left: 18%; }
+.landing-chain-right { left: 82%; }
+
+.landing-beam-group .landing-hook {
+  position: absolute;
+  top: -32px;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 24px;
+  z-index: 2;
+}
+
+.landing-hook-left { left: 18%; }
+.landing-hook-right { left: 82%; }
+
+.landing-beam-group .landing-latch {
+  position: absolute;
+  top: -9px;
+  width: 14px;
+  height: 10px;
+  background: transparent;
+  border: 2.5px solid #111;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  z-index: 3;
+  transform: translateX(-50%);
+}
+
+.landing-latch-left { left: 18%; }
+.landing-latch-right { left: 82%; }
+
+.landing-beam-group .landing-ibeam {
+  position: relative;
+  width: 100%;
+  z-index: 4;
+}
+
+/* Animation states — Phase 1: lift up */
+.landing-beams.phase-up .landing-beam-group {
+  transition: bottom 1.4s steps(12, end);
+}
+
+.landing-beams.phase-up .landing-beam-required {
+  transition-delay: 0.15s;
+}
+
+.landing-beams.phase-up .landing-beam-assembly {
+  bottom: calc(100vh - 44px - 58px);
+}
+
+.landing-beams.phase-up .landing-beam-required {
+  bottom: calc(100vh - 76px - 58px);
+}
+
+/* Animation states — Phase 2: swing left */
+.landing-beams.phase-left .landing-beam-group {
+  transition: left 1s steps(8, end);
+}
+
+.landing-beams.phase-left .landing-beam-required {
+  transition-delay: 0.1s;
+}
+
+.landing-beams.phase-left .landing-beam-assembly {
+  bottom: calc(100vh - 44px - 58px);
+  left: var(--side-gap);
+}
+
+.landing-beams.phase-left .landing-beam-required {
+  bottom: calc(100vh - 76px - 58px);
+  left: calc(var(--side-gap) + 50px);
+}
+
+.landing-beams.done {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .landing-beams {
+    display: none;
+  }
 }
 
 /* ================= UNASSEMBLED STATE ================= */
@@ -1230,10 +1339,6 @@ body {
 @media (max-width: 768px) {
   .assembly-btn {
     padding: 16px var(--side-gap);
-  }
-
-  .assembly-btn .assembly-text {
-    display: none;
   }
 
   .assembly-btn .assembly-screw {
@@ -1999,14 +2104,14 @@ body {
         fill="url(#g-steel-v)" stroke="none"/>
       <circle cx="110" cy="292" r="24"
         fill="url(#g-steel-v)" stroke="none"/>
-      <circle cx="110" cy="292" r="13" fill="#F05323"/>
+      <circle cx="110" cy="292" r="13" fill="#FE5000"/>
       <circle cx="110" cy="292" r="11.5" fill="none" stroke="none"/>
 
       <path d="
         M 110,68.83    L 145.65,89.42  L 145.65,130.58 L 110,151.17  L 74.35,130.58  L 74.35,89.42  Z
         M 110,85       L 131.65,97.5   L 131.65,122.5  L 110,135     L 88.35,122.5   L 88.35,97.5   Z
       " fill="url(#g-steel-v)" stroke="none" fill-rule="evenodd"/>
-      <polygon points="130,96 147,88 147,132 130,124" fill="#F05323" stroke="none"/>
+      <polygon points="130,96 147,88 147,132 130,124" fill="#FE5000" stroke="none"/>
     </g>
 
     <polygon
@@ -2037,12 +2142,61 @@ body {
     </div>
 
     <div class="assembly-btn" id="assemblyBtn">
-      <div class="assembly-text left">ASSEMBLY</div>
       <div class="assembly-screw"></div>
-      <div class="assembly-text right">REQUIRED</div>
     </div>
   </div>
 
+</div>
+
+<!-- LANDING I-BEAMS (desktop only) -->
+<div class="landing-beams" id="landingBeams">
+  <div class="landing-beam-group landing-beam-assembly">
+    <div class="landing-chain landing-chain-left"></div>
+    <div class="landing-chain landing-chain-right"></div>
+    <div class="landing-hook landing-hook-left">
+      <svg viewBox="0 0 26 24" width="26" height="24">
+        <ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/>
+        <line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/>
+      </svg>
+    </div>
+    <div class="landing-hook landing-hook-right">
+      <svg viewBox="0 0 26 24" width="26" height="24">
+        <ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/>
+        <line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/>
+      </svg>
+    </div>
+    <div class="landing-latch landing-latch-left"></div>
+    <div class="landing-latch landing-latch-right"></div>
+    <div class="landing-ibeam">
+      <div class="ibeam-flange ibeam-flange-top"></div>
+      <div class="ibeam-web"><span class="crane-beam-text">ASSEMBLY</span></div>
+      <div class="ibeam-flange ibeam-flange-bottom"></div>
+    </div>
+  </div>
+
+  <div class="landing-beam-group landing-beam-required">
+    <div class="landing-chain landing-chain-left"></div>
+    <div class="landing-chain landing-chain-right"></div>
+    <div class="landing-hook landing-hook-left">
+      <svg viewBox="0 0 26 24" width="26" height="24">
+        <ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/>
+        <line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/>
+      </svg>
+    </div>
+    <div class="landing-hook landing-hook-right">
+      <svg viewBox="0 0 26 24" width="26" height="24">
+        <ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/>
+        <line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/>
+      </svg>
+    </div>
+    <div class="landing-latch landing-latch-left"></div>
+    <div class="landing-latch landing-latch-right"></div>
+    <div class="landing-ibeam">
+      <div class="ibeam-flange ibeam-flange-top"></div>
+      <div class="ibeam-web"><span class="crane-beam-text">REQUIRED</span></div>
+      <div class="ibeam-flange ibeam-flange-bottom"></div>
+    </div>
+  </div>
 </div>
 
 <!-- FIXED SEARCH BAR -->
@@ -2065,7 +2219,7 @@ body {
       <div class="safety-content-inner">
         <p class="safety-info">ASSEMBLY REQUIRED is an assemblage of 69 works by VCUarts BFA Graphic Design students, Class of 2026. The exhibition joins these projects within a shared structural system. Each unit occupies a distinct position while contributing to a larger collective framework.</p>
         <div class="safety-spacer"></div>
-        <p class="safety-colophon">Assembled, welded, and bolted into place by Dea Flynn, Eunice Park, Hailey Jo, Kristen Koh, Leya Muwakki, Matt Christian, Megan Shaw, Milena Paul, Ray Burnette, Rusty Johnson, and Sal Scarpa-Friedman.<br><br>The build was supervised by Herdimas Anggara.</p>
+        <p class="safety-colophon">Assembled, welded, and bolted into place by Delia Flynn, Eunice Park, Hailey Jo, Kristen Koh, Leya Muwakki, Matt Christian, Megan Shaw, Milena Paul, Ray Burnette, Rusty Johnson, and Sal Scarpa-Friedman.<br><br>The build was supervised by Herdimas Anggara.</p>
       </div>
     </div>
     <div class="safety-stripe"></div>
@@ -2199,7 +2353,6 @@ body {
   function doSearch() {
     const query = searchInput.value.trim().toLowerCase();
 
-    // Clear previous highlights
     wrapper.classList.remove('search-active');
     document.querySelectorAll('.cell.search-match-cell').forEach(c => c.classList.remove('search-match-cell'));
 
@@ -2211,7 +2364,6 @@ body {
       return;
     }
 
-    // Find matching students
     searchMatches = [];
     students.forEach((s, idx) => {
       if (s.name.toLowerCase().includes(query) || s.projectTitle.toLowerCase().includes(query)) {
@@ -2226,7 +2378,6 @@ body {
       return;
     }
 
-    // Highlight matching cells in grid
     wrapper.classList.add('search-active');
     const realCells = Array.from(wrapper.querySelectorAll('.cell:not(.spacer)'));
     searchMatches.forEach(idx => {
@@ -2235,7 +2386,6 @@ body {
       }
     });
 
-    // Build dropdown (show up to 10)
     const shown = searchMatches.slice(0, 10);
     searchDropdown.innerHTML = shown.map((idx, i) => {
       const s = students[idx];
@@ -2248,7 +2398,6 @@ body {
     if (searchSelectedIndex < 0) searchSelectedIndex = 0;
     updateDropdownSelection();
 
-    // Click handlers on items
     searchDropdown.querySelectorAll('.search-dropdown-item[data-idx]').forEach(item => {
       item.addEventListener('click', () => {
         const idx = parseInt(item.dataset.idx);
@@ -2272,7 +2421,6 @@ body {
 
   function goToStudent(idx) {
     const driveType = screwTypes[idx % screwTypes.length];
-    // Clear search state
     searchInput.value = '';
     wrapper.classList.remove('search-active');
     document.querySelectorAll('.cell.search-match-cell').forEach(c => c.classList.remove('search-match-cell'));
@@ -2280,7 +2428,6 @@ body {
     searchDropdown.innerHTML = '';
     searchMatches = [];
     searchSelectedIndex = -1;
-    // Open detail
     openDetail(idx, driveType);
   }
 
@@ -2322,14 +2469,12 @@ body {
     }
   });
 
-  // Close dropdown when clicking outside
   document.addEventListener('click', (e) => {
     if (!e.target.closest('#searchBlueprint')) {
       searchDropdown.classList.remove('visible');
     }
   });
 
-  // Re-show dropdown on focus if there's a query
   searchInput.addEventListener('focus', () => {
     if (searchInput.value.trim()) doSearch();
   });
@@ -2351,104 +2496,55 @@ body {
 
     if (isMobile) {
       html += bH;
-
       html += `<div class="detail-mobile-row">`;
       html += bV;
-      html += `<div class="detail-mobile-cell name-cell">
-        <div class="student-name">${student.name}</div>
-      </div>`;
+      html += `<div class="detail-mobile-cell name-cell"><div class="student-name">${student.name}</div></div>`;
       html += bV;
-      html += `<div class="detail-mobile-cell project-cell">
-        <div class="project-title">${student.projectTitle}</div>
-      </div>`;
+      html += `<div class="detail-mobile-cell project-cell"><div class="project-title">${student.projectTitle}</div></div>`;
       html += bV;
       html += `</div>`;
-
       html += bH;
-
       html += `<div class="detail-mobile-row image-row">`;
       html += bV;
-      html += `<div class="detail-mobile-cell image-cell">
-        <img id="detailImg" src="${student.images[0]}" alt="Project image 1">
-      </div>`;
+      html += `<div class="detail-mobile-cell image-cell"><img id="detailImg" src="${student.images[0]}" alt="Project image 1"></div>`;
       html += bV;
       html += `<div class="detail-nav-screw prev-screw" id="imgPrev"></div>`;
       html += `<div class="detail-nav-screw next-screw" id="imgNext"></div>`;
       html += `</div>`;
-
       html += bH;
-
       html += `<div class="detail-mobile-row">`;
       html += bV;
       html += `<div class="detail-mobile-cell desc-cell"><p>${student.descriptionShort}</p></div>`;
       html += bV;
       html += `</div>`;
-
       html += bH;
-
       html += `<div class="detail-mobile-row">`;
       html += bV;
-      html += `<div class="detail-mobile-cell link-cell">
-        <a href="${student.links[0].url}" target="_blank">${student.links[0].label}</a>
-      </div>`;
+      html += `<div class="detail-mobile-cell link-cell"><a href="${student.links[0].url}" target="_blank">${student.links[0].label}</a></div>`;
       html += bV;
-      html += `<div class="detail-mobile-cell link-cell">
-        <a href="${student.links[1].url}" target="_blank">${student.links[1].label}</a>
-      </div>`;
+      html += `<div class="detail-mobile-cell link-cell"><a href="${student.links[1].url}" target="_blank">${student.links[1].label}</a></div>`;
       html += bV;
       html += `</div>`;
-
       html += bH;
-
     } else {
       html += bH;
-
       html += `<div class="detail-top-row">`;
       html += bV;
-      html += `<div class="detail-image-area">
-        <img id="detailImg" src="${student.images[0]}" alt="Project image 1">
-      </div>`;
+      html += `<div class="detail-image-area"><img id="detailImg" src="${student.images[0]}" alt="Project image 1"></div>`;
       html += bV;
       html += `<div class="detail-nav-screw prev-screw" id="imgPrev"></div>`;
       html += `<div class="detail-nav-screw next-screw" id="imgNext"></div>`;
       html += `</div>`;
-
       html += bH;
-
       html += `<div class="detail-bottom-row">`;
       html += bV;
-      html += `
-        <div class="detail-split">
-          <div class="detail-info-cell name-cell">
-            <div class="student-name">${student.name}</div>
-          </div>
-          ${bH}
-          <div class="detail-info-cell project-cell">
-            <div class="project-title">${student.projectTitle}</div>
-          </div>
-        </div>
-      `;
+      html += `<div class="detail-split"><div class="detail-info-cell name-cell"><div class="student-name">${student.name}</div></div>${bH}<div class="detail-info-cell project-cell"><div class="project-title">${student.projectTitle}</div></div></div>`;
       html += bV;
-      html += `
-        <div class="detail-info-cell desc-cell">
-          <p>${student.description}</p>
-        </div>
-      `;
+      html += `<div class="detail-info-cell desc-cell"><p>${student.description}</p></div>`;
       html += bV;
-      html += `
-        <div class="detail-split">
-          <div class="detail-info-cell link-cell">
-            <a href="${student.links[0].url}" target="_blank">${student.links[0].label}</a>
-          </div>
-          ${bH}
-          <div class="detail-info-cell link-cell">
-            <a href="${student.links[1].url}" target="_blank">${student.links[1].label}</a>
-          </div>
-        </div>
-      `;
+      html += `<div class="detail-split"><div class="detail-info-cell link-cell"><a href="${student.links[0].url}" target="_blank">${student.links[0].label}</a></div>${bH}<div class="detail-info-cell link-cell"><a href="${student.links[1].url}" target="_blank">${student.links[1].label}</a></div></div>`;
       html += bV;
       html += `</div>`;
-
       html += bH;
     }
 
@@ -2503,21 +2599,13 @@ body {
       const hBeams = frame.querySelectorAll('.detail-beam-h');
       const hInfos = Array.from(hBeams).map(hb => {
         const r = hb.getBoundingClientRect();
-        return {
-          y: r.top + r.height / 2 - frameRect.top,
-          left: r.left - frameRect.left,
-          right: r.right - frameRect.left
-        };
+        return { y: r.top + r.height / 2 - frameRect.top, left: r.left - frameRect.left, right: r.right - frameRect.left };
       });
 
       const vBeams = frame.querySelectorAll('.detail-beam-v');
       const vInfos = Array.from(vBeams).map(vb => {
         const r = vb.getBoundingClientRect();
-        return {
-          x: r.left + r.width / 2 - frameRect.left,
-          top: r.top - frameRect.top,
-          bottom: r.bottom - frameRect.top
-        };
+        return { x: r.left + r.width / 2 - frameRect.left, top: r.top - frameRect.top, bottom: r.bottom - frameRect.top };
       });
 
       const placed = new Set();
@@ -2537,41 +2625,28 @@ body {
     });
 
     frame.addEventListener('mouseover', (e) => {
-      if (e.target.classList.contains('detail-screw')) {
-        frame.classList.add('screws-hover');
-      }
+      if (e.target.classList.contains('detail-screw')) frame.classList.add('screws-hover');
     });
-
     frame.addEventListener('mouseout', (e) => {
-      if (e.target.classList.contains('detail-screw')) {
-        frame.classList.remove('screws-hover');
-      }
+      if (e.target.classList.contains('detail-screw')) frame.classList.remove('screws-hover');
     });
-
     frame.addEventListener('mousedown', (e) => {
-      if (e.target.classList.contains('detail-screw')) {
-        frame.classList.add('screws-active');
-      }
+      if (e.target.classList.contains('detail-screw')) frame.classList.add('screws-active');
     });
-
     frame.addEventListener('mouseup', (e) => {
       if (e.target.classList.contains('detail-screw')) {
         frame.classList.remove('screws-active');
         closeDetail();
       }
     });
-
     frame.addEventListener('touchstart', (e) => {
       if (e.target.classList.contains('detail-screw')) {
         frame.classList.add('screws-hover');
         frame.classList.add('screws-active');
       }
     }, { passive: true });
-
     frame.addEventListener('touchend', (e) => {
-      if (e.target.classList.contains('detail-screw')) {
-        closeDetail();
-      }
+      if (e.target.classList.contains('detail-screw')) closeDetail();
     });
   }
 
@@ -2586,9 +2661,7 @@ body {
   let currentDetailDrive = null;
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && detailOverlay.classList.contains('active')) {
-      closeDetail();
-    }
+    if (e.key === 'Escape' && detailOverlay.classList.contains('active')) closeDetail();
   });
 
   /* ================= FILTER SYSTEM ================= */
@@ -2598,29 +2671,21 @@ body {
       const btn = document.createElement('div');
       btn.className = 'filter-btn';
       btn.setAttribute('data-drive', type);
-
       btn.addEventListener('click', () => {
         btn.classList.toggle('active');
         updateFilters();
       });
-
       filterLeft.appendChild(btn);
     });
   }
 
   function updateFilters() {
-    activeFilters = Array.from(
-      document.querySelectorAll('.filter-btn.active')
-    ).map(btn => btn.dataset.drive);
-
+    activeFilters = Array.from(document.querySelectorAll('.filter-btn.active')).map(btn => btn.dataset.drive);
     const filtering = activeFilters.length > 0;
     wrapper.classList.toggle('filtering', filtering);
-
     document.querySelectorAll('.cell').forEach(cell => {
       cell.classList.remove('match');
-
       if (!filtering) return;
-
       const match = activeFilters.includes(cell.dataset.drive);
       if (match) cell.classList.add('match');
     });
@@ -2631,15 +2696,12 @@ body {
   function layoutGrid() {
     const isMobile = window.innerWidth <= 768;
     const columns = isMobile ? 3 : 6;
-
     const sideGap = 32;
     const pulleyGap = isMobile ? 0 : 24;
     const containerWidth = Math.min(window.innerWidth, 1000);
     const availableWidth = containerWidth - sideGap - sideGap - pulleyGap;
     const cellSize = Math.floor(availableWidth / columns);
-
     wrapper.style.gridTemplateColumns = `repeat(${columns}, ${cellSize}px)`;
-
     document.querySelectorAll('.cell').forEach(cell => {
       cell.style.width = cellSize + "px";
       cell.style.height = cellSize + "px";
@@ -2650,10 +2712,7 @@ body {
 
   function fillGrid() {
     wrapper.innerHTML = "";
-
-    if (!assembled) {
-      wrapper.classList.add('unassembled');
-    }
+    if (!assembled) wrapper.classList.add('unassembled');
 
     const isMobile = window.innerWidth <= 768;
     const columns = isMobile ? 3 : 6;
@@ -2672,11 +2731,9 @@ body {
     for (let i = 1; i <= MIN_CELLS; i++) {
       const driveType = screwTypes[(i - 1) % screwTypes.length];
       const palette = palettes[i % palettes.length];
-
       const cell = document.createElement('div');
       cell.className = 'cell';
       cell.setAttribute("data-drive", driveType);
-
       cell.innerHTML = `
         <div class="beam-top"></div>
         <div class="beam-bottom"></div>
@@ -2686,10 +2743,8 @@ body {
         <div class="screw-left"></div>
         <div class="screw-right"></div>
       `;
-
       cell.style.cursor = 'pointer';
       cell.addEventListener('click', () => openDetail(i - 1, driveType));
-
       wrapper.appendChild(cell);
     }
 
@@ -2705,31 +2760,25 @@ body {
 
   function generateMeshPattern(size) {
     if (size === cachedMeshSize && cachedMeshPattern) return cachedMeshPattern;
-
     const canvas = document.createElement('canvas');
     const dpr = window.devicePixelRatio || 1;
     canvas.width = size * dpr;
     canvas.height = size * dpr;
     const ctx = canvas.getContext('2d');
     ctx.scale(dpr, dpr);
-
     const padding = 20;
     const gap = 6;
     const cols = 4;
     const rows = 6;
     const radius = 10;
-
-    ctx.fillStyle = 'rgba(240, 83, 35, 0.75)';
+    ctx.fillStyle = 'rgba(254, 80, 0, 0.75)';
     ctx.fillRect(0, 0, size, size);
-
     ctx.globalCompositeOperation = 'destination-out';
     ctx.fillStyle = 'rgba(0, 0, 0, 1)';
-
     const innerW = size - padding * 2;
     const innerH = size - padding * 2;
     const holeW = (innerW - gap * (cols - 1)) / cols;
     const holeH = (innerH - gap * (rows - 1)) / rows;
-
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
         const x = padding + c * (holeW + gap);
@@ -2739,7 +2788,6 @@ body {
         ctx.fill();
       }
     }
-
     cachedMeshPattern = canvas.toDataURL();
     cachedMeshSize = size;
     return cachedMeshPattern;
@@ -2769,7 +2817,6 @@ body {
   infoBtn.addEventListener('click', () => {
     infoOpen = !infoOpen;
     infoBtn.classList.toggle('active', infoOpen);
-
     if (infoOpen) {
       safetyOverlay.classList.add('active');
       window.addEventListener('wheel', preventInfoScroll, { passive: false });
@@ -2783,14 +2830,9 @@ body {
     }
   });
 
-  function preventInfoScroll(e) {
-    e.preventDefault();
-  }
-
+  function preventInfoScroll(e) { e.preventDefault(); }
   function preventInfoKeyScroll(e) {
-    if ([32, 33, 34, 35, 36, 38, 40].includes(e.keyCode)) {
-      e.preventDefault();
-    }
+    if ([32, 33, 34, 35, 36, 38, 40].includes(e.keyCode)) e.preventDefault();
   }
 
   /* ================= INIT ================= */
@@ -2799,6 +2841,7 @@ body {
   const assemblyBtn = document.getElementById('assemblyBtn');
   const assemblyScrewEl = assemblyBtn.querySelector('.assembly-screw');
   const filterBar = document.querySelector('.filter-bar');
+  const landingBeams = document.getElementById('landingBeams');
 
   assemblyScrewEl.addEventListener('click', () => {
     assembled = true;
@@ -2807,7 +2850,6 @@ body {
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
 
     const blueTarp = document.getElementById('blueTarp');
-
     const isMobile = window.innerWidth <= 768;
     const columns = isMobile ? 3 : 6;
 
@@ -2821,7 +2863,6 @@ body {
     }
 
     blueTarp.style.clipPath = 'inset(0 0 0 0)';
-
     rows.reverse();
 
     const animGroups = [];
@@ -2836,7 +2877,6 @@ body {
     }
 
     realCells.forEach(cell => cell.classList.add('assembling'));
-
     wrapper.classList.remove('unassembled');
 
     const ROW_DELAY = 200;
@@ -2848,35 +2888,59 @@ body {
           cell.classList.remove('assembling');
           cell.classList.add('assembled-reveal');
         });
-
         const revealPercent = ((groupIndex + 1) / totalGroups) * 100;
         blueTarp.style.clipPath = `inset(0 0 ${revealPercent}% 0)`;
-
       }, groupIndex * ROW_DELAY);
     });
 
+    // Animate landing beams to crane position (desktop only)
+    if (!isMobile && landingBeams) {
+      // Phase 1: lift up
+      landingBeams.classList.add('phase-up');
+
+      // Phase 2: swing left after lift completes
+      setTimeout(() => {
+        landingBeams.classList.remove('phase-up');
+        // Lock the lifted position inline before switching phase
+        const asmGroup = landingBeams.querySelector('.landing-beam-assembly');
+        const reqGroup = landingBeams.querySelector('.landing-beam-required');
+        asmGroup.style.bottom = 'calc(100vh - 44px - 58px)';
+        reqGroup.style.bottom = 'calc(100vh - 76px - 58px)';
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            landingBeams.classList.add('phase-left');
+          });
+        });
+      }, 1600);
+    }
+
     const totalTime = totalGroups * ROW_DELAY + 300;
+    const beamAnimTime = isMobile ? 0 : 2800; // 1.6s lift + 1.1s swing + buffer
+    const revealTime = Math.max(totalTime, beamAnimTime);
     setTimeout(() => {
       blueTarp.classList.add('hidden');
       filterBar.classList.remove('unassembled');
       pulley.classList.remove('unassembled');
       document.getElementById('crane').classList.add('visible');
       document.getElementById('searchBlueprint').classList.remove('unassembled');
+
+      // Hide landing beams, show real crane
+      if (landingBeams) landingBeams.classList.add('done');
+
       window.removeEventListener('wheel', preventScroll);
       window.removeEventListener('touchmove', preventScroll);
       window.removeEventListener('keydown', preventKeyScroll);
       updatePulley();
       positionSearchBar();
-    }, totalTime);
+    }, revealTime);
   });
 
   function positionSearchBar() {
     const sb = document.getElementById('searchBlueprint');
     if (!sb || sb.classList.contains('unassembled')) return;
-
     const isMobile = window.innerWidth <= 768;
     const gap = isMobile ? 12 : 24;
-
     const rightRect = document.querySelector('.filter-right').getBoundingClientRect();
     const viewH = window.innerHeight;
 
@@ -2900,7 +2964,6 @@ body {
   function positionTarp() {
     const blueTarp = document.getElementById('blueTarp');
     if (!blueTarp || assembled) return;
-
     const isMobile = window.innerWidth <= 768;
     const columns = isMobile ? 3 : 6;
     const allCells = Array.from(wrapper.querySelectorAll('.cell'));
@@ -2909,21 +2972,17 @@ body {
       const rowCells = allCells.slice(i, i + columns).filter(c => !c.classList.contains('spacer'));
       if (rowCells.length > 0) rows.push(rowCells);
     }
-
     if (rows.length < 4) return;
-
     const wrapperTop = wrapper.offsetTop;
     const tarpEndRowIndex = rows.length - 3;
     const tarpEndCell = rows[tarpEndRowIndex][0];
     const tarpBottomY = tarpEndCell.offsetTop + tarpEndCell.offsetHeight / 2 + wrapperTop;
-
     let tarpTopY;
     if (isMobile) {
       tarpTopY = Math.max(wrapperTop, tarpBottomY - window.innerHeight * 0.55);
     } else {
       tarpTopY = wrapperTop;
     }
-
     const containerHeight = wrapper.parentElement.offsetHeight;
     blueTarp.style.top = tarpTopY + 'px';
     blueTarp.style.bottom = (containerHeight - tarpBottomY) + 'px';
@@ -2957,11 +3016,9 @@ body {
     if (e.target.closest('.detail-overlay') || e.target.closest('.safety-overlay')) return;
     e.preventDefault();
   }
-  
+
   function preventKeyScroll(e) {
-    if (!assembled && [32, 33, 34, 35, 36, 38, 40].includes(e.keyCode)) {
-      e.preventDefault();
-    }
+    if (!assembled && [32, 33, 34, 35, 36, 38, 40].includes(e.keyCode)) e.preventDefault();
   }
 
   window.addEventListener('wheel', preventScroll, { passive: false });
@@ -3003,19 +3060,12 @@ body {
     const scrollH = document.documentElement.scrollHeight;
     const viewH = window.innerHeight;
     const maxScroll = scrollH - viewH;
-
-    if (maxScroll <= 0) {
-      pulley.classList.add('hidden');
-      return;
-    }
+    if (maxScroll <= 0) { pulley.classList.add('hidden'); return; }
     pulley.classList.remove('hidden');
-
     const scrollFraction = window.scrollY / maxScroll;
     const trackH = getTrackHeight();
     const carriageY = TRACK_TOP + scrollFraction * trackH;
-
     carriage.style.top = carriageY + 'px';
-
     const totalRotation = scrollFraction * 720;
     wheelTop.style.transform = `rotate(${totalRotation}deg)`;
     wheelBottom.style.transform = `rotate(${totalRotation}deg)`;
@@ -3053,9 +3103,7 @@ body {
     document.body.style.userSelect = '';
   });
 
-  window.addEventListener('touchend', () => {
-    dragging = false;
-  });
+  window.addEventListener('touchend', () => { dragging = false; });
 
   function handleDrag(clientY) {
     if (infoOpen) return;
@@ -3064,7 +3112,6 @@ body {
     const scrollH = document.documentElement.scrollHeight;
     const viewH = window.innerHeight;
     const maxScroll = scrollH - viewH;
-
     const scrollDelta = (deltaY / trackH) * maxScroll;
     window.scrollTo({ top: dragStartScroll + scrollDelta, behavior: 'instant' });
   }
@@ -3072,16 +3119,13 @@ body {
   pulley.addEventListener('click', (e) => {
     if (infoOpen) return;
     if (e.target === carriage || carriage.contains(e.target)) return;
-
     const rect = pulley.getBoundingClientRect();
     const clickY = e.clientY - rect.top;
     const trackH = getTrackHeight();
     const fraction = Math.max(0, Math.min(1, (clickY - TRACK_TOP) / trackH));
-
     const scrollH = document.documentElement.scrollHeight;
     const viewH = window.innerHeight;
     const maxScroll = scrollH - viewH;
-
     window.scrollTo({ top: fraction * maxScroll, behavior: 'smooth' });
   });
 
