@@ -7,13 +7,22 @@
 <link rel="icon" type="image/png" href="favicon.png">
 
 <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.typekit.net/tmj5izb.css">
+<link rel="stylesheet" href="https://use.typekit.net/lwh4htq.css">
 
 <style>
+@font-face {
+  font-family: 'AssemblyRequired';
+  src: url('AssemblyRequired-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
 :root {
-  --bg: #000000;
-  --tube-light: #f2f2f2;
-  --tube-mid: #c7ccd1;
-  --tube-dark: #8f969d;
+  --bg: #F05323;
+  --tube-light: #c2d7fc;
+  --tube-mid: #4b77c4;
+  --tube-dark: #004ccb;
   --beam: 10px;
   --side-gap: 32px;
   --pulley-gap: 24px;
@@ -42,10 +51,48 @@
   cursor: var(--cursor-pointer) !important;
 }
 
+/* ================= BACKGROUNDS ================= */
+
+html, body {
+  background: var(--bg);
+}
+
+.cell {
+  background: linear-gradient(to top, #c2d7fc, var(--orange));
+}
+
+#loader {
+  background: var(--bg);
+}
+
+.detail-overlay,
+.detail-image-area {
+  background: var(--orange);
+}
+
+.detail-info-cell,
+.detail-mobile-cell {
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 6px,
+      rgba(255,255,255,0.05) 6px,
+      rgba(255,255,255,0.05) 7px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 6px,
+      rgba(255,255,255,0.05) 6px,
+      rgba(255,255,255,0.05) 7px
+    ),
+    rgba(0, 60, 130, 0.95);
+}
+
 html, body {
   margin: 0;
   padding: 0;
-  background: var(--bg);
   font-family: 'Work Sans', sans-serif;
   letter-spacing: -0.6px;
   text-shadow: 0 0 0.5px currentColor, 0 0 0.5px currentColor;
@@ -101,6 +148,7 @@ body {
 .bottom-bar {
   display: grid;
   grid-template: 1fr / 1fr;
+  overflow: visible;
 }
 
 .bottom-bar > * {
@@ -122,20 +170,22 @@ body {
   gap: clamp(8px, 3vw, 2px);
 }
 
+/* ---- REVISION 2: White buttons ---- */
+
 .filter-btn {
   width: clamp(44px, 6vw, 64px);
   height: clamp(44px, 6vw, 64px);
   border-radius: 50%;
   position: relative;
   cursor: pointer;
-  border: var(--filter-stroke) solid var(--orange);
-  background: transparent;
+  border: var(--filter-stroke) solid #ffffff;
+  background: #ffffff;
 }
 
 .filter-btn:hover,
 .filter-btn.active {
-  background: var(--btn-color);
-  border-color: var(--btn-color);
+  background: var(--bg);
+  border-color: #ffffff;
 }
 
 .filter-btn::after,
@@ -145,26 +195,22 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: var(--btn-color);
+  background: var(--bg);
 }
 
 .filter-btn:hover::after,
 .filter-btn.active::after,
 .filter-btn:hover::before,
 .filter-btn.active::before {
-  background: var(--bg);
+  background: #ffffff;
 }
 
 /* ================= SCREW DRIVE ICONS ================= */
-
-/* SLOTTED */
 
 .filter-btn[data-drive="slotted"]::after {
   width: 60%;
   height: var(--filter-stroke);
 }
-
-/* CROSS */
 
 .filter-btn[data-drive="cross"]::after {
   width: 60%;
@@ -175,14 +221,10 @@ body {
   height: 60%;
 }
 
-/* ROBERTSON */
-
 .filter-btn[data-drive="robertson"]::after {
   width: 30%;
   height: 30%;
 }
-
-/* HEX */
 
 .filter-btn[data-drive="hex"]::after {
   width: 42%;
@@ -194,22 +236,20 @@ body {
   );
 }
 
-/* SPANNER */
-
 .filter-btn[data-drive="spanner"]::after {
   width: 60%;
   height: 60%;
   background:
-    radial-gradient(circle at 18% 50%, var(--btn-color) 18%, transparent 19%),
-    radial-gradient(circle at 82% 50%, var(--btn-color) 18%, transparent 19%);
+    radial-gradient(circle at 18% 50%, var(--bg) 18%, transparent 19%),
+    radial-gradient(circle at 82% 50%, var(--bg) 18%, transparent 19%);
   background-repeat: no-repeat;
 }
 
 .filter-btn[data-drive="spanner"]:hover::after,
 .filter-btn[data-drive="spanner"].active::after {
   background:
-    radial-gradient(circle at 18% 50%, var(--bg) 18%, transparent 19%),
-    radial-gradient(circle at 82% 50%, var(--bg) 18%, transparent 19%);
+    radial-gradient(circle at 18% 50%, #ffffff 18%, transparent 19%),
+    radial-gradient(circle at 82% 50%, #ffffff 18%, transparent 19%);
 }
 
 /* ================= RIGHT BUTTONS ================= */
@@ -218,10 +258,10 @@ body {
   width: clamp(70px, 8vw, 100px);
   height: clamp(44px, 6vw, 64px);
   border-radius: 14px;
-  border: var(--filter-stroke) solid var(--orange);
+  border: var(--filter-stroke) solid #ffffff;
   cursor: pointer;
   position: relative;
-  background: transparent;
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -233,27 +273,6 @@ body {
   width: 75%;
   height: 75%;
   background:
-    /* VERTICAL BARS */
-    linear-gradient(var(--btn-color), var(--btn-color)) 20% 0 / 2px 100% no-repeat,
-    linear-gradient(var(--btn-color), var(--btn-color)) 40% 0 / 2px 100% no-repeat,
-    linear-gradient(var(--btn-color), var(--btn-color)) 60% 0 / 2px 100% no-repeat,
-    linear-gradient(var(--btn-color), var(--btn-color)) 80% 0 / 2px 100% no-repeat,
-    /* HORIZONTAL BARS */
-    linear-gradient(var(--btn-color), var(--btn-color)) 0 20% / 100% 2px no-repeat,
-    linear-gradient(var(--btn-color), var(--btn-color)) 0 40% / 100% 2px no-repeat,
-    linear-gradient(var(--btn-color), var(--btn-color)) 0 60% / 100% 2px no-repeat,
-    linear-gradient(var(--btn-color), var(--btn-color)) 0 80% / 100% 2px no-repeat;
-}
-
-.mesh-toggle:hover,
-.mesh-toggle.active {
-  background: var(--btn-color);
-  border-color: var(--btn-color);
-}
-
-.mesh-toggle:hover::before,
-.mesh-toggle.active::before {
-  background:
     linear-gradient(var(--bg), var(--bg)) 20% 0 / 2px 100% no-repeat,
     linear-gradient(var(--bg), var(--bg)) 40% 0 / 2px 100% no-repeat,
     linear-gradient(var(--bg), var(--bg)) 60% 0 / 2px 100% no-repeat,
@@ -264,13 +283,32 @@ body {
     linear-gradient(var(--bg), var(--bg)) 0 80% / 100% 2px no-repeat;
 }
 
+.mesh-toggle:hover,
+.mesh-toggle.active {
+  background: var(--bg);
+  border-color: #ffffff;
+}
+
+.mesh-toggle:hover::before,
+.mesh-toggle.active::before {
+  background:
+    linear-gradient(#ffffff, #ffffff) 20% 0 / 2px 100% no-repeat,
+    linear-gradient(#ffffff, #ffffff) 40% 0 / 2px 100% no-repeat,
+    linear-gradient(#ffffff, #ffffff) 60% 0 / 2px 100% no-repeat,
+    linear-gradient(#ffffff, #ffffff) 80% 0 / 2px 100% no-repeat,
+    linear-gradient(#ffffff, #ffffff) 0 20% / 100% 2px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 0 40% / 100% 2px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 0 60% / 100% 2px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 0 80% / 100% 2px no-repeat;
+}
+
 .info-btn {
   width: clamp(44px, 6vw, 64px);
   height: clamp(44px, 6vw, 64px);
   border-radius: 50%;
-  border: var(--filter-stroke) solid var(--orange);
-  background: transparent;
-  color: var(--btn-color);
+  border: var(--filter-stroke) solid #ffffff;
+  background: #ffffff;
+  color: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -283,14 +321,201 @@ body {
 
 .info-btn:hover,
 .info-btn.active {
-  background: var(--btn-color);
-  border-color: var(--btn-color);
-  color: var(--bg);
+  background: var(--bg);
+  border-color: #ffffff;
+  color: #ffffff;
 }
 
 .info-btn.active {
   z-index: 301;
   position: relative;
+}
+
+/* ================= BLUEPRINT SEARCH BAR ================= */
+
+.search-blueprint {
+  position: fixed;
+  bottom: 0;
+  z-index: 60;
+  display: flex;
+  align-items: flex-start;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 6px,
+      rgba(255,255,255,0.06) 6px,
+      rgba(255,255,255,0.06) 7px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 6px,
+      rgba(255,255,255,0.06) 6px,
+      rgba(255,255,255,0.06) 7px
+    ),
+    rgba(0, 60, 130, 0.95);
+  border-top: var(--filter-stroke) solid rgba(100, 170, 255, 0.4);
+  border-left: var(--filter-stroke) solid rgba(100, 170, 255, 0.4);
+  border-right: var(--filter-stroke) solid rgba(100, 170, 255, 0.4);
+  border-bottom: none;
+  border-radius: 0;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.25);
+}
+
+.search-blueprint.unassembled {
+  display: none;
+}
+
+.search-blueprint-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: rgba(255,255,255,0.9);
+  font-family: 'tekton-pro-extended', 'Work Sans', sans-serif;
+  font-size: clamp(14px, 1.8vw, 20px);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 0 12px;
+  height: clamp(44px, 6vw, 64px);
+  caret-color: rgba(255,255,255,0.7);
+}
+
+.search-blueprint-input::placeholder {
+  color: rgba(255,255,255,0.35);
+  font-style: normal;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  font-family: 'tekton-pro-extended', 'Work Sans', sans-serif;
+}
+
+.search-blueprint-btn {
+  width: clamp(36px, 5vw, 52px);
+  height: clamp(44px, 6vw, 64px);
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: var(--cursor-pointer) !important;
+  padding: 0;
+}
+
+.search-blueprint-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: rgba(255,255,255,0.6);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.search-blueprint-btn:hover svg {
+  stroke: #ffffff;
+}
+
+/* Dropdown results */
+.search-dropdown {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: -1px;
+  right: -1px;
+  max-height: 200px;
+  overflow-y: auto;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 6px,
+      rgba(255,255,255,0.04) 6px,
+      rgba(255,255,255,0.04) 7px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 6px,
+      rgba(255,255,255,0.04) 6px,
+      rgba(255,255,255,0.04) 7px
+    ),
+    rgba(0, 50, 110, 0.97);
+  border: var(--filter-stroke) solid rgba(100, 170, 255, 0.4);
+  border-bottom: none;
+  border-radius: 0;
+  z-index: 10;
+  scrollbar-width: none;
+}
+
+.search-dropdown.visible {
+  display: block;
+}
+
+.search-dropdown-item {
+  padding: 8px 12px;
+  color: rgba(255,255,255,0.8);
+  font-family: 'tekton-pro-extended', 'Work Sans', sans-serif;
+  font-size: clamp(11px, 1.2vw, 14px);
+  text-transform: uppercase;
+  cursor: var(--cursor-pointer) !important;
+  letter-spacing: 0.2px;
+  border-bottom: 1px solid rgba(100, 170, 255, 0.12);
+}
+
+.search-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.search-dropdown-item:hover,
+.search-dropdown-item.selected {
+  background: rgba(100, 170, 255, 0.15);
+  color: #ffffff;
+}
+
+.search-dropdown-item .search-match {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Search-active cell highlighting — mesh only, no dimming */
+.wrapper.search-active .cell.search-match-cell .cell-image {
+  opacity: 1;
+}
+
+.wrapper.search-active .cell.search-match-cell .mesh {
+  opacity: 1;
+}
+
+.wrapper.search-active .cell.search-match-cell .screw-left,
+.wrapper.search-active .cell.search-match-cell .screw-right {
+  display: none;
+}
+
+/* ================= MOBILE SEARCH ================= */
+
+@media (max-width: 768px) {
+  .search-blueprint-input {
+    font-size: 13px;
+    padding: 0 8px;
+    height: 30px;
+  }
+
+  .search-blueprint-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .search-blueprint-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .search-dropdown-item {
+    padding: 8px;
+    font-size: 12px;
+  }
 }
 
 /* ================= GRID ================= */
@@ -299,6 +524,7 @@ body {
   width: 100%;
   padding-left: var(--side-gap);
   padding-right: calc(var(--side-gap) + var(--pulley-gap));
+  padding-top: 12px;
   display: grid;
   gap: 0;
   position: relative;
@@ -307,32 +533,264 @@ body {
 
 .cell {
   position: relative;
-  background: #000000;
   overflow: hidden;
+  transition: opacity 0.2s;
+}
+
+.grid-title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 12px 16px;
+  font-family: 'AssemblyRequired', 'Work Sans', sans-serif;
+  font-weight: 400;
+  font-size: clamp(50px, 5.8vw, 70px);
+  color: #ffffff;
+  text-transform: uppercase;
+  line-height: 0.88;
+  letter-spacing: 5px;
+  user-select: none;
+  overflow: hidden;
+}
+
+.grid-title span {
+  margin-right: -5px;
+}
+
+/* ================= JIB CRANE BEAMS ================= */
+
+.crane {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--max-width);
+  height: 160px;
+  z-index: 50;
+  pointer-events: none;
+  display: none;
+}
+
+.crane.visible {
+  display: block;
+}
+
+.crane-group {
+  position: absolute;
+  top: 0;
+  width: clamp(240px, 28vw, 340px);
+}
+
+.crane-group-top {
+  left: var(--side-gap);
+  z-index: 2;
+}
+
+.crane-group-bottom {
+  left: calc(var(--side-gap) + 50px);
+  z-index: 1;
+}
+
+.crane-chain {
+  position: absolute;
+  top: 0;
+  width: 14px;
+  transform: translateX(-50%);
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Crect x='2' y='0' width='10' height='11' rx='5' fill='none' stroke='%23888' stroke-width='2'/%3E%3Crect x='4' y='7' width='6' height='7' rx='3' fill='none' stroke='%23aaa' stroke-width='1.5'/%3E%3C/svg%3E")
+    repeat-y center top;
+  background-size: 14px 12px;
+}
+
+.crane-group-top .crane-chain { height: 14px; }
+.crane-group-top .crane-chain-left { left: 18%; }
+.crane-group-top .crane-chain-right { left: 82%; }
+
+.crane-group-bottom .crane-chain { height: 46px; }
+.crane-group-bottom .crane-chain-left { left: 18%; }
+.crane-group-bottom .crane-chain-right { left: 82%; }
+
+.crane-hook {
+  position: absolute;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 24px;
+  z-index: 2;
+}
+
+.crane-group-top .crane-hook { top: 12px; }
+.crane-group-top .crane-hook-left { left: 18%; }
+.crane-group-top .crane-hook-right { left: 82%; }
+
+.crane-group-bottom .crane-hook { top: 44px; }
+.crane-group-bottom .crane-hook-left { left: 18%; }
+.crane-group-bottom .crane-hook-right { left: 82%; }
+
+.crane-latch {
+  position: absolute;
+  width: 14px;
+  height: 10px;
+  background: transparent;
+  border: 2.5px solid #111;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  z-index: 3;
+  transform: translateX(-50%);
+}
+
+.crane-group-top .crane-latch { top: 35px; }
+.crane-group-bottom .crane-latch { top: 67px; }
+.crane-latch-left { left: 18%; }
+.crane-latch-right { left: 82%; }
+
+.crane-ibeam {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  z-index: 4;
+}
+
+.crane-group-top .crane-ibeam { top: 44px; }
+.crane-group-bottom .crane-ibeam { top: 76px; }
+
+.ibeam-flange {
+  height: 10px;
+  background: linear-gradient(
+    to bottom,
+    #d0d0d0 0%,
+    #e8e8e8 30%,
+    #f0f0f0 50%,
+    #d8d8d8 70%,
+    #b0b0b0 100%
+  );
+  position: relative;
+}
+
+.ibeam-flange-top {
+  border-radius: 2px 2px 0 0;
+  box-shadow: 0 -1px 0 rgba(255,255,255,0.3);
+}
+
+.ibeam-flange-top::before,
+.ibeam-flange-top::after,
+.ibeam-flange-bottom::before,
+.ibeam-flange-bottom::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+}
+
+.ibeam-flange-top::after {
+  bottom: 0;
+  background: linear-gradient(to bottom, #999, #888);
+}
+
+.ibeam-flange-bottom {
+  border-radius: 0 0 2px 2px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+}
+
+.ibeam-flange-bottom::before {
+  top: 0;
+  background: linear-gradient(to bottom, #bbb, #aaa);
+}
+
+.ibeam-web {
+  height: 38px;
+  margin: 0 14px;
+  background: linear-gradient(
+    to bottom,
+    #777 0%,
+    #999 15%,
+    #aaa 40%,
+    #bbb 50%,
+    #aaa 60%,
+    #999 85%,
+    #777 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.ibeam-web::before,
+.ibeam-web::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+}
+
+.ibeam-web::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.15), transparent);
+}
+
+.ibeam-web::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(0,0,0,0.15), transparent);
+}
+
+.crane-beam-text {
+  font-family: 'AssemblyRequired', 'Work Sans', sans-serif;
+  font-weight: 400;
+  font-size: clamp(20px, 2.5vw, 30px);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #333;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.25);
+  user-select: none;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .crane {
+    display: none !important;
+  }
+}
+
+.detail-overlay.active ~ .crane {
+  display: none !important;
 }
 
 /* ================= MESH ================= */
 
+.cell-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
 .mesh {
   position: absolute;
   inset: 0;
-  background: var(--orange);
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(6, 1fr);
-  gap: 6px;
-  padding: 20px;
   opacity: 0;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
-.mesh div {
-  border-radius: 10px;
-  overflow: hidden;
+.cell:hover .cell-image {
+  opacity: 1;
 }
 
 .cell:hover .mesh {
+  opacity: 1;
+}
+
+.wrapper.filtering .cell.match .cell-image {
   opacity: 1;
 }
 
@@ -347,6 +805,10 @@ body {
 
 .cell.hidden {
   display: none;
+}
+
+.force-mesh .cell-image {
+  opacity: 1 !important;
 }
 
 .force-mesh .mesh {
@@ -369,10 +831,10 @@ body {
   height: var(--screw-size);
   border-radius: 50%;
   background:
-    radial-gradient(circle at 35% 35%, #ff9a7a 0%, #F05323 30%, #c0400a 65%, #8a2e00 100%);
+    radial-gradient(circle at 35% 35%, #ddd 0%, #bbb 30%, #999 65%, #777 100%);
   box-shadow:
     inset -2px -2px 4px rgba(0,0,0,0.3),
-    inset 2px 2px 4px rgba(255,150,100,0.4);
+    inset 2px 2px 4px rgba(255,255,255,0.25);
   z-index: 2;
 }
 
@@ -386,7 +848,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #6b1e00;
+  background: #333;
 }
 
 /* ================= SCREW TYPES ================= */
@@ -411,7 +873,7 @@ body {
   left: 50%;
   width: 2px;
   height: 60%;
-  background: #6b1e00;
+  background: #333;
   transform: translate(-50%, -50%);
 }
 
@@ -423,8 +885,8 @@ body {
 
 [data-drive="hex"] .screw-left::after,
 [data-drive="hex"] .screw-right::after {
-  width: 10px;
-  height: 10px;
+  width: 7px;
+  height: 7px;
   clip-path: polygon(
     25% 0%, 75% 0%,
     100% 50%, 75% 100%,
@@ -437,8 +899,8 @@ body {
   width: 12px;
   height: 12px;
   background:
-    radial-gradient(circle at 30% 50%, #6b1e00 3px, transparent 3.5px),
-    radial-gradient(circle at 70% 50%, #6b1e00 3px, transparent 3.5px);
+    radial-gradient(circle at 22% 50%, #333 2px, transparent 2.5px),
+    radial-gradient(circle at 78% 50%, #333 2px, transparent 2.5px);
   background-repeat: no-repeat;
 }
 
@@ -517,7 +979,7 @@ body {
   display: none;
 }
 
-/* ================= SAFETY TAPE OVERLAY ================= */
+/* ================= SAFETY TAPE / INFO OVERLAY ================= */
 
 .safety-overlay {
   display: none;
@@ -527,18 +989,18 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  pointer-events: auto;
 }
 
 .safety-overlay.active {
   display: flex;
 }
 
-/* Block all interaction behind */
 .safety-overlay::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .safety-tape {
@@ -547,41 +1009,55 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1;
 }
 
-/* Top stripe bar */
 .safety-stripe {
-  width: 100%;
-  height: clamp(20px, 3vw, 32px);
-  background: repeating-linear-gradient(
-    -45deg,
-    #FFCD00,
-    #FFCD00 20px,
-    #000000 20px,
-    #000000 40px
-  );
-  flex-shrink: 0;
+  display: none;
 }
 
 .safety-content {
   width: 100%;
-  background: #000000;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 6px,
+      rgba(255,255,255,0.05) 6px,
+      rgba(255,255,255,0.05) 7px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 6px,
+      rgba(255,255,255,0.05) 6px,
+      rgba(255,255,255,0.05) 7px
+    ),
+    rgba(0, 60, 130, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 3px solid #003d80;
+  border-bottom: 3px solid #003d80;
+}
+
+.safety-content-inner {
+  width: 100%;
+  max-width: var(--max-width);
   padding: clamp(24px, 5vw, 48px) calc(var(--side-gap) + var(--pulley-gap)) clamp(24px, 5vw, 48px) var(--side-gap);
   display: flex;
   align-items: flex-end;
   justify-content: center;
   gap: clamp(24px, 4vw, 48px);
-  max-width: var(--max-width);
-  margin: 0 auto;
 }
 
 .safety-content p {
   margin: 0;
-  color: #ffffff;
-  font-family: 'Work Sans', sans-serif;
-  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: 'univers-next-pro', 'Work Sans', sans-serif;
+  font-weight: 700;
   line-height: 1.4;
-  letter-spacing: -0.3px;
+  letter-spacing: 0.3px;
   text-align: left;
 }
 
@@ -597,11 +1073,11 @@ body {
 .safety-content .safety-colophon {
   flex: 2;
   font-size: clamp(8px, 0.9vw, 11px);
-  color: #ffffff;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 @media (max-width: 768px) {
-  .safety-content {
+  .safety-content-inner {
     padding: 20px 24px;
   }
 
@@ -632,11 +1108,11 @@ body {
 }
 
 .assembly-btn .assembly-text {
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'AssemblyRequired', 'Work Sans', sans-serif;
   font-weight: 400;
-  font-size: clamp(14px, 2.5vw, 22px);
-  color: var(--orange);
-  letter-spacing: -0.3px;
+  font-size: clamp(50px, 5.8vw, 70px);
+  color: #ffffff;
+  letter-spacing: 5px;
   text-transform: uppercase;
   line-height: 1;
 }
@@ -653,8 +1129,8 @@ body {
   width: clamp(44px, 6vw, 64px);
   height: clamp(44px, 6vw, 64px);
   border-radius: 50%;
-  border: var(--filter-stroke) solid var(--orange);
-  background: transparent;
+  border: var(--filter-stroke) solid #ffffff;
+  background: #ffffff;
   position: relative;
   flex-shrink: 0;
   transform: rotate(45deg);
@@ -662,7 +1138,6 @@ body {
   cursor: var(--cursor-pointer) !important;
 }
 
-/* Cross drive on the assembly screw */
 .assembly-btn .assembly-screw::after {
   content: "";
   position: absolute;
@@ -671,7 +1146,7 @@ body {
   transform: translate(-50%, -50%);
   width: 60%;
   height: var(--filter-stroke);
-  background: var(--btn-color);
+  background: var(--bg);
 }
 
 .assembly-btn .assembly-screw::before {
@@ -682,18 +1157,18 @@ body {
   transform: translate(-50%, -50%);
   width: var(--filter-stroke);
   height: 60%;
-  background: var(--btn-color);
+  background: var(--bg);
 }
 
 .assembly-btn .assembly-screw:hover {
-  background: var(--btn-color);
-  border-color: var(--btn-color);
+  background: var(--bg);
+  border-color: #ffffff;
   transform: rotate(0deg);
 }
 
 .assembly-btn .assembly-screw:hover::after,
 .assembly-btn .assembly-screw:hover::before {
-  background: var(--bg);
+  background: #ffffff;
 }
 
 .assembly-btn.hidden {
@@ -720,13 +1195,16 @@ body {
   opacity: 0;
 }
 
+.wrapper.unassembled .cell:hover .cell-image {
+  opacity: 0;
+}
+
 .wrapper.unassembled .cell:hover .screw-left,
 .wrapper.unassembled .cell:hover .screw-right {
   display: block;
   opacity: 0;
 }
 
-/* Assembly animation: cells start hidden, reveal per-row */
 .cell.assembling .braces,
 .cell.assembling .screw-left,
 .cell.assembling .screw-right {
@@ -752,6 +1230,10 @@ body {
 @media (max-width: 768px) {
   .assembly-btn {
     padding: 16px var(--side-gap);
+  }
+
+  .assembly-btn .assembly-text {
+    display: none;
   }
 
   .assembly-btn .assembly-screw {
@@ -783,7 +1265,6 @@ body {
   display: none;
 }
 
-/* Woven tarp texture + subtle wrinkle effect */
 .blue-tarp::after {
   content: "";
   position: absolute;
@@ -805,7 +1286,6 @@ body {
     );
 }
 
-/* Highlight along the top edge for depth */
 .blue-tarp::before {
   content: "";
   position: absolute;
@@ -828,7 +1308,6 @@ body {
 #loader {
   position: fixed;
   inset: 0;
-  background: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -861,6 +1340,10 @@ body {
     gap: 4px;
     padding: 16px var(--side-gap);
     justify-content: flex-end;
+  }
+
+  .filter-right {
+    gap: 4px;
   }
 
   .wrapper {
@@ -901,6 +1384,7 @@ body {
     display: none !important;
   }
 }
+
 /* ================= PULLEY SCROLLBAR ================= */
 
 .pulley {
@@ -920,8 +1404,8 @@ body {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: radial-gradient(circle at 38% 35%, #e8ecef 0%, #b0b6bc 35%, #6b7278 70%, #3a4048 100%);
-  box-shadow: inset -1px -1px 3px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(255,255,255,0.3);
+  background: radial-gradient(circle at 38% 35%, #ddd 0%, #aaa 35%, #777 70%, #555 100%);
+  box-shadow: inset -1px -1px 3px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(255,255,255,0.1);
   position: absolute;
   z-index: 3;
   flex-shrink: 0;
@@ -936,7 +1420,7 @@ body {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: radial-gradient(circle at 40% 40%, #8f969d, #3a4048);
+  background: radial-gradient(circle at 40% 40%, #aaa, #777);
   box-shadow: inset 0 0 2px rgba(0,0,0,0.6);
 }
 
@@ -953,7 +1437,7 @@ body {
   top: 26px;
   bottom: 26px;
   width: 3px;
-  background: linear-gradient(to right, #5a6068, #8f969d, #5a6068);
+  background: linear-gradient(to right, #777, #aaa, #777);
   border-radius: 2px;
   z-index: 1;
 }
@@ -964,7 +1448,7 @@ body {
   bottom: 26px;
   width: 2px;
   right: 4px;
-  background: linear-gradient(to right, #4a5058, #6b7278, #4a5058);
+  background: linear-gradient(to right, #666, #888, #666);
   border-radius: 2px;
   z-index: 1;
   opacity: 0.5;
@@ -990,8 +1474,8 @@ body {
   width: 100%;
   height: 100%;
   border-radius: 6px;
-  background: linear-gradient(to right, var(--tube-dark), var(--tube-mid), var(--tube-light), var(--tube-mid), var(--tube-dark));
-  box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.2);
+  background: linear-gradient(to right, #ccc, #e8e8e8, #ffffff, #e8e8e8, #ccc);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.5);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -1003,7 +1487,7 @@ body {
 .pulley-carriage-grip {
   width: 14px;
   height: 2px;
-  background: var(--tube-dark);
+  background: #bbb;
   border-radius: 1px;
 }
 
@@ -1016,11 +1500,19 @@ body {
   height: 0;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-top: 10px solid var(--tube-mid);
+  border-top: 10px solid #e0e0e0;
 }
 
 .pulley.hidden {
   display: none;
+}
+
+.detail-overlay.active ~ .pulley {
+  display: none !important;
+}
+
+.detail-overlay.active ~ .search-blueprint {
+  display: none !important;
 }
 
 /* ================= EXPANDED DETAIL VIEW ================= */
@@ -1034,7 +1526,6 @@ body {
   display: none;
   position: fixed;
   inset: 0;
-  background: var(--bg);
   z-index: 200;
   overflow: hidden;
 }
@@ -1055,7 +1546,6 @@ body {
   height: 100dvh;
 }
 
-/* The scaffold frame that holds everything */
 .detail-frame {
   flex: 1;
   min-height: 0;
@@ -1064,17 +1554,15 @@ body {
   position: relative;
 }
 
-/* ---- Screws at intersections ---- */
-
 .detail-screw {
   position: absolute;
   width: var(--detail-screw-size);
   height: var(--detail-screw-size);
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #ff9a7a 0%, #F05323 30%, #c0400a 65%, #8a2e00 100%);
+  background: radial-gradient(circle at 35% 35%, #ddd 0%, #bbb 30%, #999 65%, #777 100%);
   box-shadow:
     inset -2px -2px 4px rgba(0,0,0,0.3),
-    inset 2px 2px 4px rgba(255,150,100,0.4),
+    inset 2px 2px 4px rgba(255,255,255,0.25),
     0 2px 6px rgba(0,0,0,0.6);
   z-index: 10;
   cursor: pointer;
@@ -1087,7 +1575,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #6b1e00;
+  background: #444;
 }
 
 .detail-screw::before {
@@ -1096,14 +1584,13 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #6b1e00;
+  background: #444;
 }
-
-/* ---- Screw drive types (all sizes relative to screw) ---- */
 
 .detail-frame[data-drive="slotted"] .detail-screw::after {
   width: 60%;
   height: 12%;
+  background: #333;
 }
 .detail-frame[data-drive="slotted"] .detail-screw::before {
   display: none;
@@ -1112,15 +1599,18 @@ body {
 .detail-frame[data-drive="cross"] .detail-screw::after {
   width: 60%;
   height: 12%;
+  background: #333;
 }
 .detail-frame[data-drive="cross"] .detail-screw::before {
   width: 12%;
   height: 60%;
+  background: #333;
 }
 
 .detail-frame[data-drive="robertson"] .detail-screw::after {
   width: 30%;
   height: 30%;
+  background: #333;
 }
 .detail-frame[data-drive="robertson"] .detail-screw::before {
   display: none;
@@ -1129,6 +1619,7 @@ body {
 .detail-frame[data-drive="hex"] .detail-screw::after {
   width: 42%;
   height: 42%;
+  background: #333;
   clip-path: polygon(
     25% 0%, 75% 0%,
     100% 50%, 75% 100%,
@@ -1143,22 +1634,18 @@ body {
   width: 60%;
   height: 60%;
   background:
-    radial-gradient(circle at 30% 50%, #6b1e00 22%, transparent 23%),
-    radial-gradient(circle at 70% 50%, #6b1e00 22%, transparent 23%);
+    radial-gradient(circle at 30% 50%, #333 22%, transparent 23%),
+    radial-gradient(circle at 70% 50%, #333 22%, transparent 23%);
   background-repeat: no-repeat;
 }
 .detail-frame[data-drive="spanner"] .detail-screw::before {
   display: none;
 }
 
-/* ---- Simultaneous hover/active via class on frame ---- */
-
 .detail-frame.screws-hover .detail-screw,
 .detail-frame.screws-active .detail-screw {
   transform: translate(-50%, -50%) rotate(-45deg);
 }
-
-/* ---- Beam styles (all same thickness) ---- */
 
 .detail-beam-h {
   height: var(--beam-thick);
@@ -1186,7 +1673,6 @@ body {
   );
 }
 
-/* Top image area: one big cell spanning 3/4 of height */
 .detail-top-row {
   display: flex;
   flex: 3;
@@ -1196,7 +1682,6 @@ body {
 
 .detail-image-area {
   flex: 1;
-  background: #000000;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -1213,22 +1698,21 @@ body {
 }
 
 .detail-image-area .img-placeholder {
-  color: #333;
+  color: #bbb;
   font-size: 14px;
   font-family: 'Work Sans', sans-serif;
 }
 
-/* Nav screws (prev/next) on the vertical beams */
 .detail-nav-screw {
   position: absolute;
   top: 50%;
   width: var(--detail-screw-size);
   height: var(--detail-screw-size);
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #ffffff 0%, var(--tube-light) 25%, var(--tube-mid) 55%, var(--tube-dark) 85%);
+  background: radial-gradient(circle at 35% 35%, #ddd 0%, #bbb 30%, #999 65%, #777 100%);
   box-shadow:
-    inset -2px -2px 4px rgba(0,0,0,0.5),
-    inset 2px 2px 4px rgba(255,255,255,0.4),
+    inset -2px -2px 4px rgba(0,0,0,0.3),
+    inset 2px 2px 4px rgba(255,255,255,0.25),
     0 2px 6px rgba(0,0,0,0.6);
   z-index: 10;
   cursor: var(--cursor-pointer) !important;
@@ -1241,7 +1725,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: solid var(--tube-dark);
+  border: solid #555;
 }
 
 .detail-nav-screw.prev-screw {
@@ -1250,8 +1734,12 @@ body {
 
 .detail-nav-screw.prev-screw::after {
   border-width: 7px 10px 7px 0;
-  border-color: transparent var(--tube-dark) transparent transparent;
+  border-color: transparent #555 transparent transparent;
   transform: translate(calc(-50% - 2px), -50%);
+}
+
+.detail-nav-screw.prev-screw:hover {
+  transform: translate(-50%, -50%) rotate(-20deg);
 }
 
 .detail-nav-screw.next-screw {
@@ -1261,11 +1749,14 @@ body {
 
 .detail-nav-screw.next-screw::after {
   border-width: 7px 0 7px 10px;
-  border-color: transparent transparent transparent var(--tube-dark);
+  border-color: transparent transparent transparent #555;
   transform: translate(calc(-50% + 2px), -50%);
 }
 
-/* Bottom info row: 1/4 of height, cells with beam dividers */
+.detail-nav-screw.next-screw:hover {
+  transform: translate(50%, -50%) rotate(20deg);
+}
+
 .detail-bottom-row {
   display: flex;
   flex: 1;
@@ -1273,17 +1764,17 @@ body {
 }
 
 .detail-info-cell {
-  background: #000000;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   padding: clamp(10px, 2.5vw, 20px);
-  color: var(--tube-light);
-  font-family: 'Work Sans', sans-serif;
+  color: #ffffff;
+  font-family: 'univers-next-pro', 'Work Sans', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.3px;
   overflow: hidden;
 }
 
-/* Split container for title and links (desktop: 2 rows, no padding) */
 .detail-split {
   flex: 1;
   display: flex;
@@ -1303,7 +1794,7 @@ body {
 .detail-info-cell .student-name {
   font-size: clamp(11px, 1.3vw, 16px);
   font-weight: 400;
-  color: var(--orange);
+  color: #ffffff;
   line-height: 1.2;
 }
 
@@ -1327,7 +1818,7 @@ body {
 }
 
 .detail-info-cell.link-cell a {
-  color: var(--btn-color);
+  color: #ffffff;
   text-decoration: none;
   font-size: clamp(11px, 1.3vw, 16px);
   font-weight: 400;
@@ -1355,13 +1846,11 @@ body {
     flex-direction: column;
   }
 
-  /* Hide desktop layout elements on mobile */
   .detail-top-row,
   .detail-bottom-row {
     display: none;
   }
 
-  /* Show mobile layout */
   .detail-mobile {
     display: none;
   }
@@ -1371,7 +1860,6 @@ body {
   }
 }
 
-/* Mobile detail layout — hidden on desktop */
 .detail-mobile {
   display: none;
 }
@@ -1395,9 +1883,10 @@ body {
 
   .detail-mobile-cell {
     flex: 1;
-    background: #000000;
     padding: clamp(12px, 4vw, 20px);
-    font-family: 'Work Sans', sans-serif;
+    font-family: 'univers-next-pro', 'Work Sans', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.3px;
     overflow: hidden;
   }
 
@@ -1405,7 +1894,7 @@ body {
   .detail-mobile-cell.name-cell .student-name {
     font-size: 14px;
     font-weight: 400;
-    color: var(--orange);
+    color: #ffffff;
     line-height: 1.2;
   }
 
@@ -1444,7 +1933,7 @@ body {
   }
 
   .detail-mobile-cell.image-cell .img-placeholder {
-    color: #333;
+    color: #bbb;
     font-size: 14px;
     font-family: 'Work Sans', sans-serif;
   }
@@ -1464,7 +1953,7 @@ body {
   }
 
   .detail-mobile-cell.link-cell a {
-    color: var(--btn-color);
+    color: #ffffff;
     text-decoration: none;
     font-size: 14px;
     font-weight: 400;
@@ -1505,34 +1994,28 @@ body {
       </radialGradient>
     </defs>
 
-    <!-- ── WRENCH GROUP (spins around screw center 110,110) ── -->
     <g class="wrench-group">
-
-      <!-- HANDLE + RING drawn first so jaw renders on top -->
       <rect x="94" y="110" width="32" height="170" rx="8"
-        fill="url(#g-steel-v)" stroke="#2a2e32" stroke-width="1"/>
+        fill="url(#g-steel-v)" stroke="none"/>
       <circle cx="110" cy="292" r="24"
-        fill="url(#g-steel-v)" stroke="#2a2e32" stroke-width="1.5"/>
-      <circle cx="110" cy="292" r="13" fill="#000000"/>
-      <circle cx="110" cy="292" r="11.5" fill="none" stroke="#3a4048" stroke-width="1"/>
+        fill="url(#g-steel-v)" stroke="none"/>
+      <circle cx="110" cy="292" r="13" fill="#F05323"/>
+      <circle cx="110" cy="292" r="11.5" fill="none" stroke="none"/>
 
-      <!-- JAW on top, covers handle start -->
       <path d="
         M 110,68.83    L 145.65,89.42  L 145.65,130.58 L 110,151.17  L 74.35,130.58  L 74.35,89.42  Z
         M 110,85       L 131.65,97.5   L 131.65,122.5  L 110,135     L 88.35,122.5   L 88.35,97.5   Z
       " fill="url(#g-steel-v)" stroke="none" fill-rule="evenodd"/>
-      <polygon points="130,96 147,88 147,132 130,124" fill="#000000" stroke="none"/>
-
+      <polygon points="130,96 147,88 147,132 130,124" fill="#F05323" stroke="none"/>
     </g>
 
-    <!-- SCREW: static hex, same vertices as jaw inner hex -->
     <polygon
       points="110,85 131.65,97.5 131.65,122.5 110,135 88.35,122.5 88.35,97.5"
-      fill="url(#g-screw)" stroke="#5a6068" stroke-width="1"
+      fill="url(#g-screw)" stroke="none"
     />
-    <line x1="110" y1="85"  x2="110" y2="135" stroke="#6b7278" stroke-width="0.6" opacity="0.5"/>
-    <line x1="88.35" y1="97.5"  x2="131.65" y2="122.5" stroke="#6b7278" stroke-width="0.6" opacity="0.5"/>
-    <line x1="131.65" y1="97.5"  x2="88.35" y2="122.5" stroke="#6b7278" stroke-width="0.6" opacity="0.5"/>
+    <line x1="110" y1="85"  x2="110" y2="135" stroke="#6b7278" stroke-width="0.6" opacity="0.3"/>
+    <line x1="88.35" y1="97.5"  x2="131.65" y2="122.5" stroke="#6b7278" stroke-width="0.6" opacity="0.3"/>
+    <line x1="131.65" y1="97.5"  x2="88.35" y2="122.5" stroke="#6b7278" stroke-width="0.6" opacity="0.3"/>
     <circle cx="110" cy="110" r="5" fill="#3e4347"/>
     <circle cx="110" cy="110" r="2.5" fill="#7d848b"/>
   </svg>
@@ -1546,6 +2029,7 @@ body {
   <div class="bottom-bar">
     <div class="filter-bar unassembled">
       <div class="filter-left"></div>
+
       <div class="filter-right">
         <div class="mesh-toggle" role="button" aria-label="Toggle all safety mesh"></div>
         <div class="info-btn" role="button" aria-label="Toggle info panel">i</div>
@@ -1561,6 +2045,15 @@ body {
 
 </div>
 
+<!-- FIXED SEARCH BAR -->
+<div class="search-blueprint unassembled" id="searchBlueprint">
+  <div class="search-dropdown" id="searchDropdown"></div>
+  <input type="text" class="search-blueprint-input" id="searchInput" placeholder="Search student..." autocomplete="off" spellcheck="false">
+  <button class="search-blueprint-btn" id="searchBtn" aria-label="Search">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+  </button>
+</div>
+
 <div class="detail-overlay" id="detailOverlay">
   <div class="detail-inner" id="detailInner"></div>
 </div>
@@ -1569,9 +2062,11 @@ body {
   <div class="safety-tape">
     <div class="safety-stripe"></div>
     <div class="safety-content">
-      <p class="safety-info">ASSEMBLY REQUIRED is an assemblage of 68 works by VCUarts BFA Graphic Design students, Class of 2026. The exhibition joins these projects within a shared structural system. Each unit occupies a distinct position while contributing to a larger collective framework.</p>
-      <div class="safety-spacer"></div>
-      <p class="safety-colophon">Assembled, welded, and bolted into place by Dea Flynn, Eunice Park, Hailey Jo, Kristen Koh, Leya Muwakki, Matt Christian, Megan Shaw, Milena Paul, Ray Burnette, Rusty Johnson, and Sal Scarpa-Friedman.<br><br>The build was supervised by Herdimas Anggara.</p>
+      <div class="safety-content-inner">
+        <p class="safety-info">ASSEMBLY REQUIRED is an assemblage of 69 works by VCUarts BFA Graphic Design students, Class of 2026. The exhibition joins these projects within a shared structural system. Each unit occupies a distinct position while contributing to a larger collective framework.</p>
+        <div class="safety-spacer"></div>
+        <p class="safety-colophon">Assembled, welded, and bolted into place by Dea Flynn, Eunice Park, Hailey Jo, Kristen Koh, Leya Muwakki, Matt Christian, Megan Shaw, Milena Paul, Ray Burnette, Rusty Johnson, and Sal Scarpa-Friedman.<br><br>The build was supervised by Herdimas Anggara.</p>
+      </div>
     </div>
     <div class="safety-stripe"></div>
   </div>
@@ -1592,6 +2087,56 @@ body {
     <div class="pulley-wheel pulley-wheel-bottom" id="pulleyWheelBottom"></div>
   </div>
 
+<div class="crane" id="crane">
+  <div class="crane-group crane-group-top">
+    <div class="crane-chain crane-chain-left"></div>
+    <div class="crane-chain crane-chain-right"></div>
+    <div class="crane-hook crane-hook-left">
+      <svg viewBox="0 0 26 24" width="26" height="24">
+        <ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/>
+        <line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/>
+      </svg>
+    </div>
+    <div class="crane-hook crane-hook-right">
+      <svg viewBox="0 0 26 24" width="26" height="24">
+        <ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/>
+        <line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/>
+      </svg>
+    </div>
+    <div class="crane-latch crane-latch-left"></div>
+    <div class="crane-latch crane-latch-right"></div>
+    <div class="crane-ibeam">
+      <div class="ibeam-flange ibeam-flange-top"></div>
+      <div class="ibeam-web"><span class="crane-beam-text">ASSEMBLY</span></div>
+      <div class="ibeam-flange ibeam-flange-bottom"></div>
+    </div>
+  </div>
+
+  <div class="crane-group crane-group-bottom">
+    <div class="crane-chain crane-chain-left"></div>
+    <div class="crane-chain crane-chain-right"></div>
+    <div class="crane-hook crane-hook-left">
+      <svg viewBox="0 0 26 24" width="26" height="24">
+        <ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/>
+        <line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/>
+      </svg>
+    </div>
+    <div class="crane-hook crane-hook-right">
+      <svg viewBox="0 0 26 24" width="26" height="24">
+        <ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/>
+        <line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/>
+      </svg>
+    </div>
+    <div class="crane-latch crane-latch-left"></div>
+    <div class="crane-latch crane-latch-right"></div>
+    <div class="crane-ibeam">
+      <div class="ibeam-flange ibeam-flange-top"></div>
+      <div class="ibeam-web"><span class="crane-beam-text">REQUIRED</span></div>
+      <div class="ibeam-flange ibeam-flange-bottom"></div>
+    </div>
+  </div>
+</div>
+
 <script>
   const wrapper = document.querySelector('.wrapper');
   const filterLeft = document.querySelector('.filter-left');
@@ -1599,7 +2144,7 @@ body {
   const infoBtn = document.querySelector('.info-btn');
   const outerContainer = document.querySelector('.outer-container');
 
-  const MIN_CELLS = 68;
+  const MIN_CELLS = 69;
   const screwTypes = ["slotted", "cross", "robertson", "hex", "spanner"];
 
   const palettes = [
@@ -1613,6 +2158,7 @@ body {
   let activeFilters = [];
   let meshForced = false;
   let infoOpen = false;
+  let savedScrollY = 0;
 
   const detailOverlay = document.getElementById('detailOverlay');
   const detailInner = document.getElementById('detailInner');
@@ -1629,7 +2175,7 @@ body {
     'example_image_07.png'
   ];
 
-  const students = Array.from({ length: 68 }, (_, i) => ({
+  const students = Array.from({ length: 69 }, (_, i) => ({
     id: i + 1,
     name: `Student ${i + 1}`,
     projectTitle: `Project ${i + 1}`,
@@ -1641,6 +2187,152 @@ body {
     ],
     images: projectImages
   }));
+
+  /* ================= SEARCH ================= */
+
+  const searchInput = document.getElementById('searchInput');
+  const searchBtn = document.getElementById('searchBtn');
+  const searchDropdown = document.getElementById('searchDropdown');
+  let searchSelectedIndex = -1;
+  let searchMatches = [];
+
+  function doSearch() {
+    const query = searchInput.value.trim().toLowerCase();
+
+    // Clear previous highlights
+    wrapper.classList.remove('search-active');
+    document.querySelectorAll('.cell.search-match-cell').forEach(c => c.classList.remove('search-match-cell'));
+
+    if (!query) {
+      searchDropdown.classList.remove('visible');
+      searchDropdown.innerHTML = '';
+      searchMatches = [];
+      searchSelectedIndex = -1;
+      return;
+    }
+
+    // Find matching students
+    searchMatches = [];
+    students.forEach((s, idx) => {
+      if (s.name.toLowerCase().includes(query) || s.projectTitle.toLowerCase().includes(query)) {
+        searchMatches.push(idx);
+      }
+    });
+
+    if (searchMatches.length === 0) {
+      searchDropdown.innerHTML = '<div class="search-dropdown-item" style="color:rgba(255,255,255,0.4);cursor:default;">No results</div>';
+      searchDropdown.classList.add('visible');
+      searchSelectedIndex = -1;
+      return;
+    }
+
+    // Highlight matching cells in grid
+    wrapper.classList.add('search-active');
+    const realCells = Array.from(wrapper.querySelectorAll('.cell:not(.spacer)'));
+    searchMatches.forEach(idx => {
+      if (realCells[idx]) {
+        realCells[idx].classList.add('search-match-cell');
+      }
+    });
+
+    // Build dropdown (show up to 10)
+    const shown = searchMatches.slice(0, 10);
+    searchDropdown.innerHTML = shown.map((idx, i) => {
+      const s = students[idx];
+      const name = highlightMatch(s.name, query);
+      const title = highlightMatch(s.projectTitle, query);
+      return `<div class="search-dropdown-item${i === searchSelectedIndex ? ' selected' : ''}" data-idx="${idx}">${name} — ${title}</div>`;
+    }).join('');
+    searchDropdown.classList.add('visible');
+
+    if (searchSelectedIndex < 0) searchSelectedIndex = 0;
+    updateDropdownSelection();
+
+    // Click handlers on items
+    searchDropdown.querySelectorAll('.search-dropdown-item[data-idx]').forEach(item => {
+      item.addEventListener('click', () => {
+        const idx = parseInt(item.dataset.idx);
+        goToStudent(idx);
+      });
+    });
+  }
+
+  function highlightMatch(text, query) {
+    const i = text.toLowerCase().indexOf(query);
+    if (i === -1) return text;
+    return text.slice(0, i) + '<span class="search-match">' + text.slice(i, i + query.length) + '</span>' + text.slice(i + query.length);
+  }
+
+  function updateDropdownSelection() {
+    const items = searchDropdown.querySelectorAll('.search-dropdown-item[data-idx]');
+    items.forEach((item, i) => {
+      item.classList.toggle('selected', i === searchSelectedIndex);
+    });
+  }
+
+  function goToStudent(idx) {
+    const driveType = screwTypes[idx % screwTypes.length];
+    // Clear search state
+    searchInput.value = '';
+    wrapper.classList.remove('search-active');
+    document.querySelectorAll('.cell.search-match-cell').forEach(c => c.classList.remove('search-match-cell'));
+    searchDropdown.classList.remove('visible');
+    searchDropdown.innerHTML = '';
+    searchMatches = [];
+    searchSelectedIndex = -1;
+    // Open detail
+    openDetail(idx, driveType);
+  }
+
+  searchInput.addEventListener('input', doSearch);
+
+  searchInput.addEventListener('keydown', (e) => {
+    const items = searchDropdown.querySelectorAll('.search-dropdown-item[data-idx]');
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (items.length > 0) {
+        searchSelectedIndex = Math.max(0, searchSelectedIndex - 1);
+        updateDropdownSelection();
+      }
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (items.length > 0) {
+        searchSelectedIndex = Math.min(items.length - 1, searchSelectedIndex + 1);
+        updateDropdownSelection();
+      }
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (searchMatches.length > 0) {
+        const shown = searchMatches.slice(0, 10);
+        const idx = shown[Math.max(0, searchSelectedIndex)] ?? shown[0];
+        if (idx !== undefined) goToStudent(idx);
+      }
+    } else if (e.key === 'Escape') {
+      searchInput.value = '';
+      doSearch();
+      searchInput.blur();
+    }
+  });
+
+  searchBtn.addEventListener('click', () => {
+    if (searchMatches.length > 0) {
+      const shown = searchMatches.slice(0, 10);
+      const idx = shown[Math.max(0, searchSelectedIndex)] ?? shown[0];
+      if (idx !== undefined) goToStudent(idx);
+    }
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#searchBlueprint')) {
+      searchDropdown.classList.remove('visible');
+    }
+  });
+
+  // Re-show dropdown on focus if there's a query
+  searchInput.addEventListener('focus', () => {
+    if (searchInput.value.trim()) doSearch();
+  });
 
   /* ================= DETAIL VIEW ================= */
 
@@ -1658,11 +2350,8 @@ body {
     let html = `<div class="detail-frame" data-drive="${driveType}">`;
 
     if (isMobile) {
-      // Mobile: vertical stack — title, image, description, links
-      // Each row: bV | cell | bV, separated by bH
       html += bH;
 
-      // Title row — split into 2 columns: name | beam | project
       html += `<div class="detail-mobile-row">`;
       html += bV;
       html += `<div class="detail-mobile-cell name-cell">
@@ -1677,7 +2366,6 @@ body {
 
       html += bH;
 
-      // Image row
       html += `<div class="detail-mobile-row image-row">`;
       html += bV;
       html += `<div class="detail-mobile-cell image-cell">
@@ -1690,7 +2378,6 @@ body {
 
       html += bH;
 
-      // Description row
       html += `<div class="detail-mobile-row">`;
       html += bV;
       html += `<div class="detail-mobile-cell desc-cell"><p>${student.descriptionShort}</p></div>`;
@@ -1699,7 +2386,6 @@ body {
 
       html += bH;
 
-      // Links row — split into 2 columns: handle | beam | portfolio
       html += `<div class="detail-mobile-row">`;
       html += bV;
       html += `<div class="detail-mobile-cell link-cell">
@@ -1715,7 +2401,6 @@ body {
       html += bH;
 
     } else {
-      // Desktop: original 4x4 layout
       html += bH;
 
       html += `<div class="detail-top-row">`;
@@ -1767,7 +2452,7 @@ body {
       html += bH;
     }
 
-    html += `</div>`; // close detail-frame
+    html += `</div>`;
 
     detailInner.innerHTML = html;
     detailOverlay.classList.add('active');
@@ -1775,7 +2460,6 @@ body {
 
     const frame = detailInner.querySelector('.detail-frame');
 
-    // Image carousel
     let currentImgIndex = 0;
     const imgEl = document.getElementById('detailImg');
     const prevBtn = document.getElementById('imgPrev');
@@ -1804,7 +2488,6 @@ body {
       });
     }
 
-    // Place screws at every beam intersection after layout
     requestAnimationFrame(() => {
       const frameRect = frame.getBoundingClientRect();
       const beamT = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--beam-thick'));
@@ -1817,7 +2500,6 @@ body {
         frame.appendChild(s);
       }
 
-      // Collect all horizontal beams with their Y center and horizontal span
       const hBeams = frame.querySelectorAll('.detail-beam-h');
       const hInfos = Array.from(hBeams).map(hb => {
         const r = hb.getBoundingClientRect();
@@ -1828,7 +2510,6 @@ body {
         };
       });
 
-      // Collect all vertical beams with their X center and vertical span
       const vBeams = frame.querySelectorAll('.detail-beam-v');
       const vInfos = Array.from(vBeams).map(vb => {
         const r = vb.getBoundingClientRect();
@@ -1839,12 +2520,9 @@ body {
         };
       });
 
-      // Place screw at every intersection where beams overlap
       const placed = new Set();
       hInfos.forEach(h => {
         vInfos.forEach(v => {
-          // Check if the v-beam's vertical span overlaps the h-beam's Y
-          // and the h-beam's horizontal span overlaps the v-beam's X
           const vOverlap = v.top <= h.y + beamT && v.bottom >= h.y - beamT;
           const hOverlap = h.left <= v.x + beamT && h.right >= v.x - beamT;
           if (vOverlap && hOverlap) {
@@ -1858,7 +2536,6 @@ body {
       });
     });
 
-    // Simultaneous hover/click on all screws
     frame.addEventListener('mouseover', (e) => {
       if (e.target.classList.contains('detail-screw')) {
         frame.classList.add('screws-hover');
@@ -1884,7 +2561,6 @@ body {
       }
     });
 
-    // Touch support
     frame.addEventListener('touchstart', (e) => {
       if (e.target.classList.contains('detail-screw')) {
         frame.classList.add('screws-hover');
@@ -1909,7 +2585,6 @@ body {
   let currentDetailIndex = null;
   let currentDetailDrive = null;
 
-  // Close on Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && detailOverlay.classList.contains('active')) {
       closeDetail();
@@ -1920,7 +2595,6 @@ body {
 
   function createFilters() {
     screwTypes.forEach(type => {
-
       const btn = document.createElement('div');
       btn.className = 'filter-btn';
       btn.setAttribute('data-drive', type);
@@ -1955,13 +2629,11 @@ body {
   /* ================= GRID LAYOUT ================= */
 
   function layoutGrid() {
-
     const isMobile = window.innerWidth <= 768;
-    const columns = isMobile ? 2 : 6;
+    const columns = isMobile ? 3 : 6;
 
     const sideGap = 32;
     const pulleyGap = isMobile ? 0 : 24;
-    // Use the container's actual width instead of viewport width
     const containerWidth = Math.min(window.innerWidth, 1000);
     const availableWidth = containerWidth - sideGap - sideGap - pulleyGap;
     const cellSize = Math.floor(availableWidth / columns);
@@ -1977,29 +2649,27 @@ body {
   /* ================= GRID GENERATION ================= */
 
   function fillGrid() {
-
     wrapper.innerHTML = "";
 
-    // Preserve unassembled state
     if (!assembled) {
       wrapper.classList.add('unassembled');
     }
 
     const isMobile = window.innerWidth <= 768;
-    const columns = isMobile ? 2 : 6;
+    const columns = isMobile ? 3 : 6;
     const remainder = MIN_CELLS % columns;
     const emptyCount = remainder === 0 ? 0 : columns - remainder;
 
-    // Add empty spacer cells so the partial row is at the top
-    for (let i = 0; i < emptyCount; i++) {
-      const spacer = document.createElement('div');
-      spacer.className = 'cell spacer';
-      spacer.style.visibility = 'hidden';
-      wrapper.appendChild(spacer);
+    if (emptyCount > 0) {
+      for (let i = 0; i < emptyCount; i++) {
+        const spacer = document.createElement('div');
+        spacer.className = 'cell spacer';
+        spacer.style.visibility = 'hidden';
+        wrapper.appendChild(spacer);
+      }
     }
 
     for (let i = 1; i <= MIN_CELLS; i++) {
-
       const driveType = screwTypes[(i - 1) % screwTypes.length];
       const palette = palettes[i % palettes.length];
 
@@ -2007,21 +2677,12 @@ body {
       cell.className = 'cell';
       cell.setAttribute("data-drive", driveType);
 
-      const gradient = `url('fifth-harmony.png')`;
-
-      const meshHTML = Array.from({ length: 24 }, (_, idx) => {
-        const col = idx % 4;
-        const row = Math.floor(idx / 4);
-        const bgPosX = (col / 3) * 100;
-        const bgPosY = (row / 5) * 100;
-        return `<div style="background-image: url('fifth-harmony.png'); background-size: 400% 600%; background-position: ${bgPosX}% ${bgPosY}%;"></div>`;
-      }).join("");
-
       cell.innerHTML = `
         <div class="beam-top"></div>
         <div class="beam-bottom"></div>
         <div class="braces"></div>
-        <div class="mesh">${meshHTML}</div>
+        <div class="cell-image" style="background-image: url('fifth-harmony.png');"></div>
+        <div class="mesh"></div>
         <div class="screw-left"></div>
         <div class="screw-right"></div>
       `;
@@ -2033,7 +2694,66 @@ body {
     }
 
     layoutGrid();
+    applyMeshPattern();
     updateFilters();
+  }
+
+  /* ================= MESH PATTERN GENERATOR ================= */
+
+  let cachedMeshPattern = null;
+  let cachedMeshSize = 0;
+
+  function generateMeshPattern(size) {
+    if (size === cachedMeshSize && cachedMeshPattern) return cachedMeshPattern;
+
+    const canvas = document.createElement('canvas');
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = size * dpr;
+    canvas.height = size * dpr;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    const padding = 20;
+    const gap = 6;
+    const cols = 4;
+    const rows = 6;
+    const radius = 10;
+
+    ctx.fillStyle = 'rgba(240, 83, 35, 0.75)';
+    ctx.fillRect(0, 0, size, size);
+
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+
+    const innerW = size - padding * 2;
+    const innerH = size - padding * 2;
+    const holeW = (innerW - gap * (cols - 1)) / cols;
+    const holeH = (innerH - gap * (rows - 1)) / rows;
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const x = padding + c * (holeW + gap);
+        const y = padding + r * (holeH + gap);
+        ctx.beginPath();
+        ctx.roundRect(x, y, holeW, holeH, radius);
+        ctx.fill();
+      }
+    }
+
+    cachedMeshPattern = canvas.toDataURL();
+    cachedMeshSize = size;
+    return cachedMeshPattern;
+  }
+
+  function applyMeshPattern() {
+    const cells = document.querySelectorAll('.cell:not(.spacer)');
+    if (cells.length === 0) return;
+    const cellSize = cells[0].offsetWidth;
+    if (cellSize <= 0) return;
+    const pattern = generateMeshPattern(cellSize);
+    document.querySelectorAll('.mesh').forEach(m => {
+      m.style.backgroundImage = `url(${pattern})`;
+    });
   }
 
   /* ================= RIGHT BUTTONS ================= */
@@ -2052,10 +2772,26 @@ body {
 
     if (infoOpen) {
       safetyOverlay.classList.add('active');
+      window.addEventListener('wheel', preventInfoScroll, { passive: false });
+      window.addEventListener('touchmove', preventInfoScroll, { passive: false });
+      window.addEventListener('keydown', preventInfoKeyScroll);
     } else {
       safetyOverlay.classList.remove('active');
+      window.removeEventListener('wheel', preventInfoScroll);
+      window.removeEventListener('touchmove', preventInfoScroll);
+      window.removeEventListener('keydown', preventInfoKeyScroll);
     }
   });
+
+  function preventInfoScroll(e) {
+    e.preventDefault();
+  }
+
+  function preventInfoKeyScroll(e) {
+    if ([32, 33, 34, 35, 36, 38, 40].includes(e.keyCode)) {
+      e.preventDefault();
+    }
+  }
 
   /* ================= INIT ================= */
 
@@ -2068,33 +2804,26 @@ body {
     assembled = true;
     assemblyBtn.classList.add('hidden');
 
-    // Scroll to bottom first so user sees the animation
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
 
     const blueTarp = document.getElementById('blueTarp');
 
     const isMobile = window.innerWidth <= 768;
-    const columns = isMobile ? 2 : 6;
+    const columns = isMobile ? 3 : 6;
 
-    // Get ALL cells (including spacers) to group into proper rows
     const allCells = Array.from(wrapper.querySelectorAll('.cell'));
     const realCells = allCells.filter(c => !c.classList.contains('spacer'));
 
-    // Group all cells into rows of `columns`
     const rows = [];
     for (let i = 0; i < allCells.length; i += columns) {
       const rowCells = allCells.slice(i, i + columns).filter(c => !c.classList.contains('spacer'));
       if (rowCells.length > 0) rows.push(rowCells);
     }
 
-    // Tarp position — use positionTarp's logic for consistency
-    // (tarp is already positioned by positionTarp, just ensure clip reset)
     blueTarp.style.clipPath = 'inset(0 0 0 0)';
 
-    // Reverse so we animate from bottom row to top row
     rows.reverse();
 
-    // On mobile, group every 2 rows together for faster assembly
     const animGroups = [];
     if (isMobile) {
       for (let i = 0; i < rows.length; i += 2) {
@@ -2106,16 +2835,13 @@ body {
       rows.forEach(r => animGroups.push(r));
     }
 
-    // Mark all real cells as assembling
     realCells.forEach(cell => cell.classList.add('assembling'));
 
-    // Remove the wrapper unassembled class
     wrapper.classList.remove('unassembled');
 
     const ROW_DELAY = 200;
     const totalGroups = animGroups.length;
 
-    // Tarp snaps every 1 anim group
     animGroups.forEach((groupCells, groupIndex) => {
       setTimeout(() => {
         groupCells.forEach(cell => {
@@ -2123,32 +2849,60 @@ body {
           cell.classList.add('assembled-reveal');
         });
 
-        // Snap tarp every group
         const revealPercent = ((groupIndex + 1) / totalGroups) * 100;
         blueTarp.style.clipPath = `inset(0 0 ${revealPercent}% 0)`;
 
       }, groupIndex * ROW_DELAY);
     });
 
-    // After all rows are done, show filter bar, pulley, hide tarp, enable scrolling
     const totalTime = totalGroups * ROW_DELAY + 300;
     setTimeout(() => {
       blueTarp.classList.add('hidden');
       filterBar.classList.remove('unassembled');
       pulley.classList.remove('unassembled');
+      document.getElementById('crane').classList.add('visible');
+      document.getElementById('searchBlueprint').classList.remove('unassembled');
       window.removeEventListener('wheel', preventScroll);
       window.removeEventListener('touchmove', preventScroll);
       window.removeEventListener('keydown', preventKeyScroll);
       updatePulley();
+      positionSearchBar();
     }, totalTime);
   });
+
+  function positionSearchBar() {
+    const sb = document.getElementById('searchBlueprint');
+    if (!sb || sb.classList.contains('unassembled')) return;
+
+    const isMobile = window.innerWidth <= 768;
+    const gap = isMobile ? 4 : parseInt(getComputedStyle(filterBar).gap) || 8;
+
+    const rightRect = document.querySelector('.filter-right').getBoundingClientRect();
+    const viewH = window.innerHeight;
+
+    if (isMobile) {
+      const sideGap = 32;
+      sb.style.left = sideGap + 'px';
+      sb.style.width = (rightRect.left - sideGap - gap) + 'px';
+      sb.style.height = 'auto';
+      sb.style.top = rightRect.top + 'px';
+      sb.style.bottom = '0px';
+    } else {
+      const leftRect = document.querySelector('.filter-left').getBoundingClientRect();
+      sb.style.left = (leftRect.right + gap) + 'px';
+      sb.style.width = (rightRect.left - leftRect.right - gap * 2) + 'px';
+      sb.style.height = 'auto';
+      sb.style.top = leftRect.top + 'px';
+      sb.style.bottom = '0px';
+    }
+  }
 
   function positionTarp() {
     const blueTarp = document.getElementById('blueTarp');
     if (!blueTarp || assembled) return;
 
     const isMobile = window.innerWidth <= 768;
-    const columns = isMobile ? 2 : 6;
+    const columns = isMobile ? 3 : 6;
     const allCells = Array.from(wrapper.querySelectorAll('.cell'));
     const rows = [];
     for (let i = 0; i < allCells.length; i += columns) {
@@ -2158,14 +2912,11 @@ body {
 
     if (rows.length < 4) return;
 
-    // Use offsetTop relative to outer-container (the positioned parent)
     const wrapperTop = wrapper.offsetTop;
     const tarpEndRowIndex = rows.length - 3;
     const tarpEndCell = rows[tarpEndRowIndex][0];
     const tarpBottomY = tarpEndCell.offsetTop + tarpEndCell.offsetHeight / 2 + wrapperTop;
 
-    // On desktop: tarp covers from grid top to mid of 3rd-from-bottom row
-    // On mobile: tarp covers about 60% of visible viewport height above the tarp bottom edge
     let tarpTopY;
     if (isMobile) {
       tarpTopY = Math.max(wrapperTop, tarpBottomY - window.innerHeight * 0.55);
@@ -2183,18 +2934,16 @@ body {
   window.addEventListener("resize", () => {
     fillGrid();
     positionTarp();
-    // Re-render detail view if open (handles desktop ↔ mobile switch)
     if (currentDetailIndex !== null && detailOverlay.classList.contains('active')) {
       openDetail(currentDetailIndex, currentDetailDrive);
     }
-    // Snap to bottom to avoid blank space after layout change
     requestAnimationFrame(() => {
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
       updatePulley();
+      positionSearchBar();
     });
   });
 
-  // Disable scrolling until assembled
   function lockScroll() {
     document.body.classList.add('no-scroll');
     document.documentElement.classList.add('no-scroll');
@@ -2204,14 +2953,11 @@ body {
     document.documentElement.classList.remove('no-scroll');
   }
 
-  // Block wheel and touch scroll events
   function preventScroll(e) {
-    // Allow scrolling on detail overlay and safety overlay
     if (e.target.closest('.detail-overlay') || e.target.closest('.safety-overlay')) return;
     e.preventDefault();
   }
   
-  // Also prevent keyboard scrolling
   function preventKeyScroll(e) {
     if (!assembled && [32, 33, 34, 35, 36, 38, 40].includes(e.keyCode)) {
       e.preventDefault();
@@ -2225,11 +2971,9 @@ body {
   createFilters();
   fillGrid();
 
-  // Show loader for 3s, then snap to bottom and show tarp
   const loader = document.getElementById('loader');
   setTimeout(() => {
     loader.style.display = 'none';
-    // Scroll to bottom so the assembly button is visible
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
     positionTarp();
     updatePulley();
@@ -2244,8 +2988,8 @@ body {
 
   const WHEEL_SIZE = 28;
   const CARRIAGE_H = 44;
-  const TRACK_TOP = 12 + WHEEL_SIZE; // below top wheel
-  const TRACK_BOTTOM_OFFSET = 12 + WHEEL_SIZE; // above bottom wheel
+  const TRACK_TOP = 12 + WHEEL_SIZE;
+  const TRACK_BOTTOM_OFFSET = 12 + WHEEL_SIZE;
 
   let dragging = false;
   let dragStartY = 0;
@@ -2260,7 +3004,6 @@ body {
     const viewH = window.innerHeight;
     const maxScroll = scrollH - viewH;
 
-    // Hide pulley if no scrolling needed
     if (maxScroll <= 0) {
       pulley.classList.add('hidden');
       return;
@@ -2273,8 +3016,7 @@ body {
 
     carriage.style.top = carriageY + 'px';
 
-    // Spin wheels based on scroll position
-    const totalRotation = scrollFraction * 720; // two full turns over full scroll
+    const totalRotation = scrollFraction * 720;
     wheelTop.style.transform = `rotate(${totalRotation}deg)`;
     wheelBottom.style.transform = `rotate(${totalRotation}deg)`;
   }
@@ -2282,7 +3024,6 @@ body {
   window.addEventListener('scroll', updatePulley, { passive: true });
   window.addEventListener('resize', updatePulley);
 
-  // Drag to scroll
   carriage.addEventListener('mousedown', (e) => {
     e.preventDefault();
     dragging = true;
@@ -2317,6 +3058,7 @@ body {
   });
 
   function handleDrag(clientY) {
+    if (infoOpen) return;
     const deltaY = clientY - dragStartY;
     const trackH = getTrackHeight();
     const scrollH = document.documentElement.scrollHeight;
@@ -2327,8 +3069,8 @@ body {
     window.scrollTo({ top: dragStartScroll + scrollDelta, behavior: 'instant' });
   }
 
-  // Click on rope to jump scroll
   pulley.addEventListener('click', (e) => {
+    if (infoOpen) return;
     if (e.target === carriage || carriage.contains(e.target)) return;
 
     const rect = pulley.getBoundingClientRect();
@@ -2343,7 +3085,6 @@ body {
     window.scrollTo({ top: fraction * maxScroll, behavior: 'smooth' });
   });
 
-  // Initial position
   requestAnimationFrame(updatePulley);
 </script>
 
