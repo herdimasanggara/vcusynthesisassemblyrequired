@@ -2875,7 +2875,7 @@ body {
     if (!sb || sb.classList.contains('unassembled')) return;
 
     const isMobile = window.innerWidth <= 768;
-    const gap = isMobile ? 4 : parseInt(getComputedStyle(filterBar).gap) || 8;
+    const gap = isMobile ? 12 : 24;
 
     const rightRect = document.querySelector('.filter-right').getBoundingClientRect();
     const viewH = window.innerHeight;
