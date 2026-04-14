@@ -2083,8 +2083,8 @@ body {
       const sideGap = 32;
       sb.style.left = sideGap + 'px';
       sb.style.width = (rightRect.left - sideGap - gap) + 'px';
-      sb.style.height = '';
-      sb.style.top = '';
+      sb.style.height = 'auto';
+      sb.style.top = rightRect.top + 'px';
       sb.style.bottom = '0px';
     } else {
       const leftRect = document.querySelector('.filter-left').getBoundingClientRect();
@@ -2119,9 +2119,15 @@ body {
   }
 
   window.addEventListener("resize", () => {
-    fillGrid(); positionTarp();
-    if (currentDetailIndex !== null && detailOverlay.classList.contains('active')) openDetail(currentDetailIndex, currentDetailDrive);
-    requestAnimationFrame(() => { window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' }); updatePulley(); positionSearchBar(); });
+    const searchFocused = document.activeElement === searchInput;
+    if (!searchFocused) {
+      fillGrid(); positionTarp();
+      if (currentDetailIndex !== null && detailOverlay.classList.contains('active')) openDetail(currentDetailIndex, currentDetailDrive);
+    }
+    requestAnimationFrame(() => {
+      if (!searchFocused) { window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' }); }
+      updatePulley(); positionSearchBar();
+    });
   });
 
   function lockScroll() { document.body.classList.add('no-scroll'); document.documentElement.classList.add('no-scroll'); }
