@@ -44,7 +44,7 @@
 .mesh-toggle,
 .info-btn,
 .cell,
-.detail-screw,
+.detail-screw.close-screw,
 .detail-info-cell.links-cell a,
 .pulley-carriage,
 [role="button"] {
@@ -169,8 +169,6 @@ body {
   align-items: center;
   gap: clamp(8px, 3vw, 2px);
 }
-
-/* ---- REVISION 2: White buttons ---- */
 
 .filter-btn {
   width: clamp(44px, 6vw, 64px);
@@ -340,20 +338,8 @@ body {
   display: flex;
   align-items: flex-start;
   background:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 6px,
-      rgba(255,255,255,0.06) 6px,
-      rgba(255,255,255,0.06) 7px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 6px,
-      rgba(255,255,255,0.06) 6px,
-      rgba(255,255,255,0.06) 7px
-    ),
+    repeating-linear-gradient(0deg,transparent,transparent 6px,rgba(255,255,255,0.06) 6px,rgba(255,255,255,0.06) 7px),
+    repeating-linear-gradient(90deg,transparent,transparent 6px,rgba(255,255,255,0.06) 6px,rgba(255,255,255,0.06) 7px),
     rgba(0, 60, 130, 0.95);
   border-top: var(--filter-stroke) solid rgba(100, 170, 255, 0.4);
   border-left: var(--filter-stroke) solid rgba(100, 170, 255, 0.4);
@@ -363,9 +349,7 @@ body {
   box-shadow: 0 -2px 8px rgba(0,0,0,0.25);
 }
 
-.search-blueprint.unassembled {
-  display: none;
-}
+.search-blueprint.unassembled { display: none; }
 
 .search-blueprint-input {
   flex: 1;
@@ -404,43 +388,25 @@ body {
 }
 
 .search-blueprint-btn svg {
-  width: 18px;
-  height: 18px;
+  width: 18px; height: 18px;
   stroke: rgba(255,255,255,0.6);
-  fill: none;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  fill: none; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
 }
 
-.search-blueprint-btn:hover svg {
-  stroke: #ffffff;
-}
+.search-blueprint-btn:hover svg { stroke: #ffffff; }
 
-/* Dropdown results */
 .search-dropdown {
   display: none;
   position: absolute;
   bottom: 100%;
-  left: -1px;
-  right: -1px;
+  left: calc(-1 * var(--filter-stroke));
+  right: calc(-1 * var(--filter-stroke));
   max-height: 200px;
   overflow-y: auto;
   background:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 6px,
-      rgba(255,255,255,0.04) 6px,
-      rgba(255,255,255,0.04) 7px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 6px,
-      rgba(255,255,255,0.04) 6px,
-      rgba(255,255,255,0.04) 7px
-    ),
+    repeating-linear-gradient(0deg,transparent,transparent 6px,rgba(255,255,255,0.04) 6px,rgba(255,255,255,0.04) 7px),
+    repeating-linear-gradient(90deg,transparent,transparent 6px,rgba(255,255,255,0.04) 6px,rgba(255,255,255,0.04) 7px),
     rgba(0, 50, 110, 0.97);
   border: var(--filter-stroke) solid rgba(100, 170, 255, 0.4);
   border-bottom: none;
@@ -449,9 +415,7 @@ body {
   scrollbar-width: none;
 }
 
-.search-dropdown.visible {
-  display: block;
-}
+.search-dropdown.visible { display: block; }
 
 .search-dropdown-item {
   padding: 8px 12px;
@@ -464,9 +428,7 @@ body {
   border-bottom: 1px solid rgba(100, 170, 255, 0.12);
 }
 
-.search-dropdown-item:last-child {
-  border-bottom: none;
-}
+.search-dropdown-item:last-child { border-bottom: none; }
 
 .search-dropdown-item:hover,
 .search-dropdown-item.selected {
@@ -479,43 +441,16 @@ body {
   font-weight: 600;
 }
 
-/* Search-active cell highlighting — mesh only, no dimming */
-.wrapper.search-active .cell.search-match-cell .cell-image {
-  opacity: 1;
-}
-
-.wrapper.search-active .cell.search-match-cell .mesh {
-  opacity: 1;
-}
-
+.wrapper.search-active .cell.search-match-cell .cell-image { opacity: 1; }
+.wrapper.search-active .cell.search-match-cell .mesh { opacity: 1; }
 .wrapper.search-active .cell.search-match-cell .screw-left,
-.wrapper.search-active .cell.search-match-cell .screw-right {
-  display: none;
-}
-
-/* ================= MOBILE SEARCH ================= */
+.wrapper.search-active .cell.search-match-cell .screw-right { display: none; }
 
 @media (max-width: 768px) {
-  .search-blueprint-input {
-    font-size: 13px;
-    padding: 0 8px;
-    height: 30px;
-  }
-
-  .search-blueprint-btn {
-    width: 30px;
-    height: 30px;
-  }
-
-  .search-blueprint-btn svg {
-    width: 14px;
-    height: 14px;
-  }
-
-  .search-dropdown-item {
-    padding: 8px;
-    font-size: 12px;
-  }
+  .search-blueprint-input { font-size: 13px; padding: 0 8px; height: 30px; }
+  .search-blueprint-btn { width: 30px; height: 30px; }
+  .search-blueprint-btn svg { width: 14px; height: 14px; }
+  .search-dropdown-item { padding: 8px; font-size: 12px; }
 }
 
 /* ================= GRID ================= */
@@ -554,9 +489,7 @@ body {
   overflow: hidden;
 }
 
-.grid-title span {
-  margin-right: -5px;
-}
+.grid-title span { margin-right: -5px; }
 
 /* ================= JIB CRANE BEAMS ================= */
 
@@ -567,15 +500,14 @@ body {
   transform: translateX(-50%);
   width: 100%;
   max-width: var(--max-width);
-  height: 160px;
+  height: 180px;
   z-index: 50;
-  pointer-events: none;
+  pointer-events: auto;
   display: none;
+  overflow: visible;
 }
 
-.crane.visible {
-  display: block;
-}
+.crane.visible { display: block; }
 
 .crane-group {
   position: absolute;
@@ -583,14 +515,16 @@ body {
   width: clamp(240px, 28vw, 340px);
 }
 
-.crane-group-top {
-  left: var(--side-gap);
-  z-index: 2;
+.crane-group-top { left: var(--side-gap); z-index: 2; }
+.crane-group-bottom { left: calc(var(--side-gap) + 50px); z-index: 1; }
+
+.crane.hovered .crane-group-bottom {
+  top: 8px;
 }
 
-.crane-group-bottom {
-  left: calc(var(--side-gap) + 50px);
-  z-index: 1;
+.crane.hovered .crane-group-bottom .crane-chain {
+  top: -8px;
+  height: calc(46px + 8px);
 }
 
 .crane-chain {
@@ -598,9 +532,7 @@ body {
   top: 0;
   width: 14px;
   transform: translateX(-50%);
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Crect x='2' y='0' width='10' height='11' rx='5' fill='none' stroke='%23888' stroke-width='2'/%3E%3Crect x='4' y='7' width='6' height='7' rx='3' fill='none' stroke='%23aaa' stroke-width='1.5'/%3E%3C/svg%3E")
-    repeat-y center top;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Crect x='2' y='0' width='10' height='11' rx='5' fill='none' stroke='%23888' stroke-width='2'/%3E%3Crect x='4' y='7' width='6' height='7' rx='3' fill='none' stroke='%23aaa' stroke-width='1.5'/%3E%3C/svg%3E") repeat-y center top;
   background-size: 14px 12px;
 }
 
@@ -615,23 +547,20 @@ body {
 .crane-hook {
   position: absolute;
   transform: translateX(-50%);
-  width: 26px;
-  height: 24px;
+  width: 26px; height: 24px;
   z-index: 2;
 }
 
 .crane-group-top .crane-hook { top: 12px; }
 .crane-group-top .crane-hook-left { left: 18%; }
 .crane-group-top .crane-hook-right { left: 82%; }
-
 .crane-group-bottom .crane-hook { top: 44px; }
 .crane-group-bottom .crane-hook-left { left: 18%; }
 .crane-group-bottom .crane-hook-right { left: 82%; }
 
 .crane-latch {
   position: absolute;
-  width: 14px;
-  height: 10px;
+  width: 14px; height: 10px;
   background: transparent;
   border: 2.5px solid #111;
   border-bottom: none;
@@ -647,8 +576,7 @@ body {
 
 .crane-ibeam {
   position: absolute;
-  width: 100%;
-  left: 0;
+  width: 100%; left: 0;
   z-index: 4;
 }
 
@@ -657,14 +585,7 @@ body {
 
 .ibeam-flange {
   height: 10px;
-  background: linear-gradient(
-    to bottom,
-    #d0d0d0 0%,
-    #e8e8e8 30%,
-    #f0f0f0 50%,
-    #d8d8d8 70%,
-    #b0b0b0 100%
-  );
+  background: linear-gradient(to bottom, #d0d0d0 0%, #e8e8e8 30%, #f0f0f0 50%, #d8d8d8 70%, #b0b0b0 100%);
   position: relative;
 }
 
@@ -673,69 +594,42 @@ body {
   box-shadow: 0 -1px 0 rgba(255,255,255,0.3);
 }
 
-.ibeam-flange-top::before,
-.ibeam-flange-top::after,
-.ibeam-flange-bottom::before,
-.ibeam-flange-bottom::after {
+.ibeam-flange-top::before, .ibeam-flange-top::after,
+.ibeam-flange-bottom::before, .ibeam-flange-bottom::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 0; right: 0;
   height: 2px;
 }
 
-.ibeam-flange-top::after {
-  bottom: 0;
-  background: linear-gradient(to bottom, #999, #888);
-}
+.ibeam-flange-top::after { bottom: 0; background: linear-gradient(to bottom, #999, #888); }
 
 .ibeam-flange-bottom {
   border-radius: 0 0 2px 2px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.35);
 }
 
-.ibeam-flange-bottom::before {
-  top: 0;
-  background: linear-gradient(to bottom, #bbb, #aaa);
-}
+.ibeam-flange-bottom::before { top: 0; background: linear-gradient(to bottom, #bbb, #aaa); }
 
 .ibeam-web {
   height: 38px;
   margin: 0 14px;
-  background: linear-gradient(
-    to bottom,
-    #777 0%,
-    #999 15%,
-    #aaa 40%,
-    #bbb 50%,
-    #aaa 60%,
-    #999 85%,
-    #777 100%
-  );
+  background: linear-gradient(to bottom, #777 0%, #999 15%, #aaa 40%, #bbb 50%, #aaa 60%, #999 85%, #777 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
 }
 
-.ibeam-web::before,
-.ibeam-web::after {
+.ibeam-web::before, .ibeam-web::after {
   content: "";
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: 0; bottom: 0;
   width: 3px;
 }
 
-.ibeam-web::before {
-  left: 0;
-  background: linear-gradient(to right, rgba(0,0,0,0.15), transparent);
-}
-
-.ibeam-web::after {
-  right: 0;
-  background: linear-gradient(to left, rgba(0,0,0,0.15), transparent);
-}
+.ibeam-web::before { left: 0; background: linear-gradient(to right, rgba(0,0,0,0.15), transparent); }
+.ibeam-web::after { right: 0; background: linear-gradient(to left, rgba(0,0,0,0.15), transparent); }
 
 .crane-beam-text {
   font-family: 'AssemblyRequired', 'Work Sans', sans-serif;
@@ -750,31 +644,21 @@ body {
   z-index: 1;
 }
 
-@media (max-width: 768px) {
-  .crane {
-    display: none !important;
-  }
-}
-
-.detail-overlay.active ~ .crane {
-  display: none !important;
-}
+@media (max-width: 768px) { .crane { display: none !important; } }
+.detail-overlay.active ~ .crane { display: none !important; }
 
 /* ================= MESH ================= */
 
 .cell-image {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background-size: cover;
   background-position: center;
-  opacity: 0;
-  z-index: 1;
+  opacity: 0; z-index: 1;
   pointer-events: none;
 }
 
 .mesh {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   opacity: 0;
   pointer-events: none;
   z-index: 2;
@@ -782,170 +666,100 @@ body {
   background-repeat: no-repeat;
 }
 
-.cell:hover .cell-image {
-  opacity: 1;
-}
+.cell:hover .cell-image { opacity: 1; }
+.cell:hover .mesh { opacity: 1; }
 
-.cell:hover .mesh {
-  opacity: 1;
-}
-
-.wrapper.filtering .cell.match .cell-image {
-  opacity: 1;
-}
-
-.wrapper.filtering .cell.match .mesh {
-  opacity: 1;
-}
-
+.wrapper.filtering .cell.match .cell-image { opacity: 1; }
+.wrapper.filtering .cell.match .mesh { opacity: 1; }
 .wrapper.filtering .cell.match .screw-left,
-.wrapper.filtering .cell.match .screw-right {
-  display: none;
-}
+.wrapper.filtering .cell.match .screw-right { display: none; }
 
-.cell.hidden {
-  display: none;
-}
+.cell.hidden { display: none; }
 
-.force-mesh .cell-image {
-  opacity: 1 !important;
-}
-
-.force-mesh .mesh {
-  opacity: 1 !important;
-}
-
+.force-mesh .cell-image { opacity: 1 !important; }
+.force-mesh .mesh { opacity: 1 !important; }
 .force-mesh .screw-left,
-.force-mesh .screw-right {
-  display: none !important;
-}
+.force-mesh .screw-right { display: none !important; }
 
 /* ================= SCREWS ================= */
 
-.screw-left,
-.screw-right {
+.screw-left, .screw-right {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   width: var(--screw-size);
   height: var(--screw-size);
   border-radius: 50%;
-  background:
-    radial-gradient(circle at 35% 35%, #ddd 0%, #bbb 30%, #999 65%, #777 100%);
-  box-shadow:
-    inset -2px -2px 4px rgba(0,0,0,0.3),
-    inset 2px 2px 4px rgba(255,255,255,0.25);
+  background: radial-gradient(circle at 35% 35%, #ddd 0%, #bbb 30%, #999 65%, #777 100%);
+  box-shadow: inset -2px -2px 4px rgba(0,0,0,0.3), inset 2px 2px 4px rgba(255,255,255,0.25);
   z-index: 2;
 }
 
 .screw-left { left: var(--inner-padding); }
 .screw-right { right: var(--inner-padding); }
 
-.screw-left::after,
-.screw-right::after {
+.screw-left::after, .screw-right::after {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   background: #333;
 }
 
-/* ================= SCREW TYPES ================= */
-
 [data-drive="slotted"] .screw-left::after,
-[data-drive="slotted"] .screw-right::after {
-  width: 60%;
-  height: 2px;
-}
+[data-drive="slotted"] .screw-right::after { width: 60%; height: 2px; }
 
 [data-drive="cross"] .screw-left::after,
-[data-drive="cross"] .screw-right::after {
-  width: 60%;
-  height: 2px;
-}
+[data-drive="cross"] .screw-right::after { width: 60%; height: 2px; }
 
 [data-drive="cross"] .screw-left::before,
 [data-drive="cross"] .screw-right::before {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 2px;
-  height: 60%;
+  top: 50%; left: 50%;
+  width: 2px; height: 60%;
   background: #333;
   transform: translate(-50%, -50%);
 }
 
 [data-drive="robertson"] .screw-left::after,
-[data-drive="robertson"] .screw-right::after {
-  width: 6px;
-  height: 6px;
-}
+[data-drive="robertson"] .screw-right::after { width: 6px; height: 6px; }
 
 [data-drive="hex"] .screw-left::after,
 [data-drive="hex"] .screw-right::after {
-  width: 7px;
-  height: 7px;
-  clip-path: polygon(
-    25% 0%, 75% 0%,
-    100% 50%, 75% 100%,
-    25% 100%, 0% 50%
-  );
+  width: 7px; height: 7px;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 }
 
 [data-drive="spanner"] .screw-left::after,
 [data-drive="spanner"] .screw-right::after {
-  width: 12px;
-  height: 12px;
-  background:
-    radial-gradient(circle at 22% 50%, #333 2px, transparent 2.5px),
-    radial-gradient(circle at 78% 50%, #333 2px, transparent 2.5px);
+  width: 12px; height: 12px;
+  background: radial-gradient(circle at 22% 50%, #333 2px, transparent 2.5px),
+              radial-gradient(circle at 78% 50%, #333 2px, transparent 2.5px);
   background-repeat: no-repeat;
 }
 
-.cell:hover .screw-left,
-.cell:hover .screw-right {
-  display: none;
-}
+.cell:hover .screw-left, .cell:hover .screw-right { display: none; }
 
 /* ================= BEAMS ================= */
 
-.cell::before,
-.cell::after {
+.cell::before, .cell::after {
   content: "";
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: 0; bottom: 0;
   width: var(--beam);
-  background: linear-gradient(
-    to right,
-    var(--tube-dark),
-    var(--tube-mid),
-    var(--tube-light),
-    var(--tube-mid),
-    var(--tube-dark)
-  );
+  background: linear-gradient(to right, var(--tube-dark), var(--tube-mid), var(--tube-light), var(--tube-mid), var(--tube-dark));
   z-index: 3;
 }
 
 .cell::before { left: 0; }
 .cell::after { right: 0; }
 
-.beam-top,
-.beam-bottom {
+.beam-top, .beam-bottom {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 0; right: 0;
   height: var(--beam);
-  background: linear-gradient(
-    to bottom,
-    var(--tube-dark),
-    var(--tube-mid),
-    var(--tube-light),
-    var(--tube-mid),
-    var(--tube-dark)
-  );
+  background: linear-gradient(to bottom, var(--tube-dark), var(--tube-mid), var(--tube-light), var(--tube-mid), var(--tube-dark));
   z-index: 3;
 }
 
@@ -953,38 +767,20 @@ body {
 .beam-bottom { bottom: 0; }
 
 .braces {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background:
-    linear-gradient(
-      to bottom right,
-      transparent calc(50% - var(--beam)/2),
-      var(--tube-mid) calc(50% - var(--beam)/2),
-      var(--tube-light) 50%,
-      var(--tube-mid) calc(50% + var(--beam)/2),
-      transparent calc(50% + var(--beam)/2)
-    ),
-    linear-gradient(
-      to top right,
-      transparent calc(50% - var(--beam)/2),
-      var(--tube-mid) calc(50% - var(--beam)/2),
-      var(--tube-light) 50%,
-      var(--tube-mid) calc(50% + var(--beam)/2),
-      transparent calc(50% + var(--beam)/2)
-    );
+    linear-gradient(to bottom right, transparent calc(50% - var(--beam)/2), var(--tube-mid) calc(50% - var(--beam)/2), var(--tube-light) 50%, var(--tube-mid) calc(50% + var(--beam)/2), transparent calc(50% + var(--beam)/2)),
+    linear-gradient(to top right, transparent calc(50% - var(--beam)/2), var(--tube-mid) calc(50% - var(--beam)/2), var(--tube-light) 50%, var(--tube-mid) calc(50% + var(--beam)/2), transparent calc(50% + var(--beam)/2));
   z-index: 1;
 }
 
-.info-panel {
-  display: none;
-}
+.info-panel { display: none; }
 
 /* ================= SAFETY TAPE / INFO OVERLAY ================= */
 
 .safety-overlay {
   display: none;
-  position: fixed;
-  inset: 0;
+  position: fixed; inset: 0;
   z-index: 300;
   flex-direction: column;
   align-items: center;
@@ -992,14 +788,11 @@ body {
   pointer-events: auto;
 }
 
-.safety-overlay.active {
-  display: flex;
-}
+.safety-overlay.active { display: flex; }
 
 .safety-overlay::before {
   content: "";
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background: rgba(0, 0, 0, 0.4);
 }
 
@@ -1012,27 +805,13 @@ body {
   z-index: 1;
 }
 
-.safety-stripe {
-  display: none;
-}
+.safety-stripe { display: none; }
 
 .safety-content {
   width: 100%;
   background:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 6px,
-      rgba(255,255,255,0.05) 6px,
-      rgba(255,255,255,0.05) 7px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 6px,
-      rgba(255,255,255,0.05) 6px,
-      rgba(255,255,255,0.05) 7px
-    ),
+    repeating-linear-gradient(0deg,transparent,transparent 6px,rgba(255,255,255,0.05) 6px,rgba(255,255,255,0.05) 7px),
+    repeating-linear-gradient(90deg,transparent,transparent 6px,rgba(255,255,255,0.05) 6px,rgba(255,255,255,0.05) 7px),
     rgba(0, 60, 130, 0.95);
   display: flex;
   align-items: center;
@@ -1061,37 +840,15 @@ body {
   text-align: left;
 }
 
-.safety-content .safety-info {
-  flex: 3;
-  font-size: clamp(14px, 1.6vw, 20px);
-}
-
-.safety-content .safety-spacer {
-  flex: 1;
-}
-
-.safety-content .safety-colophon {
-  flex: 2;
-  font-size: clamp(8px, 0.9vw, 11px);
-  color: rgba(255, 255, 255, 0.7);
-}
+.safety-content .safety-info { flex: 3; font-size: clamp(14px, 1.6vw, 20px); }
+.safety-content .safety-spacer { flex: 1; }
+.safety-content .safety-colophon { flex: 2; font-size: clamp(8px, 0.9vw, 11px); color: rgba(255, 255, 255, 0.7); }
 
 @media (max-width: 768px) {
-  .safety-content-inner {
-    padding: 20px 24px;
-  }
-
-  .safety-content .safety-info {
-    font-size: 14px;
-  }
-
-  .safety-content .safety-colophon {
-    display: none;
-  }
-
-  .safety-content .safety-spacer {
-    display: none;
-  }
+  .safety-content-inner { padding: 20px 24px; }
+  .safety-content .safety-info { font-size: 14px; }
+  .safety-content .safety-colophon { display: none; }
+  .safety-content .safety-spacer { display: none; }
 }
 
 /* ================= ASSEMBLY BUTTON ================= */
@@ -1123,8 +880,7 @@ body {
 .assembly-btn .assembly-screw::after {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   width: 60%;
   height: var(--filter-stroke);
@@ -1134,8 +890,7 @@ body {
 .assembly-btn .assembly-screw::before {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   width: var(--filter-stroke);
   height: 60%;
@@ -1149,21 +904,15 @@ body {
 }
 
 .assembly-btn .assembly-screw:hover::after,
-.assembly-btn .assembly-screw:hover::before {
-  background: #ffffff;
-}
+.assembly-btn .assembly-screw:hover::before { background: #ffffff; }
 
-.assembly-btn.hidden {
-  visibility: hidden;
-  pointer-events: none;
-}
+.assembly-btn.hidden { visibility: hidden; pointer-events: none; }
 
 /* ================= LANDING I-BEAMS ================= */
 
 .landing-beams {
   position: fixed;
-  top: 0;
-  left: 50%;
+  top: 0; left: 50%;
   transform: translateX(-50%);
   width: 100%;
   max-width: var(--max-width);
@@ -1195,9 +944,7 @@ body {
   bottom: calc(100% + 20px);
   width: 14px;
   transform: translateX(-50%);
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Crect x='2' y='0' width='10' height='11' rx='5' fill='none' stroke='%23888' stroke-width='2'/%3E%3Crect x='4' y='7' width='6' height='7' rx='3' fill='none' stroke='%23aaa' stroke-width='1.5'/%3E%3C/svg%3E")
-    repeat-y center top;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Crect x='2' y='0' width='10' height='11' rx='5' fill='none' stroke='%23888' stroke-width='2'/%3E%3Crect x='4' y='7' width='6' height='7' rx='3' fill='none' stroke='%23aaa' stroke-width='1.5'/%3E%3C/svg%3E") repeat-y center top;
   background-size: 14px 12px;
   height: 100vh;
 }
@@ -1209,8 +956,7 @@ body {
   position: absolute;
   top: -32px;
   transform: translateX(-50%);
-  width: 26px;
-  height: 24px;
+  width: 26px; height: 24px;
   z-index: 2;
 }
 
@@ -1220,8 +966,7 @@ body {
 .landing-beam-group .landing-latch {
   position: absolute;
   top: -9px;
-  width: 14px;
-  height: 10px;
+  width: 14px; height: 10px;
   background: transparent;
   border: 2.5px solid #111;
   border-bottom: none;
@@ -1239,113 +984,44 @@ body {
   z-index: 4;
 }
 
-/* Animation states — Phase 1: lift up */
-.landing-beams.phase-up .landing-beam-group {
-  transition: bottom 1.4s steps(12, end);
-}
+.landing-beams.phase-up .landing-beam-group { transition: bottom 1.4s steps(12, end); }
+.landing-beams.phase-up .landing-beam-required { transition-delay: 0.15s; }
+.landing-beams.phase-up .landing-beam-assembly { bottom: calc(100vh - 44px - 58px); }
+.landing-beams.phase-up .landing-beam-required { bottom: calc(100vh - 76px - 58px); }
 
-.landing-beams.phase-up .landing-beam-required {
-  transition-delay: 0.15s;
-}
+.landing-beams.phase-left .landing-beam-group { transition: left 1s steps(8, end); }
+.landing-beams.phase-left .landing-beam-required { transition-delay: 0.1s; }
+.landing-beams.phase-left .landing-beam-assembly { bottom: calc(100vh - 44px - 58px); left: var(--side-gap); }
+.landing-beams.phase-left .landing-beam-required { bottom: calc(100vh - 76px - 58px); left: calc(var(--side-gap) + 50px); }
 
-.landing-beams.phase-up .landing-beam-assembly {
-  bottom: calc(100vh - 44px - 58px);
-}
+.landing-beams.done { display: none; }
 
-.landing-beams.phase-up .landing-beam-required {
-  bottom: calc(100vh - 76px - 58px);
-}
-
-/* Animation states — Phase 2: swing left */
-.landing-beams.phase-left .landing-beam-group {
-  transition: left 1s steps(8, end);
-}
-
-.landing-beams.phase-left .landing-beam-required {
-  transition-delay: 0.1s;
-}
-
-.landing-beams.phase-left .landing-beam-assembly {
-  bottom: calc(100vh - 44px - 58px);
-  left: var(--side-gap);
-}
-
-.landing-beams.phase-left .landing-beam-required {
-  bottom: calc(100vh - 76px - 58px);
-  left: calc(var(--side-gap) + 50px);
-}
-
-.landing-beams.done {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .landing-beams {
-    display: none;
-  }
-}
+@media (max-width: 768px) { .landing-beams { display: none; } }
 
 /* ================= UNASSEMBLED STATE ================= */
 
-.wrapper.unassembled .braces {
-  opacity: 0;
-}
-
-.wrapper.unassembled .screw-left,
-.wrapper.unassembled .screw-right {
-  opacity: 0;
-}
-
-.wrapper.unassembled .cell {
-  pointer-events: none;
-}
-
-.wrapper.unassembled .cell:hover .mesh {
-  opacity: 0;
-}
-
-.wrapper.unassembled .cell:hover .cell-image {
-  opacity: 0;
-}
-
+.wrapper.unassembled .braces { opacity: 0; }
+.wrapper.unassembled .screw-left, .wrapper.unassembled .screw-right { opacity: 0; }
+.wrapper.unassembled .cell { pointer-events: none; }
+.wrapper.unassembled .cell:hover .mesh { opacity: 0; }
+.wrapper.unassembled .cell:hover .cell-image { opacity: 0; }
 .wrapper.unassembled .cell:hover .screw-left,
-.wrapper.unassembled .cell:hover .screw-right {
-  display: block;
-  opacity: 0;
-}
+.wrapper.unassembled .cell:hover .screw-right { display: block; opacity: 0; }
 
 .cell.assembling .braces,
 .cell.assembling .screw-left,
-.cell.assembling .screw-right {
-  opacity: 0;
-}
+.cell.assembling .screw-right { opacity: 0; }
 
 .cell.assembled-reveal .braces,
 .cell.assembled-reveal .screw-left,
-.cell.assembled-reveal .screw-right {
-  opacity: 1;
-}
+.cell.assembled-reveal .screw-right { opacity: 1; }
 
-.filter-bar.unassembled {
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.pulley.unassembled {
-  opacity: 0;
-  pointer-events: none;
-}
+.filter-bar.unassembled { visibility: hidden; pointer-events: none; }
+.pulley.unassembled { opacity: 0; pointer-events: none; }
 
 @media (max-width: 768px) {
-  .assembly-btn {
-    padding: 16px var(--side-gap);
-  }
-
-  .assembly-btn .assembly-screw {
-    width: 30px;
-    height: 30px;
-    border-width: 2px;
-  }
+  .assembly-btn { padding: 16px var(--side-gap); }
+  .assembly-btn .assembly-screw { width: 30px; height: 30px; border-width: 2px; }
 }
 
 /* ================= BLUE TARP ================= */
@@ -1359,69 +1035,43 @@ body {
   pointer-events: none;
   clip-path: inset(0 0 0 0);
   display: none;
-  box-shadow:
-    0 6px 20px rgba(0,0,0,0.5),
-    0 2px 8px rgba(0,0,0,0.3),
-    inset 0 1px 0 rgba(255,255,255,0.08);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08);
   border-bottom: 3px solid #003d80;
 }
 
-.blue-tarp.hidden {
-  display: none;
-}
+.blue-tarp.hidden { display: none; }
 
 .blue-tarp::after {
   content: "";
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 6px,
-      rgba(255,255,255,0.04) 6px,
-      rgba(255,255,255,0.04) 7px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 6px,
-      rgba(255,255,255,0.04) 6px,
-      rgba(255,255,255,0.04) 7px
-    );
+    repeating-linear-gradient(0deg,transparent,transparent 6px,rgba(255,255,255,0.04) 6px,rgba(255,255,255,0.04) 7px),
+    repeating-linear-gradient(90deg,transparent,transparent 6px,rgba(255,255,255,0.04) 6px,rgba(255,255,255,0.04) 7px);
 }
 
 .blue-tarp::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   height: 2px;
   background: rgba(100, 170, 255, 0.15);
 }
 
 @media (max-width: 768px) {
-  .blue-tarp {
-    left: calc(var(--side-gap) - 8px);
-    right: calc(var(--side-gap) - 8px);
-  }
+  .blue-tarp { left: calc(var(--side-gap) - 8px); right: calc(var(--side-gap) - 8px); }
 }
 
 /* ================= LOADER ================= */
 
 #loader {
-  position: fixed;
-  inset: 0;
+  position: fixed; inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
 }
 
-#loader svg {
-  overflow: visible;
-}
+#loader svg { overflow: visible; }
 
 #loader .wrench-group {
   transform-origin: 110px 110px;
@@ -1441,53 +1091,16 @@ body {
 /* ================= MOBILE OVERRIDE ================= */
 
 @media (max-width: 768px) {
-  .filter-bar {
-    gap: 4px;
-    padding: 16px var(--side-gap);
-    justify-content: flex-end;
-  }
-
-  .filter-right {
-    gap: 4px;
-  }
-
-  .wrapper {
-    padding-right: var(--side-gap);
-  }
-
-  .info-panel {
-    margin-right: var(--side-gap);
-    width: min(600px, calc(100% - var(--side-gap) - var(--side-gap)));
-  }
-
-  .filter-btn {
-    width: 30px;
-    height: 30px;
-    border-width: 2px;
-  }
-
-  .filter-left {
-    display: none;
-  }
-
-  .mesh-toggle,
-  .info-btn {
-    width: 30px;
-    height: 30px;
-    border-width: 2px;
-  }
-
-  .info-btn {
-    font-size: 16px;
-  }
-
-  .mesh-toggle {
-    width: 52px;
-  }
-
-  .pulley {
-    display: none !important;
-  }
+  .filter-bar { gap: 4px; padding: 16px var(--side-gap); justify-content: flex-end; }
+  .filter-right { gap: 4px; }
+  .wrapper { padding-right: var(--side-gap); }
+  .info-panel { margin-right: var(--side-gap); width: min(600px, calc(100% - var(--side-gap) - var(--side-gap))); }
+  .filter-btn { width: 30px; height: 30px; border-width: 2px; }
+  .filter-left { display: none; }
+  .mesh-toggle, .info-btn { width: 30px; height: 30px; border-width: 2px; }
+  .info-btn { font-size: 16px; }
+  .mesh-toggle { width: 52px; }
+  .pulley { display: none !important; }
 }
 
 /* ================= PULLEY SCROLLBAR ================= */
@@ -1495,8 +1108,7 @@ body {
 .pulley {
   position: fixed;
   right: max(3px, calc(50% - var(--max-width) / 2 + 3px));
-  top: 0;
-  bottom: 0;
+  top: 0; bottom: 0;
   width: 36px;
   z-index: 100;
   pointer-events: none;
@@ -1506,8 +1118,7 @@ body {
 }
 
 .pulley-wheel {
-  width: 28px;
-  height: 28px;
+  width: 28px; height: 28px;
   border-radius: 50%;
   background: radial-gradient(circle at 38% 35%, #ddd 0%, #aaa 35%, #777 70%, #555 100%);
   box-shadow: inset -1px -1px 3px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(255,255,255,0.1);
@@ -1519,28 +1130,20 @@ body {
 .pulley-wheel::after {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 10px;
-  height: 10px;
+  width: 10px; height: 10px;
   border-radius: 50%;
   background: radial-gradient(circle at 40% 40%, #aaa, #777);
   box-shadow: inset 0 0 2px rgba(0,0,0,0.6);
 }
 
-.pulley-wheel-top {
-  top: 12px;
-}
-
-.pulley-wheel-bottom {
-  bottom: 12px;
-}
+.pulley-wheel-top { top: 12px; }
+.pulley-wheel-bottom { bottom: 12px; }
 
 .pulley-rope {
   position: absolute;
-  top: 26px;
-  bottom: 26px;
+  top: 26px; bottom: 26px;
   width: 3px;
   background: linear-gradient(to right, #777, #aaa, #777);
   border-radius: 2px;
@@ -1549,8 +1152,7 @@ body {
 
 .pulley-rope-right {
   position: absolute;
-  top: 26px;
-  bottom: 26px;
+  top: 26px; bottom: 26px;
   width: 2px;
   right: 4px;
   background: linear-gradient(to right, #666, #888, #666);
@@ -1563,21 +1165,17 @@ body {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  width: 26px;
-  height: 44px;
+  width: 26px; height: 44px;
   z-index: 4;
   pointer-events: auto;
   cursor: grab;
   touch-action: none;
 }
 
-.pulley-carriage:active {
-  cursor: grabbing;
-}
+.pulley-carriage:active { cursor: grabbing; }
 
 .pulley-carriage-body {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   border-radius: 6px;
   background: linear-gradient(to right, #ccc, #e8e8e8, #ffffff, #e8e8e8, #ccc);
   box-shadow: 0 2px 6px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.5);
@@ -1589,36 +1187,22 @@ body {
   gap: 3px;
 }
 
-.pulley-carriage-grip {
-  width: 14px;
-  height: 2px;
-  background: #bbb;
-  border-radius: 1px;
-}
+.pulley-carriage-grip { width: 14px; height: 2px; background: #bbb; border-radius: 1px; }
 
 .pulley-carriage-hook {
   position: absolute;
   bottom: -10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 0;
-  height: 0;
+  width: 0; height: 0;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
   border-top: 10px solid #e0e0e0;
 }
 
-.pulley.hidden {
-  display: none;
-}
-
-.detail-overlay.active ~ .pulley {
-  display: none !important;
-}
-
-.detail-overlay.active ~ .search-blueprint {
-  display: none !important;
-}
+.pulley.hidden { display: none; }
+.detail-overlay.active ~ .pulley { display: none !important; }
+.detail-overlay.active ~ .search-blueprint { display: none !important; }
 
 /* ================= EXPANDED DETAIL VIEW ================= */
 
@@ -1629,8 +1213,7 @@ body {
 
 .detail-overlay {
   display: none;
-  position: fixed;
-  inset: 0;
+  position: fixed; inset: 0;
   z-index: 200;
   overflow: hidden;
 }
@@ -1670,15 +1253,13 @@ body {
     inset 2px 2px 4px rgba(255,255,255,0.25),
     0 2px 6px rgba(0,0,0,0.6);
   z-index: 10;
-  cursor: pointer;
   transform: translate(-50%, -50%);
 }
 
 .detail-screw::after {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   background: #444;
 }
@@ -1686,96 +1267,86 @@ body {
 .detail-screw::before {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   background: #444;
 }
 
-.detail-frame[data-drive="slotted"] .detail-screw::after {
-  width: 60%;
-  height: 12%;
-  background: #333;
+/* --- Drive-type styles for regular (non-close) detail screws --- */
+
+.detail-frame[data-drive="slotted"] .detail-screw:not(.close-screw)::after {
+  width: 60%; height: 12%; background: #333;
 }
-.detail-frame[data-drive="slotted"] .detail-screw::before {
-  display: none;
+.detail-frame[data-drive="slotted"] .detail-screw:not(.close-screw)::before { display: none; }
+
+.detail-frame[data-drive="cross"] .detail-screw:not(.close-screw)::after {
+  width: 60%; height: 12%; background: #333;
+}
+.detail-frame[data-drive="cross"] .detail-screw:not(.close-screw)::before {
+  width: 12%; height: 60%; background: #333;
 }
 
-.detail-frame[data-drive="cross"] .detail-screw::after {
-  width: 60%;
-  height: 12%;
-  background: #333;
+.detail-frame[data-drive="robertson"] .detail-screw:not(.close-screw)::after {
+  width: 30%; height: 30%; background: #333;
 }
-.detail-frame[data-drive="cross"] .detail-screw::before {
-  width: 12%;
-  height: 60%;
-  background: #333;
-}
+.detail-frame[data-drive="robertson"] .detail-screw:not(.close-screw)::before { display: none; }
 
-.detail-frame[data-drive="robertson"] .detail-screw::after {
-  width: 30%;
-  height: 30%;
-  background: #333;
+.detail-frame[data-drive="hex"] .detail-screw:not(.close-screw)::after {
+  width: 42%; height: 42%; background: #333;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 }
-.detail-frame[data-drive="robertson"] .detail-screw::before {
-  display: none;
-}
+.detail-frame[data-drive="hex"] .detail-screw:not(.close-screw)::before { display: none; }
 
-.detail-frame[data-drive="hex"] .detail-screw::after {
-  width: 42%;
-  height: 42%;
-  background: #333;
-  clip-path: polygon(
-    25% 0%, 75% 0%,
-    100% 50%, 75% 100%,
-    25% 100%, 0% 50%
-  );
-}
-.detail-frame[data-drive="hex"] .detail-screw::before {
-  display: none;
-}
-
-.detail-frame[data-drive="spanner"] .detail-screw::after {
-  width: 60%;
-  height: 60%;
-  background:
-    radial-gradient(circle at 30% 50%, #333 22%, transparent 23%),
-    radial-gradient(circle at 70% 50%, #333 22%, transparent 23%);
+.detail-frame[data-drive="spanner"] .detail-screw:not(.close-screw)::after {
+  width: 60%; height: 60%;
+  background: radial-gradient(circle at 22% 50%, #333 18%, transparent 19%),
+              radial-gradient(circle at 78% 50%, #333 18%, transparent 19%);
   background-repeat: no-repeat;
 }
-.detail-frame[data-drive="spanner"] .detail-screw::before {
-  display: none;
+.detail-frame[data-drive="spanner"] .detail-screw:not(.close-screw)::before { display: none; }
+
+/* --- Close screw: X pattern (rotated +) with corrected lighting --- */
+
+.detail-screw.close-screw {
+  cursor: var(--cursor-pointer) !important;
+  /* Pre-rotate gradient & shadows so lighting looks natural at 45° */
+  background: radial-gradient(circle at 29% 50%, #ddd 0%, #bbb 30%, #999 65%, #777 100%) !important;
+  box-shadow:
+    inset -3px 0px 4px rgba(0,0,0,0.3),
+    inset 3px 0px 4px rgba(255,255,255,0.25),
+    1.4px 1.4px 6px rgba(0,0,0,0.6) !important;
+  transform: translate(-50%, -50%) rotate(45deg);
 }
 
-.detail-frame.screws-hover .detail-screw,
-.detail-frame.screws-active .detail-screw {
-  transform: translate(-50%, -50%) rotate(-45deg);
+.detail-screw.close-screw::after {
+  width: 60% !important;
+  height: 12% !important;
+  background: #333 !important;
+  clip-path: none !important;
+  border: none !important;
+}
+
+.detail-screw.close-screw::before {
+  display: block !important;
+  width: 12% !important;
+  height: 60% !important;
+  background: #333 !important;
+}
+
+.detail-screw.close-screw:hover {
+  transform: translate(-50%, -50%) rotate(0deg);
 }
 
 .detail-beam-h {
   height: var(--beam-thick);
   flex-shrink: 0;
-  background: linear-gradient(
-    to bottom,
-    var(--tube-dark),
-    var(--tube-mid),
-    var(--tube-light),
-    var(--tube-mid),
-    var(--tube-dark)
-  );
+  background: linear-gradient(to bottom, var(--tube-dark), var(--tube-mid), var(--tube-light), var(--tube-mid), var(--tube-dark));
 }
 
 .detail-beam-v {
   width: var(--beam-thick);
   flex-shrink: 0;
-  background: linear-gradient(
-    to right,
-    var(--tube-dark),
-    var(--tube-mid),
-    var(--tube-light),
-    var(--tube-mid),
-    var(--tube-dark)
-  );
+  background: linear-gradient(to right, var(--tube-dark), var(--tube-mid), var(--tube-light), var(--tube-mid), var(--tube-dark));
 }
 
 .detail-top-row {
@@ -1795,8 +1366,7 @@ body {
 }
 
 .detail-image-area img {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
@@ -1827,15 +1397,12 @@ body {
 .detail-nav-screw::after {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   border: solid #555;
 }
 
-.detail-nav-screw.prev-screw {
-  left: calc(var(--beam-thick) / 2);
-}
+.detail-nav-screw.prev-screw { left: calc(var(--beam-thick) / 2); }
 
 .detail-nav-screw.prev-screw::after {
   border-width: 7px 10px 7px 0;
@@ -1843,9 +1410,7 @@ body {
   transform: translate(calc(-50% - 2px), -50%);
 }
 
-.detail-nav-screw.prev-screw:hover {
-  transform: translate(-50%, -50%) rotate(-20deg);
-}
+.detail-nav-screw.prev-screw:hover { transform: translate(-50%, -50%) rotate(-20deg); }
 
 .detail-nav-screw.next-screw {
   right: calc(var(--beam-thick) / 2);
@@ -1858,9 +1423,7 @@ body {
   transform: translate(calc(-50% + 2px), -50%);
 }
 
-.detail-nav-screw.next-screw:hover {
-  transform: translate(50%, -50%) rotate(20deg);
-}
+.detail-nav-screw.next-screw:hover { transform: translate(50%, -50%) rotate(20deg); }
 
 .detail-bottom-row {
   display: flex;
@@ -1887,14 +1450,8 @@ body {
   min-height: 0;
 }
 
-.detail-split .detail-info-cell {
-  flex: 1;
-  min-height: 0;
-}
-
-.detail-info-cell.desc-cell {
-  flex: 2;
-}
+.detail-split .detail-info-cell { flex: 1; min-height: 0; }
+.detail-info-cell.desc-cell { flex: 2; }
 
 .detail-info-cell .student-name {
   font-size: clamp(11px, 1.3vw, 16px);
@@ -1917,10 +1474,7 @@ body {
   line-height: 1.4;
 }
 
-.detail-info-cell.link-cell {
-  align-items: flex-start;
-  justify-content: flex-start;
-}
+.detail-info-cell.link-cell { align-items: flex-start; justify-content: flex-start; }
 
 .detail-info-cell.link-cell a {
   color: #ffffff;
@@ -1929,62 +1483,24 @@ body {
   font-weight: 400;
 }
 
-.detail-info-cell.link-cell a:hover {
-  text-decoration: underline;
-}
+.detail-info-cell.link-cell a:hover { text-decoration: underline; }
 
 @media (max-width: 768px) {
-  .detail-overlay.active {
-    overflow-y: hidden;
-  }
-
-  .detail-inner {
-    padding: 16px;
-    height: 100vh;
-    height: 100dvh;
-  }
-
-  .detail-frame {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .detail-top-row,
-  .detail-bottom-row {
-    display: none;
-  }
-
-  .detail-mobile {
-    display: none;
-  }
-
-  :root {
-    --detail-screw-size: 22px;
-  }
+  .detail-overlay.active { overflow-y: hidden; }
+  .detail-inner { padding: 16px; height: 100vh; height: 100dvh; }
+  .detail-frame { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .detail-top-row, .detail-bottom-row { display: none; }
+  .detail-mobile { display: none; }
+  :root { --detail-screw-size: 22px; }
 }
 
-.detail-mobile {
-  display: none;
-}
+.detail-mobile { display: none; }
 
 @media (max-width: 768px) {
-  .detail-mobile {
-    display: flex;
-    flex-direction: column;
-  }
+  .detail-mobile { display: flex; flex-direction: column; }
 
-  .detail-mobile-row {
-    display: flex;
-    min-height: 0;
-    flex: 1;
-  }
-
-  .detail-mobile-row.image-row {
-    flex: 3;
-    position: relative;
-  }
+  .detail-mobile-row { display: flex; min-height: 0; flex: 1; }
+  .detail-mobile-row.image-row { flex: 3; position: relative; }
 
   .detail-mobile-cell {
     flex: 1;
@@ -1996,77 +1512,32 @@ body {
   }
 
   .detail-mobile-cell.title-cell .student-name,
-  .detail-mobile-cell.name-cell .student-name {
-    font-size: 14px;
-    font-weight: 400;
-    color: #ffffff;
-    line-height: 1.2;
-  }
+  .detail-mobile-cell.name-cell .student-name { font-size: 14px; font-weight: 400; color: #ffffff; line-height: 1.2; }
 
   .detail-mobile-cell.title-cell .project-title,
-  .detail-mobile-cell.project-cell .project-title {
-    font-size: 14px;
-    font-weight: 400;
-    color: #ffffff;
-    line-height: 1.2;
-  }
+  .detail-mobile-cell.project-cell .project-title { font-size: 14px; font-weight: 400; color: #ffffff; line-height: 1.2; }
 
   .detail-mobile-cell.image-cell {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0; overflow: hidden;
   }
 
   .detail-mobile-cell.image-cell img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
     display: block;
   }
 
-  .detail-mobile-row.image-row .detail-nav-screw.prev-screw {
-    left: calc(var(--beam-thick) / 2);
-    transform: translate(-50%, -50%);
-  }
+  .detail-mobile-row.image-row .detail-nav-screw.prev-screw { left: calc(var(--beam-thick) / 2); transform: translate(-50%, -50%); }
+  .detail-mobile-row.image-row .detail-nav-screw.next-screw { right: calc(var(--beam-thick) / 2); transform: translate(50%, -50%); }
 
-  .detail-mobile-row.image-row .detail-nav-screw.next-screw {
-    right: calc(var(--beam-thick) / 2);
-    transform: translate(50%, -50%);
-  }
+  .detail-mobile-cell.image-cell .img-placeholder { color: #bbb; font-size: 14px; font-family: 'Work Sans', sans-serif; }
 
-  .detail-mobile-cell.image-cell .img-placeholder {
-    color: #bbb;
-    font-size: 14px;
-    font-family: 'Work Sans', sans-serif;
-  }
+  .detail-mobile-cell.desc-cell p { margin: 0; font-size: 14px; color: #ffffff; line-height: 1.5; }
 
-  .detail-mobile-cell.desc-cell p {
-    margin: 0;
-    font-size: 14px;
-    color: #ffffff;
-    line-height: 1.5;
-  }
-
-  .detail-mobile-cell.link-cell {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
-
-  .detail-mobile-cell.link-cell a {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 400;
-  }
-
-  .detail-mobile-cell.link-cell a:hover {
-    text-decoration: underline;
-  }
+  .detail-mobile-cell.link-cell { display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; }
+  .detail-mobile-cell.link-cell a { color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 400; }
+  .detail-mobile-cell.link-cell a:hover { text-decoration: underline; }
 }
 
 </style>
@@ -2079,73 +1550,57 @@ body {
   <svg width="210" height="310" viewBox="0 0 220 330">
     <defs>
       <linearGradient id="g-steel" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%"   stop-color="#5a6068"/>
-        <stop offset="20%"  stop-color="#b0b6bc"/>
-        <stop offset="50%"  stop-color="#f2f2f2"/>
-        <stop offset="80%"  stop-color="#b0b6bc"/>
+        <stop offset="0%" stop-color="#5a6068"/>
+        <stop offset="20%" stop-color="#b0b6bc"/>
+        <stop offset="50%" stop-color="#f2f2f2"/>
+        <stop offset="80%" stop-color="#b0b6bc"/>
         <stop offset="100%" stop-color="#5a6068"/>
       </linearGradient>
       <linearGradient id="g-steel-v" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%"   stop-color="#5a6068"/>
-        <stop offset="20%"  stop-color="#b0b6bc"/>
-        <stop offset="50%"  stop-color="#f2f2f2"/>
-        <stop offset="80%"  stop-color="#b0b6bc"/>
+        <stop offset="0%" stop-color="#5a6068"/>
+        <stop offset="20%" stop-color="#b0b6bc"/>
+        <stop offset="50%" stop-color="#f2f2f2"/>
+        <stop offset="80%" stop-color="#b0b6bc"/>
         <stop offset="100%" stop-color="#5a6068"/>
       </linearGradient>
       <radialGradient id="g-screw" cx="38%" cy="32%" r="65%">
-        <stop offset="0%"   stop-color="#e8ecef"/>
-        <stop offset="50%"  stop-color="#8f969d"/>
+        <stop offset="0%" stop-color="#e8ecef"/>
+        <stop offset="50%" stop-color="#8f969d"/>
         <stop offset="100%" stop-color="#3a4048"/>
       </radialGradient>
     </defs>
-
     <g class="wrench-group">
-      <rect x="94" y="110" width="32" height="170" rx="8"
-        fill="url(#g-steel-v)" stroke="none"/>
-      <circle cx="110" cy="292" r="24"
-        fill="url(#g-steel-v)" stroke="none"/>
+      <rect x="94" y="110" width="32" height="170" rx="8" fill="url(#g-steel-v)" stroke="none"/>
+      <circle cx="110" cy="292" r="24" fill="url(#g-steel-v)" stroke="none"/>
       <circle cx="110" cy="292" r="13" fill="#FE5000"/>
       <circle cx="110" cy="292" r="11.5" fill="none" stroke="none"/>
-
-      <path d="
-        M 110,68.83    L 145.65,89.42  L 145.65,130.58 L 110,151.17  L 74.35,130.58  L 74.35,89.42  Z
-        M 110,85       L 131.65,97.5   L 131.65,122.5  L 110,135     L 88.35,122.5   L 88.35,97.5   Z
-      " fill="url(#g-steel-v)" stroke="none" fill-rule="evenodd"/>
+      <path d="M 110,68.83 L 145.65,89.42 L 145.65,130.58 L 110,151.17 L 74.35,130.58 L 74.35,89.42 Z M 110,85 L 131.65,97.5 L 131.65,122.5 L 110,135 L 88.35,122.5 L 88.35,97.5 Z" fill="url(#g-steel-v)" stroke="none" fill-rule="evenodd"/>
       <polygon points="130,96 147,88 147,132 130,124" fill="#FE5000" stroke="none"/>
     </g>
-
-    <polygon
-      points="110,85 131.65,97.5 131.65,122.5 110,135 88.35,122.5 88.35,97.5"
-      fill="url(#g-screw)" stroke="none"
-    />
-    <line x1="110" y1="85"  x2="110" y2="135" stroke="#6b7278" stroke-width="0.6" opacity="0.3"/>
-    <line x1="88.35" y1="97.5"  x2="131.65" y2="122.5" stroke="#6b7278" stroke-width="0.6" opacity="0.3"/>
-    <line x1="131.65" y1="97.5"  x2="88.35" y2="122.5" stroke="#6b7278" stroke-width="0.6" opacity="0.3"/>
+    <polygon points="110,85 131.65,97.5 131.65,122.5 110,135 88.35,122.5 88.35,97.5" fill="url(#g-screw)" stroke="none"/>
+    <line x1="110" y1="85" x2="110" y2="135" stroke="#6b7278" stroke-width="0.6" opacity="0.3"/>
+    <line x1="88.35" y1="97.5" x2="131.65" y2="122.5" stroke="#6b7278" stroke-width="0.6" opacity="0.3"/>
+    <line x1="131.65" y1="97.5" x2="88.35" y2="122.5" stroke="#6b7278" stroke-width="0.6" opacity="0.3"/>
     <circle cx="110" cy="110" r="5" fill="#3e4347"/>
     <circle cx="110" cy="110" r="2.5" fill="#7d848b"/>
   </svg>
 </div>
 
 <div class="outer-container">
-
   <div class="wrapper unassembled"></div>
   <div class="blue-tarp" id="blueTarp"></div>
-
   <div class="bottom-bar">
     <div class="filter-bar unassembled">
       <div class="filter-left"></div>
-
       <div class="filter-right">
         <div class="mesh-toggle" role="button" aria-label="Toggle all safety mesh"></div>
         <div class="info-btn" role="button" aria-label="Toggle info panel">i</div>
       </div>
     </div>
-
     <div class="assembly-btn" id="assemblyBtn">
       <div class="assembly-screw"></div>
     </div>
   </div>
-
 </div>
 
 <!-- LANDING I-BEAMS (desktop only) -->
@@ -2153,18 +1608,8 @@ body {
   <div class="landing-beam-group landing-beam-assembly">
     <div class="landing-chain landing-chain-left"></div>
     <div class="landing-chain landing-chain-right"></div>
-    <div class="landing-hook landing-hook-left">
-      <svg viewBox="0 0 26 24" width="26" height="24">
-        <ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/>
-        <line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/>
-      </svg>
-    </div>
-    <div class="landing-hook landing-hook-right">
-      <svg viewBox="0 0 26 24" width="26" height="24">
-        <ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/>
-        <line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/>
-      </svg>
-    </div>
+    <div class="landing-hook landing-hook-left"><svg viewBox="0 0 26 24" width="26" height="24"><ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/><line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/></svg></div>
+    <div class="landing-hook landing-hook-right"><svg viewBox="0 0 26 24" width="26" height="24"><ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/><line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/></svg></div>
     <div class="landing-latch landing-latch-left"></div>
     <div class="landing-latch landing-latch-right"></div>
     <div class="landing-ibeam">
@@ -2173,22 +1618,11 @@ body {
       <div class="ibeam-flange ibeam-flange-bottom"></div>
     </div>
   </div>
-
   <div class="landing-beam-group landing-beam-required">
     <div class="landing-chain landing-chain-left"></div>
     <div class="landing-chain landing-chain-right"></div>
-    <div class="landing-hook landing-hook-left">
-      <svg viewBox="0 0 26 24" width="26" height="24">
-        <ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/>
-        <line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/>
-      </svg>
-    </div>
-    <div class="landing-hook landing-hook-right">
-      <svg viewBox="0 0 26 24" width="26" height="24">
-        <ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/>
-        <line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/>
-      </svg>
-    </div>
+    <div class="landing-hook landing-hook-left"><svg viewBox="0 0 26 24" width="26" height="24"><ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/><line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/></svg></div>
+    <div class="landing-hook landing-hook-right"><svg viewBox="0 0 26 24" width="26" height="24"><ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/><line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/></svg></div>
     <div class="landing-latch landing-latch-left"></div>
     <div class="landing-latch landing-latch-right"></div>
     <div class="landing-ibeam">
@@ -2227,36 +1661,26 @@ body {
 </div>
 
 <div class="pulley unassembled" id="pulley">
-    <div class="pulley-wheel pulley-wheel-top" id="pulleyWheelTop"></div>
-    <div class="pulley-rope"></div>
-    <div class="pulley-rope-right"></div>
-    <div class="pulley-carriage" id="pulleyCarriage">
-      <div class="pulley-carriage-body">
-        <div class="pulley-carriage-grip"></div>
-        <div class="pulley-carriage-grip"></div>
-        <div class="pulley-carriage-grip"></div>
-      </div>
-      <div class="pulley-carriage-hook"></div>
+  <div class="pulley-wheel pulley-wheel-top" id="pulleyWheelTop"></div>
+  <div class="pulley-rope"></div>
+  <div class="pulley-rope-right"></div>
+  <div class="pulley-carriage" id="pulleyCarriage">
+    <div class="pulley-carriage-body">
+      <div class="pulley-carriage-grip"></div>
+      <div class="pulley-carriage-grip"></div>
+      <div class="pulley-carriage-grip"></div>
     </div>
-    <div class="pulley-wheel pulley-wheel-bottom" id="pulleyWheelBottom"></div>
+    <div class="pulley-carriage-hook"></div>
   </div>
+  <div class="pulley-wheel pulley-wheel-bottom" id="pulleyWheelBottom"></div>
+</div>
 
 <div class="crane" id="crane">
   <div class="crane-group crane-group-top">
     <div class="crane-chain crane-chain-left"></div>
     <div class="crane-chain crane-chain-right"></div>
-    <div class="crane-hook crane-hook-left">
-      <svg viewBox="0 0 26 24" width="26" height="24">
-        <ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/>
-        <line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/>
-      </svg>
-    </div>
-    <div class="crane-hook crane-hook-right">
-      <svg viewBox="0 0 26 24" width="26" height="24">
-        <ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/>
-        <line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/>
-      </svg>
-    </div>
+    <div class="crane-hook crane-hook-left"><svg viewBox="0 0 26 24" width="26" height="24"><ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/><line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/></svg></div>
+    <div class="crane-hook crane-hook-right"><svg viewBox="0 0 26 24" width="26" height="24"><ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/><line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/></svg></div>
     <div class="crane-latch crane-latch-left"></div>
     <div class="crane-latch crane-latch-right"></div>
     <div class="crane-ibeam">
@@ -2265,22 +1689,11 @@ body {
       <div class="ibeam-flange ibeam-flange-bottom"></div>
     </div>
   </div>
-
   <div class="crane-group crane-group-bottom">
     <div class="crane-chain crane-chain-left"></div>
     <div class="crane-chain crane-chain-right"></div>
-    <div class="crane-hook crane-hook-left">
-      <svg viewBox="0 0 26 24" width="26" height="24">
-        <ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/>
-        <line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/>
-      </svg>
-    </div>
-    <div class="crane-hook crane-hook-right">
-      <svg viewBox="0 0 26 24" width="26" height="24">
-        <ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/>
-        <line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/>
-      </svg>
-    </div>
+    <div class="crane-hook crane-hook-left"><svg viewBox="0 0 26 24" width="26" height="24"><ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/><line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/></svg></div>
+    <div class="crane-hook crane-hook-right"><svg viewBox="0 0 26 24" width="26" height="24"><ellipse cx="13" cy="5" rx="4" ry="4.5" fill="none" stroke="#FFCD00" stroke-width="2.5"/><line x1="13" y1="9.5" x2="13" y2="24" stroke="#FFCD00" stroke-width="2.5"/></svg></div>
     <div class="crane-latch crane-latch-left"></div>
     <div class="crane-latch crane-latch-right"></div>
     <div class="crane-ibeam">
@@ -2317,16 +1730,9 @@ body {
   const detailOverlay = document.getElementById('detailOverlay');
   const detailInner = document.getElementById('detailInner');
 
-  /* ================= STUDENT DATA (PLACEHOLDER) ================= */
-
   const projectImages = [
-    'example_image_01.png',
-    'example_image_02.png',
-    'example_image_03.png',
-    'example_image_04.png',
-    'example_image_05.png',
-    'example_image_06.png',
-    'example_image_07.png'
+    'example_image_01.png','example_image_02.png','example_image_03.png',
+    'example_image_04.png','example_image_05.png','example_image_06.png','example_image_07.png'
   ];
 
   const students = Array.from({ length: 69 }, (_, i) => ({
@@ -2335,10 +1741,7 @@ body {
     projectTitle: `Project ${i + 1}`,
     description: `Clank, clank, clank. Bolt by bolt, beam by beam, each piece locks into something bigger than itself. What you see here was built from the ground up, assembled by hand, held together by the structure around it. Assembly required.`,
     descriptionShort: `Clank, clank, clank. Built from the ground up. Assembly required.`,
-    links: [
-      { label: '@handle', url: '#' },
-      { label: 'Portfolio', url: '#' }
-    ],
+    links: [{ label: '@handle', url: '#' }, { label: 'Portfolio', url: '#' }],
     images: projectImages
   }));
 
@@ -2352,208 +1755,82 @@ body {
 
   function doSearch() {
     const query = searchInput.value.trim().toLowerCase();
-
     wrapper.classList.remove('search-active');
     document.querySelectorAll('.cell.search-match-cell').forEach(c => c.classList.remove('search-match-cell'));
-
-    if (!query) {
-      searchDropdown.classList.remove('visible');
-      searchDropdown.innerHTML = '';
-      searchMatches = [];
-      searchSelectedIndex = -1;
-      return;
-    }
-
+    if (!query) { searchDropdown.classList.remove('visible'); searchDropdown.innerHTML = ''; searchMatches = []; searchSelectedIndex = -1; return; }
     searchMatches = [];
-    students.forEach((s, idx) => {
-      if (s.name.toLowerCase().includes(query) || s.projectTitle.toLowerCase().includes(query)) {
-        searchMatches.push(idx);
-      }
-    });
-
-    if (searchMatches.length === 0) {
-      searchDropdown.innerHTML = '<div class="search-dropdown-item" style="color:rgba(255,255,255,0.4);cursor:default;">No results</div>';
-      searchDropdown.classList.add('visible');
-      searchSelectedIndex = -1;
-      return;
-    }
-
+    students.forEach((s, idx) => { if (s.name.toLowerCase().includes(query) || s.projectTitle.toLowerCase().includes(query)) searchMatches.push(idx); });
+    if (searchMatches.length === 0) { searchDropdown.innerHTML = '<div class="search-dropdown-item" style="color:rgba(255,255,255,0.4);cursor:default;">No results</div>'; searchDropdown.classList.add('visible'); searchSelectedIndex = -1; return; }
     wrapper.classList.add('search-active');
     const realCells = Array.from(wrapper.querySelectorAll('.cell:not(.spacer)'));
-    searchMatches.forEach(idx => {
-      if (realCells[idx]) {
-        realCells[idx].classList.add('search-match-cell');
-      }
-    });
-
+    searchMatches.forEach(idx => { if (realCells[idx]) realCells[idx].classList.add('search-match-cell'); });
     const shown = searchMatches.slice(0, 10);
-    searchDropdown.innerHTML = shown.map((idx, i) => {
-      const s = students[idx];
-      const name = highlightMatch(s.name, query);
-      const title = highlightMatch(s.projectTitle, query);
-      return `<div class="search-dropdown-item${i === searchSelectedIndex ? ' selected' : ''}" data-idx="${idx}">${name} — ${title}</div>`;
-    }).join('');
+    searchDropdown.innerHTML = shown.map((idx, i) => { const s = students[idx]; return `<div class="search-dropdown-item${i === searchSelectedIndex ? ' selected' : ''}" data-idx="${idx}">${highlightMatch(s.name, query)} — ${highlightMatch(s.projectTitle, query)}</div>`; }).join('');
     searchDropdown.classList.add('visible');
-
     if (searchSelectedIndex < 0) searchSelectedIndex = 0;
     updateDropdownSelection();
-
-    searchDropdown.querySelectorAll('.search-dropdown-item[data-idx]').forEach(item => {
-      item.addEventListener('click', () => {
-        const idx = parseInt(item.dataset.idx);
-        goToStudent(idx);
-      });
-    });
+    searchDropdown.querySelectorAll('.search-dropdown-item[data-idx]').forEach(item => { item.addEventListener('click', () => goToStudent(parseInt(item.dataset.idx))); });
   }
 
-  function highlightMatch(text, query) {
-    const i = text.toLowerCase().indexOf(query);
-    if (i === -1) return text;
-    return text.slice(0, i) + '<span class="search-match">' + text.slice(i, i + query.length) + '</span>' + text.slice(i + query.length);
-  }
+  function highlightMatch(text, query) { const i = text.toLowerCase().indexOf(query); if (i === -1) return text; return text.slice(0, i) + '<span class="search-match">' + text.slice(i, i + query.length) + '</span>' + text.slice(i + query.length); }
 
-  function updateDropdownSelection() {
-    const items = searchDropdown.querySelectorAll('.search-dropdown-item[data-idx]');
-    items.forEach((item, i) => {
-      item.classList.toggle('selected', i === searchSelectedIndex);
-    });
-  }
+  function updateDropdownSelection() { const items = searchDropdown.querySelectorAll('.search-dropdown-item[data-idx]'); items.forEach((item, i) => { item.classList.toggle('selected', i === searchSelectedIndex); }); }
 
   function goToStudent(idx) {
     const driveType = screwTypes[idx % screwTypes.length];
     searchInput.value = '';
     wrapper.classList.remove('search-active');
     document.querySelectorAll('.cell.search-match-cell').forEach(c => c.classList.remove('search-match-cell'));
-    searchDropdown.classList.remove('visible');
-    searchDropdown.innerHTML = '';
-    searchMatches = [];
-    searchSelectedIndex = -1;
+    searchDropdown.classList.remove('visible'); searchDropdown.innerHTML = ''; searchMatches = []; searchSelectedIndex = -1;
     openDetail(idx, driveType);
   }
 
   searchInput.addEventListener('input', doSearch);
-
   searchInput.addEventListener('keydown', (e) => {
     const items = searchDropdown.querySelectorAll('.search-dropdown-item[data-idx]');
-    if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      if (items.length > 0) {
-        searchSelectedIndex = Math.max(0, searchSelectedIndex - 1);
-        updateDropdownSelection();
-      }
-    } else if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      if (items.length > 0) {
-        searchSelectedIndex = Math.min(items.length - 1, searchSelectedIndex + 1);
-        updateDropdownSelection();
-      }
-    } else if (e.key === 'Enter') {
-      e.preventDefault();
-      if (searchMatches.length > 0) {
-        const shown = searchMatches.slice(0, 10);
-        const idx = shown[Math.max(0, searchSelectedIndex)] ?? shown[0];
-        if (idx !== undefined) goToStudent(idx);
-      }
-    } else if (e.key === 'Escape') {
-      searchInput.value = '';
-      doSearch();
-      searchInput.blur();
-    }
+    if (e.key === 'ArrowUp') { e.preventDefault(); if (items.length > 0) { searchSelectedIndex = Math.max(0, searchSelectedIndex - 1); updateDropdownSelection(); } }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); if (items.length > 0) { searchSelectedIndex = Math.min(items.length - 1, searchSelectedIndex + 1); updateDropdownSelection(); } }
+    else if (e.key === 'Enter') { e.preventDefault(); if (searchMatches.length > 0) { const shown = searchMatches.slice(0, 10); const idx = shown[Math.max(0, searchSelectedIndex)] ?? shown[0]; if (idx !== undefined) goToStudent(idx); } }
+    else if (e.key === 'Escape') { searchInput.value = ''; doSearch(); searchInput.blur(); }
   });
-
-  searchBtn.addEventListener('click', () => {
-    if (searchMatches.length > 0) {
-      const shown = searchMatches.slice(0, 10);
-      const idx = shown[Math.max(0, searchSelectedIndex)] ?? shown[0];
-      if (idx !== undefined) goToStudent(idx);
-    }
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('#searchBlueprint')) {
-      searchDropdown.classList.remove('visible');
-    }
-  });
-
-  searchInput.addEventListener('focus', () => {
-    if (searchInput.value.trim()) doSearch();
-  });
+  searchBtn.addEventListener('click', () => { if (searchMatches.length > 0) { const shown = searchMatches.slice(0, 10); const idx = shown[Math.max(0, searchSelectedIndex)] ?? shown[0]; if (idx !== undefined) goToStudent(idx); } });
+  document.addEventListener('click', (e) => { if (!e.target.closest('#searchBlueprint')) searchDropdown.classList.remove('visible'); });
+  searchInput.addEventListener('focus', () => { if (searchInput.value.trim()) doSearch(); });
 
   /* ================= DETAIL VIEW ================= */
 
   function openDetail(studentIndex, driveType) {
     const student = students[studentIndex];
     if (!student) return;
-
     currentDetailIndex = studentIndex;
     currentDetailDrive = driveType;
-
     const isMobile = window.innerWidth <= 768;
     const bH = `<div class="detail-beam-h"></div>`;
     const bV = `<div class="detail-beam-v"></div>`;
-
     let html = `<div class="detail-frame" data-drive="${driveType}">`;
 
     if (isMobile) {
       html += bH;
-      html += `<div class="detail-mobile-row">`;
-      html += bV;
-      html += `<div class="detail-mobile-cell name-cell"><div class="student-name">${student.name}</div></div>`;
-      html += bV;
-      html += `<div class="detail-mobile-cell project-cell"><div class="project-title">${student.projectTitle}</div></div>`;
-      html += bV;
-      html += `</div>`;
+      html += `<div class="detail-mobile-row">${bV}<div class="detail-mobile-cell name-cell"><div class="student-name">${student.name}</div></div>${bV}<div class="detail-mobile-cell project-cell"><div class="project-title">${student.projectTitle}</div></div>${bV}</div>`;
       html += bH;
-      html += `<div class="detail-mobile-row image-row">`;
-      html += bV;
-      html += `<div class="detail-mobile-cell image-cell"><img id="detailImg" src="${student.images[0]}" alt="Project image 1"></div>`;
-      html += bV;
-      html += `<div class="detail-nav-screw prev-screw" id="imgPrev"></div>`;
-      html += `<div class="detail-nav-screw next-screw" id="imgNext"></div>`;
-      html += `</div>`;
+      html += `<div class="detail-mobile-row image-row">${bV}<div class="detail-mobile-cell image-cell"><img id="detailImg" src="${student.images[0]}" alt="Project image 1"></div>${bV}<div class="detail-nav-screw prev-screw" id="imgPrev"></div><div class="detail-nav-screw next-screw" id="imgNext"></div></div>`;
       html += bH;
-      html += `<div class="detail-mobile-row">`;
-      html += bV;
-      html += `<div class="detail-mobile-cell desc-cell"><p>${student.descriptionShort}</p></div>`;
-      html += bV;
-      html += `</div>`;
+      html += `<div class="detail-mobile-row">${bV}<div class="detail-mobile-cell desc-cell"><p>${student.descriptionShort}</p></div>${bV}</div>`;
       html += bH;
-      html += `<div class="detail-mobile-row">`;
-      html += bV;
-      html += `<div class="detail-mobile-cell link-cell"><a href="${student.links[0].url}" target="_blank">${student.links[0].label}</a></div>`;
-      html += bV;
-      html += `<div class="detail-mobile-cell link-cell"><a href="${student.links[1].url}" target="_blank">${student.links[1].label}</a></div>`;
-      html += bV;
-      html += `</div>`;
+      html += `<div class="detail-mobile-row">${bV}<div class="detail-mobile-cell link-cell"><a href="${student.links[0].url}" target="_blank">${student.links[0].label}</a></div>${bV}<div class="detail-mobile-cell link-cell"><a href="${student.links[1].url}" target="_blank">${student.links[1].label}</a></div>${bV}</div>`;
       html += bH;
     } else {
       html += bH;
-      html += `<div class="detail-top-row">`;
-      html += bV;
-      html += `<div class="detail-image-area"><img id="detailImg" src="${student.images[0]}" alt="Project image 1"></div>`;
-      html += bV;
-      html += `<div class="detail-nav-screw prev-screw" id="imgPrev"></div>`;
-      html += `<div class="detail-nav-screw next-screw" id="imgNext"></div>`;
-      html += `</div>`;
+      html += `<div class="detail-top-row">${bV}<div class="detail-image-area"><img id="detailImg" src="${student.images[0]}" alt="Project image 1"></div>${bV}<div class="detail-nav-screw prev-screw" id="imgPrev"></div><div class="detail-nav-screw next-screw" id="imgNext"></div></div>`;
       html += bH;
-      html += `<div class="detail-bottom-row">`;
-      html += bV;
-      html += `<div class="detail-split"><div class="detail-info-cell name-cell"><div class="student-name">${student.name}</div></div>${bH}<div class="detail-info-cell project-cell"><div class="project-title">${student.projectTitle}</div></div></div>`;
-      html += bV;
-      html += `<div class="detail-info-cell desc-cell"><p>${student.description}</p></div>`;
-      html += bV;
-      html += `<div class="detail-split"><div class="detail-info-cell link-cell"><a href="${student.links[0].url}" target="_blank">${student.links[0].label}</a></div>${bH}<div class="detail-info-cell link-cell"><a href="${student.links[1].url}" target="_blank">${student.links[1].label}</a></div></div>`;
-      html += bV;
-      html += `</div>`;
+      html += `<div class="detail-bottom-row">${bV}<div class="detail-split"><div class="detail-info-cell name-cell"><div class="student-name">${student.name}</div></div>${bH}<div class="detail-info-cell project-cell"><div class="project-title">${student.projectTitle}</div></div></div>${bV}<div class="detail-info-cell desc-cell"><p>${student.description}</p></div>${bV}<div class="detail-split"><div class="detail-info-cell link-cell"><a href="${student.links[0].url}" target="_blank">${student.links[0].label}</a></div>${bH}<div class="detail-info-cell link-cell"><a href="${student.links[1].url}" target="_blank">${student.links[1].label}</a></div></div>${bV}</div>`;
       html += bH;
     }
 
     html += `</div>`;
-
     detailInner.innerHTML = html;
     detailOverlay.classList.add('active');
     detailOverlay.scrollTop = 0;
-
     const frame = detailInner.querySelector('.detail-frame');
 
     let currentImgIndex = 0;
@@ -2561,28 +1838,10 @@ body {
     const prevBtn = document.getElementById('imgPrev');
     const nextBtn = document.getElementById('imgNext');
 
-    function updateImage() {
-      if (imgEl && student.images.length > 0) {
-        imgEl.src = student.images[currentImgIndex];
-        imgEl.alt = `Project image ${currentImgIndex + 1}`;
-      }
-    }
+    function updateImage() { if (imgEl && student.images.length > 0) { imgEl.src = student.images[currentImgIndex]; imgEl.alt = `Project image ${currentImgIndex + 1}`; } }
 
-    if (prevBtn) {
-      prevBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        currentImgIndex = (currentImgIndex - 1 + student.images.length) % student.images.length;
-        updateImage();
-      });
-    }
-
-    if (nextBtn) {
-      nextBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        currentImgIndex = (currentImgIndex + 1) % student.images.length;
-        updateImage();
-      });
-    }
+    if (prevBtn) { prevBtn.addEventListener('click', (e) => { e.stopPropagation(); currentImgIndex = (currentImgIndex - 1 + student.images.length) % student.images.length; updateImage(); }); }
+    if (nextBtn) { nextBtn.addEventListener('click', (e) => { e.stopPropagation(); currentImgIndex = (currentImgIndex + 1) % student.images.length; updateImage(); }); }
 
     requestAnimationFrame(() => {
       const frameRect = frame.getBoundingClientRect();
@@ -2597,16 +1856,9 @@ body {
       }
 
       const hBeams = frame.querySelectorAll('.detail-beam-h');
-      const hInfos = Array.from(hBeams).map(hb => {
-        const r = hb.getBoundingClientRect();
-        return { y: r.top + r.height / 2 - frameRect.top, left: r.left - frameRect.left, right: r.right - frameRect.left };
-      });
-
+      const hInfos = Array.from(hBeams).map(hb => { const r = hb.getBoundingClientRect(); return { y: r.top + r.height / 2 - frameRect.top, left: r.left - frameRect.left, right: r.right - frameRect.left }; });
       const vBeams = frame.querySelectorAll('.detail-beam-v');
-      const vInfos = Array.from(vBeams).map(vb => {
-        const r = vb.getBoundingClientRect();
-        return { x: r.left + r.width / 2 - frameRect.left, top: r.top - frameRect.top, bottom: r.bottom - frameRect.top };
-      });
+      const vInfos = Array.from(vBeams).map(vb => { const r = vb.getBoundingClientRect(); return { x: r.left + r.width / 2 - frameRect.left, top: r.top - frameRect.top, bottom: r.bottom - frameRect.top }; });
 
       const placed = new Set();
       hInfos.forEach(h => {
@@ -2615,38 +1867,30 @@ body {
           const hOverlap = h.left <= v.x + beamT && h.right >= v.x - beamT;
           if (vOverlap && hOverlap) {
             const key = `${Math.round(v.x)},${Math.round(h.y)}`;
-            if (!placed.has(key)) {
-              placed.add(key);
-              addScrew(v.x, h.y);
-            }
+            if (!placed.has(key)) { placed.add(key); addScrew(v.x, h.y); }
           }
         });
       });
+
+      // Find the top-left screw and mark it as the close button
+      const allDetailScrews = frame.querySelectorAll('.detail-screw');
+      let topLeftScrew = null;
+      let minDist = Infinity;
+      allDetailScrews.forEach(s => {
+        const x = parseFloat(s.style.left);
+        const y = parseFloat(s.style.top);
+        const dist = x + y;
+        if (dist < minDist) { minDist = dist; topLeftScrew = s; }
+      });
+      if (topLeftScrew) { topLeftScrew.classList.add('close-screw'); }
     });
 
-    frame.addEventListener('mouseover', (e) => {
-      if (e.target.classList.contains('detail-screw')) frame.classList.add('screws-hover');
+    // Only close on close-screw click
+    frame.addEventListener('click', (e) => {
+      if (e.target.classList.contains('close-screw')) closeDetail();
     });
-    frame.addEventListener('mouseout', (e) => {
-      if (e.target.classList.contains('detail-screw')) frame.classList.remove('screws-hover');
-    });
-    frame.addEventListener('mousedown', (e) => {
-      if (e.target.classList.contains('detail-screw')) frame.classList.add('screws-active');
-    });
-    frame.addEventListener('mouseup', (e) => {
-      if (e.target.classList.contains('detail-screw')) {
-        frame.classList.remove('screws-active');
-        closeDetail();
-      }
-    });
-    frame.addEventListener('touchstart', (e) => {
-      if (e.target.classList.contains('detail-screw')) {
-        frame.classList.add('screws-hover');
-        frame.classList.add('screws-active');
-      }
-    }, { passive: true });
     frame.addEventListener('touchend', (e) => {
-      if (e.target.classList.contains('detail-screw')) closeDetail();
+      if (e.target.classList.contains('close-screw')) closeDetail();
     });
   }
 
@@ -2660,9 +1904,7 @@ body {
   let currentDetailIndex = null;
   let currentDetailDrive = null;
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && detailOverlay.classList.contains('active')) closeDetail();
-  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && detailOverlay.classList.contains('active')) closeDetail(); });
 
   /* ================= FILTER SYSTEM ================= */
 
@@ -2671,10 +1913,7 @@ body {
       const btn = document.createElement('div');
       btn.className = 'filter-btn';
       btn.setAttribute('data-drive', type);
-      btn.addEventListener('click', () => {
-        btn.classList.toggle('active');
-        updateFilters();
-      });
+      btn.addEventListener('click', () => { btn.classList.toggle('active'); updateFilters(); });
       filterLeft.appendChild(btn);
     });
   }
@@ -2683,12 +1922,7 @@ body {
     activeFilters = Array.from(document.querySelectorAll('.filter-btn.active')).map(btn => btn.dataset.drive);
     const filtering = activeFilters.length > 0;
     wrapper.classList.toggle('filtering', filtering);
-    document.querySelectorAll('.cell').forEach(cell => {
-      cell.classList.remove('match');
-      if (!filtering) return;
-      const match = activeFilters.includes(cell.dataset.drive);
-      if (match) cell.classList.add('match');
-    });
+    document.querySelectorAll('.cell').forEach(cell => { cell.classList.remove('match'); if (!filtering) return; if (activeFilters.includes(cell.dataset.drive)) cell.classList.add('match'); });
   }
 
   /* ================= GRID LAYOUT ================= */
@@ -2702,10 +1936,7 @@ body {
     const availableWidth = containerWidth - sideGap - sideGap - pulleyGap;
     const cellSize = Math.floor(availableWidth / columns);
     wrapper.style.gridTemplateColumns = `repeat(${columns}, ${cellSize}px)`;
-    document.querySelectorAll('.cell').forEach(cell => {
-      cell.style.width = cellSize + "px";
-      cell.style.height = cellSize + "px";
-    });
+    document.querySelectorAll('.cell').forEach(cell => { cell.style.width = cellSize + "px"; cell.style.height = cellSize + "px"; });
   }
 
   /* ================= GRID GENERATION ================= */
@@ -2713,41 +1944,21 @@ body {
   function fillGrid() {
     wrapper.innerHTML = "";
     if (!assembled) wrapper.classList.add('unassembled');
-
     const isMobile = window.innerWidth <= 768;
     const columns = isMobile ? 3 : 6;
     const remainder = MIN_CELLS % columns;
     const emptyCount = remainder === 0 ? 0 : columns - remainder;
-
-    if (emptyCount > 0) {
-      for (let i = 0; i < emptyCount; i++) {
-        const spacer = document.createElement('div');
-        spacer.className = 'cell spacer';
-        spacer.style.visibility = 'hidden';
-        wrapper.appendChild(spacer);
-      }
-    }
-
+    if (emptyCount > 0) { for (let i = 0; i < emptyCount; i++) { const spacer = document.createElement('div'); spacer.className = 'cell spacer'; spacer.style.visibility = 'hidden'; wrapper.appendChild(spacer); } }
     for (let i = 1; i <= MIN_CELLS; i++) {
       const driveType = screwTypes[(i - 1) % screwTypes.length];
-      const palette = palettes[i % palettes.length];
       const cell = document.createElement('div');
       cell.className = 'cell';
       cell.setAttribute("data-drive", driveType);
-      cell.innerHTML = `
-        <div class="beam-top"></div>
-        <div class="beam-bottom"></div>
-        <div class="braces"></div>
-        <div class="cell-image" style="background-image: url('fifth-harmony.png');"></div>
-        <div class="mesh"></div>
-        <div class="screw-left"></div>
-        <div class="screw-right"></div>
-      `;
+      cell.innerHTML = `<div class="beam-top"></div><div class="beam-bottom"></div><div class="braces"></div><div class="cell-image" style="background-image: url('fifth-harmony.png');"></div><div class="mesh"></div><div class="screw-left"></div><div class="screw-right"></div>`;
       cell.style.cursor = 'pointer';
       cell.addEventListener('click', () => openDetail(i - 1, driveType));
       wrapper.appendChild(cell);
     }
-
     layoutGrid();
     applyMeshPattern();
     updateFilters();
@@ -2762,32 +1973,17 @@ body {
     if (size === cachedMeshSize && cachedMeshPattern) return cachedMeshPattern;
     const canvas = document.createElement('canvas');
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = size * dpr;
-    canvas.height = size * dpr;
+    canvas.width = size * dpr; canvas.height = size * dpr;
     const ctx = canvas.getContext('2d');
     ctx.scale(dpr, dpr);
-    const padding = 20;
-    const gap = 6;
-    const cols = 4;
-    const rows = 6;
-    const radius = 10;
+    const padding = 20, gap = 6, cols = 4, rows = 6, radius = 10;
     ctx.fillStyle = 'rgba(254, 80, 0, 0.75)';
     ctx.fillRect(0, 0, size, size);
     ctx.globalCompositeOperation = 'destination-out';
     ctx.fillStyle = 'rgba(0, 0, 0, 1)';
-    const innerW = size - padding * 2;
-    const innerH = size - padding * 2;
-    const holeW = (innerW - gap * (cols - 1)) / cols;
-    const holeH = (innerH - gap * (rows - 1)) / rows;
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        const x = padding + c * (holeW + gap);
-        const y = padding + r * (holeH + gap);
-        ctx.beginPath();
-        ctx.roundRect(x, y, holeW, holeH, radius);
-        ctx.fill();
-      }
-    }
+    const innerW = size - padding * 2, innerH = size - padding * 2;
+    const holeW = (innerW - gap * (cols - 1)) / cols, holeH = (innerH - gap * (rows - 1)) / rows;
+    for (let r = 0; r < rows; r++) { for (let c = 0; c < cols; c++) { const x = padding + c * (holeW + gap), y = padding + r * (holeH + gap); ctx.beginPath(); ctx.roundRect(x, y, holeW, holeH, radius); ctx.fill(); } }
     cachedMeshPattern = canvas.toDataURL();
     cachedMeshSize = size;
     return cachedMeshPattern;
@@ -2799,41 +1995,24 @@ body {
     const cellSize = cells[0].offsetWidth;
     if (cellSize <= 0) return;
     const pattern = generateMeshPattern(cellSize);
-    document.querySelectorAll('.mesh').forEach(m => {
-      m.style.backgroundImage = `url(${pattern})`;
-    });
+    document.querySelectorAll('.mesh').forEach(m => { m.style.backgroundImage = `url(${pattern})`; });
   }
 
   /* ================= RIGHT BUTTONS ================= */
 
-  meshToggle.addEventListener('click', () => {
-    meshForced = !meshForced;
-    meshToggle.classList.toggle('active', meshForced);
-    wrapper.classList.toggle('force-mesh', meshForced);
-  });
+  meshToggle.addEventListener('click', () => { meshForced = !meshForced; meshToggle.classList.toggle('active', meshForced); wrapper.classList.toggle('force-mesh', meshForced); });
 
   const safetyOverlay = document.getElementById('safetyOverlay');
 
   infoBtn.addEventListener('click', () => {
     infoOpen = !infoOpen;
     infoBtn.classList.toggle('active', infoOpen);
-    if (infoOpen) {
-      safetyOverlay.classList.add('active');
-      window.addEventListener('wheel', preventInfoScroll, { passive: false });
-      window.addEventListener('touchmove', preventInfoScroll, { passive: false });
-      window.addEventListener('keydown', preventInfoKeyScroll);
-    } else {
-      safetyOverlay.classList.remove('active');
-      window.removeEventListener('wheel', preventInfoScroll);
-      window.removeEventListener('touchmove', preventInfoScroll);
-      window.removeEventListener('keydown', preventInfoKeyScroll);
-    }
+    if (infoOpen) { safetyOverlay.classList.add('active'); window.addEventListener('wheel', preventInfoScroll, { passive: false }); window.addEventListener('touchmove', preventInfoScroll, { passive: false }); window.addEventListener('keydown', preventInfoKeyScroll); }
+    else { safetyOverlay.classList.remove('active'); window.removeEventListener('wheel', preventInfoScroll); window.removeEventListener('touchmove', preventInfoScroll); window.removeEventListener('keydown', preventInfoKeyScroll); }
   });
 
   function preventInfoScroll(e) { e.preventDefault(); }
-  function preventInfoKeyScroll(e) {
-    if ([32, 33, 34, 35, 36, 38, 40].includes(e.keyCode)) e.preventDefault();
-  }
+  function preventInfoKeyScroll(e) { if ([32, 33, 34, 35, 36, 38, 40].includes(e.keyCode)) e.preventDefault(); }
 
   /* ================= INIT ================= */
 
@@ -2846,77 +2025,38 @@ body {
   assemblyScrewEl.addEventListener('click', () => {
     assembled = true;
     assemblyBtn.classList.add('hidden');
-
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
-
     const blueTarp = document.getElementById('blueTarp');
     const isMobile = window.innerWidth <= 768;
     const columns = isMobile ? 3 : 6;
-
     const allCells = Array.from(wrapper.querySelectorAll('.cell'));
     const realCells = allCells.filter(c => !c.classList.contains('spacer'));
-
     const rows = [];
-    for (let i = 0; i < allCells.length; i += columns) {
-      const rowCells = allCells.slice(i, i + columns).filter(c => !c.classList.contains('spacer'));
-      if (rowCells.length > 0) rows.push(rowCells);
-    }
-
+    for (let i = 0; i < allCells.length; i += columns) { const rowCells = allCells.slice(i, i + columns).filter(c => !c.classList.contains('spacer')); if (rowCells.length > 0) rows.push(rowCells); }
     blueTarp.style.clipPath = 'inset(0 0 0 0)';
     rows.reverse();
-
     const animGroups = [];
-    if (isMobile) {
-      for (let i = 0; i < rows.length; i += 2) {
-        const group = [...rows[i]];
-        if (rows[i + 1]) group.push(...rows[i + 1]);
-        animGroups.push(group);
-      }
-    } else {
-      rows.forEach(r => animGroups.push(r));
-    }
-
+    if (isMobile) { for (let i = 0; i < rows.length; i += 2) { const group = [...rows[i]]; if (rows[i + 1]) group.push(...rows[i + 1]); animGroups.push(group); } } else { rows.forEach(r => animGroups.push(r)); }
     realCells.forEach(cell => cell.classList.add('assembling'));
     wrapper.classList.remove('unassembled');
-
     const ROW_DELAY = 200;
     const totalGroups = animGroups.length;
+    animGroups.forEach((groupCells, groupIndex) => { setTimeout(() => { groupCells.forEach(cell => { cell.classList.remove('assembling'); cell.classList.add('assembled-reveal'); }); blueTarp.style.clipPath = `inset(0 0 ${((groupIndex + 1) / totalGroups) * 100}% 0)`; }, groupIndex * ROW_DELAY); });
 
-    animGroups.forEach((groupCells, groupIndex) => {
-      setTimeout(() => {
-        groupCells.forEach(cell => {
-          cell.classList.remove('assembling');
-          cell.classList.add('assembled-reveal');
-        });
-        const revealPercent = ((groupIndex + 1) / totalGroups) * 100;
-        blueTarp.style.clipPath = `inset(0 0 ${revealPercent}% 0)`;
-      }, groupIndex * ROW_DELAY);
-    });
-
-    // Animate landing beams to crane position (desktop only)
     if (!isMobile && landingBeams) {
-      // Phase 1: lift up
       landingBeams.classList.add('phase-up');
-
-      // Phase 2: swing left after lift completes
       setTimeout(() => {
         landingBeams.classList.remove('phase-up');
-        // Lock the lifted position inline before switching phase
         const asmGroup = landingBeams.querySelector('.landing-beam-assembly');
         const reqGroup = landingBeams.querySelector('.landing-beam-required');
         asmGroup.style.bottom = 'calc(100vh - 44px - 58px)';
         reqGroup.style.bottom = 'calc(100vh - 76px - 58px)';
-
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            landingBeams.classList.add('phase-left');
-          });
-        });
+        requestAnimationFrame(() => { requestAnimationFrame(() => { landingBeams.classList.add('phase-left'); }); });
       }, 1600);
     }
 
     const totalTime = totalGroups * ROW_DELAY + 300;
-    const beamAnimTime = isMobile ? 0 : 2800; // 1.6s lift + 1.1s swing + buffer
+    const beamAnimTime = isMobile ? 0 : 2800;
     const revealTime = Math.max(totalTime, beamAnimTime);
     setTimeout(() => {
       blueTarp.classList.add('hidden');
@@ -2924,10 +2064,7 @@ body {
       pulley.classList.remove('unassembled');
       document.getElementById('crane').classList.add('visible');
       document.getElementById('searchBlueprint').classList.remove('unassembled');
-
-      // Hide landing beams, show real crane
       if (landingBeams) landingBeams.classList.add('done');
-
       window.removeEventListener('wheel', preventScroll);
       window.removeEventListener('touchmove', preventScroll);
       window.removeEventListener('keydown', preventKeyScroll);
@@ -2942,14 +2079,12 @@ body {
     const isMobile = window.innerWidth <= 768;
     const gap = isMobile ? 12 : 24;
     const rightRect = document.querySelector('.filter-right').getBoundingClientRect();
-    const viewH = window.innerHeight;
-
     if (isMobile) {
       const sideGap = 32;
       sb.style.left = sideGap + 'px';
       sb.style.width = (rightRect.left - sideGap - gap) + 'px';
-      sb.style.height = 'auto';
-      sb.style.top = rightRect.top + 'px';
+      sb.style.height = '';
+      sb.style.top = '';
       sb.style.bottom = '0px';
     } else {
       const leftRect = document.querySelector('.filter-left').getBoundingClientRect();
@@ -2968,21 +2103,14 @@ body {
     const columns = isMobile ? 3 : 6;
     const allCells = Array.from(wrapper.querySelectorAll('.cell'));
     const rows = [];
-    for (let i = 0; i < allCells.length; i += columns) {
-      const rowCells = allCells.slice(i, i + columns).filter(c => !c.classList.contains('spacer'));
-      if (rowCells.length > 0) rows.push(rowCells);
-    }
+    for (let i = 0; i < allCells.length; i += columns) { const rowCells = allCells.slice(i, i + columns).filter(c => !c.classList.contains('spacer')); if (rowCells.length > 0) rows.push(rowCells); }
     if (rows.length < 4) return;
     const wrapperTop = wrapper.offsetTop;
     const tarpEndRowIndex = rows.length - 3;
     const tarpEndCell = rows[tarpEndRowIndex][0];
     const tarpBottomY = tarpEndCell.offsetTop + tarpEndCell.offsetHeight / 2 + wrapperTop;
     let tarpTopY;
-    if (isMobile) {
-      tarpTopY = Math.max(wrapperTop, tarpBottomY - window.innerHeight * 0.55);
-    } else {
-      tarpTopY = wrapperTop;
-    }
+    if (isMobile) { tarpTopY = Math.max(wrapperTop, tarpBottomY - window.innerHeight * 0.55); } else { tarpTopY = wrapperTop; }
     const containerHeight = wrapper.parentElement.offsetHeight;
     blueTarp.style.top = tarpTopY + 'px';
     blueTarp.style.bottom = (containerHeight - tarpBottomY) + 'px';
@@ -2991,35 +2119,15 @@ body {
   }
 
   window.addEventListener("resize", () => {
-    fillGrid();
-    positionTarp();
-    if (currentDetailIndex !== null && detailOverlay.classList.contains('active')) {
-      openDetail(currentDetailIndex, currentDetailDrive);
-    }
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
-      updatePulley();
-      positionSearchBar();
-    });
+    fillGrid(); positionTarp();
+    if (currentDetailIndex !== null && detailOverlay.classList.contains('active')) openDetail(currentDetailIndex, currentDetailDrive);
+    requestAnimationFrame(() => { window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' }); updatePulley(); positionSearchBar(); });
   });
 
-  function lockScroll() {
-    document.body.classList.add('no-scroll');
-    document.documentElement.classList.add('no-scroll');
-  }
-  function unlockScroll() {
-    document.body.classList.remove('no-scroll');
-    document.documentElement.classList.remove('no-scroll');
-  }
-
-  function preventScroll(e) {
-    if (e.target.closest('.detail-overlay') || e.target.closest('.safety-overlay')) return;
-    e.preventDefault();
-  }
-
-  function preventKeyScroll(e) {
-    if (!assembled && [32, 33, 34, 35, 36, 38, 40].includes(e.keyCode)) e.preventDefault();
-  }
+  function lockScroll() { document.body.classList.add('no-scroll'); document.documentElement.classList.add('no-scroll'); }
+  function unlockScroll() { document.body.classList.remove('no-scroll'); document.documentElement.classList.remove('no-scroll'); }
+  function preventScroll(e) { if (e.target.closest('.detail-overlay') || e.target.closest('.safety-overlay')) return; e.preventDefault(); }
+  function preventKeyScroll(e) { if (!assembled && [32, 33, 34, 35, 36, 38, 40].includes(e.keyCode)) e.preventDefault(); }
 
   window.addEventListener('wheel', preventScroll, { passive: false });
   window.addEventListener('touchmove', preventScroll, { passive: false });
@@ -3029,12 +2137,7 @@ body {
   fillGrid();
 
   const loader = document.getElementById('loader');
-  setTimeout(() => {
-    loader.style.display = 'none';
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
-    positionTarp();
-    updatePulley();
-  }, 3000);
+  setTimeout(() => { loader.style.display = 'none'; window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' }); positionTarp(); updatePulley(); }, 3000);
 
   /* ================= PULLEY SCROLLBAR ================= */
 
@@ -3042,94 +2145,88 @@ body {
   const carriage = document.getElementById('pulleyCarriage');
   const wheelTop = document.getElementById('pulleyWheelTop');
   const wheelBottom = document.getElementById('pulleyWheelBottom');
+  const WHEEL_SIZE = 28, CARRIAGE_H = 44, TRACK_TOP = 12 + WHEEL_SIZE, TRACK_BOTTOM_OFFSET = 12 + WHEEL_SIZE;
+  let dragging = false, dragStartY = 0, dragStartScroll = 0;
 
-  const WHEEL_SIZE = 28;
-  const CARRIAGE_H = 44;
-  const TRACK_TOP = 12 + WHEEL_SIZE;
-  const TRACK_BOTTOM_OFFSET = 12 + WHEEL_SIZE;
-
-  let dragging = false;
-  let dragStartY = 0;
-  let dragStartScroll = 0;
-
-  function getTrackHeight() {
-    return window.innerHeight - TRACK_TOP - TRACK_BOTTOM_OFFSET - CARRIAGE_H;
-  }
+  function getTrackHeight() { return window.innerHeight - TRACK_TOP - TRACK_BOTTOM_OFFSET - CARRIAGE_H; }
 
   function updatePulley() {
-    const scrollH = document.documentElement.scrollHeight;
-    const viewH = window.innerHeight;
-    const maxScroll = scrollH - viewH;
+    const scrollH = document.documentElement.scrollHeight, viewH = window.innerHeight, maxScroll = scrollH - viewH;
     if (maxScroll <= 0) { pulley.classList.add('hidden'); return; }
     pulley.classList.remove('hidden');
-    const scrollFraction = window.scrollY / maxScroll;
-    const trackH = getTrackHeight();
-    const carriageY = TRACK_TOP + scrollFraction * trackH;
-    carriage.style.top = carriageY + 'px';
+    const scrollFraction = window.scrollY / maxScroll, trackH = getTrackHeight();
+    carriage.style.top = (TRACK_TOP + scrollFraction * trackH) + 'px';
     const totalRotation = scrollFraction * 720;
     wheelTop.style.transform = `rotate(${totalRotation}deg)`;
     wheelBottom.style.transform = `rotate(${totalRotation}deg)`;
   }
 
   window.addEventListener('scroll', updatePulley, { passive: true });
+  window.addEventListener('scroll', positionSearchBar, { passive: true });
   window.addEventListener('resize', updatePulley);
 
-  carriage.addEventListener('mousedown', (e) => {
-    e.preventDefault();
-    dragging = true;
-    dragStartY = e.clientY;
-    dragStartScroll = window.scrollY;
-    document.body.style.userSelect = 'none';
-  });
-
-  carriage.addEventListener('touchstart', (e) => {
-    dragging = true;
-    dragStartY = e.touches[0].clientY;
-    dragStartScroll = window.scrollY;
-  }, { passive: true });
-
-  window.addEventListener('mousemove', (e) => {
-    if (!dragging) return;
-    handleDrag(e.clientY);
-  });
-
-  window.addEventListener('touchmove', (e) => {
-    if (!dragging) return;
-    handleDrag(e.touches[0].clientY);
-  }, { passive: true });
-
-  window.addEventListener('mouseup', () => {
-    dragging = false;
-    document.body.style.userSelect = '';
-  });
-
+  carriage.addEventListener('mousedown', (e) => { e.preventDefault(); dragging = true; dragStartY = e.clientY; dragStartScroll = window.scrollY; document.body.style.userSelect = 'none'; });
+  carriage.addEventListener('touchstart', (e) => { dragging = true; dragStartY = e.touches[0].clientY; dragStartScroll = window.scrollY; }, { passive: true });
+  window.addEventListener('mousemove', (e) => { if (!dragging) return; handleDrag(e.clientY); });
+  window.addEventListener('touchmove', (e) => { if (!dragging) return; handleDrag(e.touches[0].clientY); }, { passive: true });
+  window.addEventListener('mouseup', () => { dragging = false; document.body.style.userSelect = ''; });
   window.addEventListener('touchend', () => { dragging = false; });
 
   function handleDrag(clientY) {
     if (infoOpen) return;
-    const deltaY = clientY - dragStartY;
-    const trackH = getTrackHeight();
-    const scrollH = document.documentElement.scrollHeight;
-    const viewH = window.innerHeight;
-    const maxScroll = scrollH - viewH;
-    const scrollDelta = (deltaY / trackH) * maxScroll;
-    window.scrollTo({ top: dragStartScroll + scrollDelta, behavior: 'instant' });
+    const deltaY = clientY - dragStartY, trackH = getTrackHeight();
+    const scrollH = document.documentElement.scrollHeight, viewH = window.innerHeight, maxScroll = scrollH - viewH;
+    window.scrollTo({ top: dragStartScroll + (deltaY / trackH) * maxScroll, behavior: 'instant' });
   }
 
   pulley.addEventListener('click', (e) => {
     if (infoOpen) return;
     if (e.target === carriage || carriage.contains(e.target)) return;
-    const rect = pulley.getBoundingClientRect();
-    const clickY = e.clientY - rect.top;
-    const trackH = getTrackHeight();
+    const rect = pulley.getBoundingClientRect(), clickY = e.clientY - rect.top, trackH = getTrackHeight();
     const fraction = Math.max(0, Math.min(1, (clickY - TRACK_TOP) / trackH));
-    const scrollH = document.documentElement.scrollHeight;
-    const viewH = window.innerHeight;
-    const maxScroll = scrollH - viewH;
+    const scrollH = document.documentElement.scrollHeight, viewH = window.innerHeight, maxScroll = scrollH - viewH;
     window.scrollTo({ top: fraction * maxScroll, behavior: 'smooth' });
   });
 
   requestAnimationFrame(updatePulley);
+
+  /* ================= CRANE HOVER ================= */
+
+  const craneEl = document.getElementById('crane');
+  const craneGroupTop = craneEl.querySelector('.crane-group-top');
+  const craneTopChains = craneGroupTop.querySelectorAll('.crane-chain');
+
+  craneEl.addEventListener('mouseenter', () => {
+    craneEl.classList.add('hovered');
+
+    // Find top of first grid cell
+    const firstCell = wrapper.querySelector('.cell:not(.spacer)');
+    if (!firstCell) return;
+    const cellTop = firstCell.getBoundingClientRect().top;
+
+    // i-beam flange starts at 44px inside the group
+    const flangeOffset = 44;
+    const newTop = cellTop - flangeOffset;
+
+    craneGroupTop.style.top = newTop + 'px';
+
+    // Extend chains upward so they reach the viewport top
+    if (newTop > 0) {
+      craneTopChains.forEach(chain => {
+        chain.style.top = -newTop + 'px';
+        chain.style.height = (14 + newTop) + 'px';
+      });
+    }
+  });
+
+  craneEl.addEventListener('mouseleave', () => {
+    craneEl.classList.remove('hovered');
+    craneGroupTop.style.top = '';
+    craneTopChains.forEach(chain => {
+      chain.style.top = '';
+      chain.style.height = '';
+    });
+  });
 </script>
 
 </body>
