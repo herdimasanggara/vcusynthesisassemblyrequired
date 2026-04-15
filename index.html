@@ -45,6 +45,7 @@
 .info-btn,
 .cell,
 .detail-screw.close-screw,
+.detail-screw.hoist-screw,
 .detail-info-cell.links-cell a,
 .pulley-carriage,
 [role="button"] {
@@ -447,8 +448,9 @@ body {
 .wrapper.search-active .cell.search-match-cell .screw-right { display: none; }
 
 @media (max-width: 768px) {
-  .search-blueprint-input { font-size: 13px; padding: 0 8px; height: 30px; }
-  .search-blueprint-btn { width: 30px; height: 30px; }
+  .search-blueprint { overflow: hidden; }
+  .search-blueprint-input { font-size: 13px; padding: 0 8px; height: 30px; min-width: 0; }
+  .search-blueprint-btn { width: 30px; height: 30px; order: -1; }
   .search-blueprint-btn svg { width: 14px; height: 14px; }
   .search-dropdown-item { padding: 8px; font-size: 12px; }
 }
@@ -500,14 +502,23 @@ body {
   transform: translateX(-50%);
   width: 100%;
   max-width: var(--max-width);
-  height: 180px;
-  z-index: 50;
-  pointer-events: auto;
+  height: 100vh;
+  z-index: 51;
+  pointer-events: none;
   display: none;
-  overflow: visible;
 }
 
 .crane.visible { display: block; }
+
+.crane-hover-zone {
+  position: absolute;
+  top: 0;
+  left: var(--side-gap);
+  width: calc(50px + clamp(240px, 28vw, 340px));
+  height: 140px;
+  pointer-events: auto;
+  z-index: 5;
+}
 
 .crane-group {
   position: absolute;
@@ -846,7 +857,7 @@ body {
 
 @media (max-width: 768px) {
   .safety-content-inner { padding: 20px 24px; }
-  .safety-content .safety-info { font-size: 14px; }
+  .safety-content .safety-info { font-size: 11px; }
   .safety-content .safety-colophon { display: none; }
   .safety-content .safety-spacer { display: none; }
 }
@@ -1240,6 +1251,7 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
+  overflow: visible;
 }
 
 .detail-screw {
@@ -1309,11 +1321,10 @@ body {
 
 .detail-screw.close-screw {
   cursor: var(--cursor-pointer) !important;
-  /* Pre-rotate gradient & shadows so lighting looks natural at 45° */
-  background: radial-gradient(circle at 29% 50%, #ddd 0%, #bbb 30%, #999 65%, #777 100%) !important;
+  background: radial-gradient(circle at 29% 50%, #FFE860 0%, #FFCD00 30%, #D4A800 65%, #A68400 100%) !important;
   box-shadow:
     inset -3px 0px 4px rgba(0,0,0,0.3),
-    inset 3px 0px 4px rgba(255,255,255,0.25),
+    inset 3px 0px 4px rgba(255,255,255,0.35),
     1.4px 1.4px 6px rgba(0,0,0,0.6) !important;
   transform: translate(-50%, -50%) rotate(45deg);
 }
@@ -1321,7 +1332,7 @@ body {
 .detail-screw.close-screw::after {
   width: 60% !important;
   height: 12% !important;
-  background: #333 !important;
+  background: #5a4000 !important;
   clip-path: none !important;
   border: none !important;
 }
@@ -1330,10 +1341,11 @@ body {
   display: block !important;
   width: 12% !important;
   height: 60% !important;
-  background: #333 !important;
+  background: #5a4000 !important;
 }
 
 .detail-screw.close-screw:hover {
+  background: radial-gradient(circle at 29% 50%, #FFF4A0 0%, #FFE040 30%, #FFCD00 65%, #D4A800 100%) !important;
   transform: translate(-50%, -50%) rotate(0deg);
 }
 
@@ -1341,12 +1353,16 @@ body {
   height: var(--beam-thick);
   flex-shrink: 0;
   background: linear-gradient(to bottom, var(--tube-dark), var(--tube-mid), var(--tube-light), var(--tube-mid), var(--tube-dark));
+  position: relative;
+  z-index: 3;
 }
 
 .detail-beam-v {
   width: var(--beam-thick);
   flex-shrink: 0;
   background: linear-gradient(to right, var(--tube-dark), var(--tube-mid), var(--tube-light), var(--tube-mid), var(--tube-dark));
+  position: relative;
+  z-index: 3;
 }
 
 .detail-top-row {
@@ -1384,10 +1400,10 @@ body {
   width: var(--detail-screw-size);
   height: var(--detail-screw-size);
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #ddd 0%, #bbb 30%, #999 65%, #777 100%);
+  background: radial-gradient(circle at 35% 35%, #FFE860 0%, #FFCD00 30%, #D4A800 65%, #A68400 100%);
   box-shadow:
     inset -2px -2px 4px rgba(0,0,0,0.3),
-    inset 2px 2px 4px rgba(255,255,255,0.25),
+    inset 2px 2px 4px rgba(255,255,255,0.35),
     0 2px 6px rgba(0,0,0,0.6);
   z-index: 10;
   cursor: var(--cursor-pointer) !important;
@@ -1399,18 +1415,21 @@ body {
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  border: solid #555;
+  border: solid #5a4000;
 }
 
 .detail-nav-screw.prev-screw { left: calc(var(--beam-thick) / 2); }
 
 .detail-nav-screw.prev-screw::after {
   border-width: 7px 10px 7px 0;
-  border-color: transparent #555 transparent transparent;
+  border-color: transparent #5a4000 transparent transparent;
   transform: translate(calc(-50% - 2px), -50%);
 }
 
-.detail-nav-screw.prev-screw:hover { transform: translate(-50%, -50%) rotate(-20deg); }
+.detail-nav-screw.prev-screw:hover {
+  background: radial-gradient(circle at 35% 35%, #FFF4A0 0%, #FFE040 30%, #FFCD00 65%, #D4A800 100%);
+  transform: translate(-50%, -50%) rotate(-20deg);
+}
 
 .detail-nav-screw.next-screw {
   right: calc(var(--beam-thick) / 2);
@@ -1419,11 +1438,14 @@ body {
 
 .detail-nav-screw.next-screw::after {
   border-width: 7px 0 7px 10px;
-  border-color: transparent transparent transparent #555;
+  border-color: transparent transparent transparent #5a4000;
   transform: translate(calc(-50% + 2px), -50%);
 }
 
-.detail-nav-screw.next-screw:hover { transform: translate(50%, -50%) rotate(20deg); }
+.detail-nav-screw.next-screw:hover {
+  background: radial-gradient(circle at 35% 35%, #FFF4A0 0%, #FFE040 30%, #FFCD00 65%, #D4A800 100%);
+  transform: translate(50%, -50%) rotate(20deg);
+}
 
 .detail-bottom-row {
   display: flex;
@@ -1451,7 +1473,11 @@ body {
 }
 
 .detail-split .detail-info-cell { flex: 1; min-height: 0; }
-.detail-info-cell.desc-cell { flex: 2; }
+.detail-info-cell.desc-cell {
+  flex: 2;
+  position: relative;
+  overflow: hidden;
+}
 
 .detail-info-cell .student-name {
   font-size: clamp(11px, 1.3vw, 16px);
@@ -1467,13 +1493,6 @@ body {
   line-height: 1.2;
 }
 
-.detail-info-cell.desc-cell p {
-  margin: 0;
-  font-size: clamp(11px, 1.3vw, 16px);
-  color: #ffffff;
-  line-height: 1.4;
-}
-
 .detail-info-cell.link-cell { align-items: flex-start; justify-content: flex-start; }
 
 .detail-info-cell.link-cell a {
@@ -1486,9 +1505,9 @@ body {
 .detail-info-cell.link-cell a:hover { text-decoration: underline; }
 
 @media (max-width: 768px) {
-  .detail-overlay.active { overflow-y: hidden; }
-  .detail-inner { padding: 16px; height: 100vh; height: 100dvh; }
-  .detail-frame { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .detail-overlay.active { overflow-y: hidden; overflow-x: visible; }
+  .detail-inner { padding: 16px; height: 100vh; height: 100dvh; overflow: visible; }
+  .detail-frame { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: visible; }
   .detail-top-row, .detail-bottom-row { display: none; }
   .detail-mobile { display: none; }
   :root { --detail-screw-size: 22px; }
@@ -1499,8 +1518,8 @@ body {
 @media (max-width: 768px) {
   .detail-mobile { display: flex; flex-direction: column; }
 
-  .detail-mobile-row { display: flex; min-height: 0; flex: 1; }
-  .detail-mobile-row.image-row { flex: 3; position: relative; }
+  .detail-mobile-row { display: flex; min-height: 0; flex: 1; overflow: visible; position: relative; z-index: 1; }
+  .detail-mobile-row.image-row { flex: 3; position: relative; z-index: 1; }
 
   .detail-mobile-cell {
     flex: 1;
@@ -1509,15 +1528,19 @@ body {
     font-weight: 700;
     letter-spacing: 0.3px;
     overflow: hidden;
+    position: relative;
+    z-index: 1;
   }
 
   .detail-mobile-cell.title-cell .student-name,
-  .detail-mobile-cell.name-cell .student-name { font-size: 14px; font-weight: 400; color: #ffffff; line-height: 1.2; }
+  .detail-mobile-cell.name-cell .student-name { font-size: 11px; font-weight: 400; color: #ffffff; line-height: 1.2; }
 
   .detail-mobile-cell.title-cell .project-title,
-  .detail-mobile-cell.project-cell .project-title { font-size: 14px; font-weight: 400; color: #ffffff; line-height: 1.2; }
+  .detail-mobile-cell.project-cell .project-title { font-size: 11px; font-weight: 400; color: #ffffff; line-height: 1.2; }
 
   .detail-mobile-cell.image-cell {
+    position: relative;
+    z-index: 1;
     display: flex; align-items: center; justify-content: center;
     padding: 0; overflow: hidden;
   }
@@ -1533,11 +1556,185 @@ body {
 
   .detail-mobile-cell.image-cell .img-placeholder { color: #bbb; font-size: 14px; font-family: 'Work Sans', sans-serif; }
 
-  .detail-mobile-cell.desc-cell p { margin: 0; font-size: 14px; color: #ffffff; line-height: 1.5; }
+  .detail-mobile-cell.desc-cell {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .detail-mobile-cell.desc-cell p { margin: 0; font-size: 11px; color: #ffffff; line-height: 1.5; }
 
   .detail-mobile-cell.link-cell { display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; }
-  .detail-mobile-cell.link-cell a { color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 400; }
+  .detail-mobile-cell.link-cell a { color: #ffffff; text-decoration: none; font-size: 11px; font-weight: 400; }
   .detail-mobile-cell.link-cell a:hover { text-decoration: underline; }
+}
+
+/* ================= HOIST SCROLL CONTROLS ================= */
+
+.desc-scroll-wrap {
+  position: relative;
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.desc-scroll-content {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.desc-scroll-content::-webkit-scrollbar { display: none; }
+
+.desc-scroll-content p {
+  margin: 0;
+  font-size: clamp(11px, 1.3vw, 16px);
+  color: #ffffff;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .desc-scroll-content p {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+}
+
+/* Hoist screws — override detail-screw appearance */
+
+.detail-screw.hoist-screw {
+  background: radial-gradient(circle at 35% 35%, #FFE860 0%, #FFCD00 30%, #D4A800 65%, #A68400 100%) !important;
+  box-shadow:
+    inset -2px -2px 4px rgba(0,0,0,0.3),
+    inset 2px 2px 4px rgba(255,255,255,0.35),
+    0 2px 6px rgba(0,0,0,0.6) !important;
+  cursor: var(--cursor-pointer) !important;
+  z-index: 50 !important;
+  pointer-events: auto !important;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.detail-screw.hoist-screw:hover {
+  background: radial-gradient(circle at 35% 35%, #FFF4A0 0%, #FFE040 30%, #FFCD00 65%, #D4A800 100%) !important;
+}
+
+.detail-screw.hoist-screw.disabled {
+  pointer-events: none !important;
+}
+
+.detail-screw.hoist-screw::after {
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+  clip-path: none !important;
+  border-left: 7px solid transparent !important;
+  border-right: 7px solid transparent !important;
+}
+
+.detail-screw.hoist-screw::before {
+  display: none !important;
+}
+
+.detail-screw.hoist-btn-up::after {
+  border-bottom: 10px solid #5a4000 !important;
+  border-top: none !important;
+  transform: translate(-50%, calc(-50% - 1px)) !important;
+}
+
+.detail-screw.hoist-btn-down::after {
+  border-top: 10px solid #5a4000 !important;
+  border-bottom: none !important;
+  transform: translate(-50%, calc(-50% + 1px)) !important;
+}
+
+@media (max-width: 768px) {
+  .detail-screw.hoist-screw {
+    width: 26px !important;
+    height: 26px !important;
+  }
+  .detail-screw.hoist-screw::after {
+    border-left-width: 6px !important;
+    border-right-width: 6px !important;
+  }
+  .detail-screw.hoist-btn-up::after {
+    border-bottom-width: 8px !important;
+  }
+  .detail-screw.hoist-btn-down::after {
+    border-top-width: 8px !important;
+  }
+}
+
+/* ================= DESC SCROLL FADE INDICATORS ================= */
+
+.desc-scroll-wrap.fade-bottom {
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black calc(100% - 28px), transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black calc(100% - 28px), transparent 100%);
+}
+
+.desc-scroll-wrap.fade-top {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 28px, black 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 28px, black 100%);
+}
+
+.desc-scroll-wrap.fade-top.fade-bottom {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 28px, black calc(100% - 28px), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 28px, black calc(100% - 28px), transparent 100%);
+}
+
+/* ================= DETAIL IMAGE LOADER ================= */
+
+.detail-img-loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    #777 0%,
+    #999 15%,
+    #aaa 40%,
+    #bbb 50%,
+    #aaa 60%,
+    #999 85%,
+    #777 100%
+  );
+}
+
+.detail-img-loader.hidden {
+  display: none;
+}
+
+.detail-img-loader svg {
+  overflow: visible;
+}
+
+.detail-img-loader .bolt-spin {
+  transform-origin: 40px 40px;
+  animation: bolt-ratchet 1.2s steps(1, end) infinite;
+}
+
+@keyframes bolt-ratchet {
+  0%      { transform: rotate(0deg); }
+  8.33%   { transform: rotate(30deg); }
+  16.66%  { transform: rotate(60deg); }
+  25%     { transform: rotate(90deg); }
+  33.33%  { transform: rotate(120deg); }
+  41.66%  { transform: rotate(150deg); }
+  50%     { transform: rotate(180deg); }
+  58.33%  { transform: rotate(210deg); }
+  66.66%  { transform: rotate(240deg); }
+  75%     { transform: rotate(270deg); }
+  83.33%  { transform: rotate(300deg); }
+  91.66%  { transform: rotate(330deg); }
+  100%    { transform: rotate(360deg); }
 }
 
 </style>
@@ -1676,6 +1873,7 @@ body {
 </div>
 
 <div class="crane" id="crane">
+  <div class="crane-hover-zone" id="craneHoverZone"></div>
   <div class="crane-group crane-group-top">
     <div class="crane-chain crane-chain-left"></div>
     <div class="crane-chain crane-chain-right"></div>
@@ -1739,8 +1937,7 @@ body {
     id: i + 1,
     name: `Student ${i + 1}`,
     projectTitle: `Project ${i + 1}`,
-    description: `Clank, clank, clank. Bolt by bolt, beam by beam, each piece locks into something bigger than itself. What you see here was built from the ground up, assembled by hand, held together by the structure around it. Assembly required.`,
-    descriptionShort: `Clank, clank, clank. Built from the ground up. Assembly required.`,
+    description: `Clank, clank, clank. Bolt by bolt, beam by beam, each piece locks into something bigger than itself. What you see here was built from the ground up, assembled by hand, held together by the structure around it. Every joint was measured twice, cut once, and welded into place. The scaffolding rose before the walls did. The framework came before the finish. Nothing here is decorative — every element is load-bearing, every connection is structural. You don't see the blueprint anymore, but it's in here, buried under layers of steel and intention. Assembly required. What holds it all together isn't just hardware — it's the hours, the decisions, the second-guessing, the starting over, the refusing to start over, the moment it finally clicks. This is what it looks like when you build something from nothing and trust the structure to hold.`,
     links: [{ label: '@handle', url: '#' }, { label: 'Portfolio', url: '#' }],
     images: projectImages
   }));
@@ -1797,6 +1994,14 @@ body {
   document.addEventListener('click', (e) => { if (!e.target.closest('#searchBlueprint')) searchDropdown.classList.remove('visible'); });
   searchInput.addEventListener('focus', () => { if (searchInput.value.trim()) doSearch(); });
 
+  // Mobile: remove placeholder text
+  function updateSearchPlaceholder() {
+    const isMobile = window.innerWidth <= 768;
+    searchInput.placeholder = isMobile ? '' : 'CREW LOOKUP...';
+  }
+  updateSearchPlaceholder();
+  window.addEventListener('resize', updateSearchPlaceholder);
+
   /* ================= DETAIL VIEW ================= */
 
   function openDetail(studentIndex, driveType) {
@@ -1813,17 +2018,17 @@ body {
       html += bH;
       html += `<div class="detail-mobile-row">${bV}<div class="detail-mobile-cell name-cell"><div class="student-name">${student.name}</div></div>${bV}<div class="detail-mobile-cell project-cell"><div class="project-title">${student.projectTitle}</div></div>${bV}</div>`;
       html += bH;
-      html += `<div class="detail-mobile-row image-row">${bV}<div class="detail-mobile-cell image-cell"><img id="detailImg" src="${student.images[0]}" alt="Project image 1"></div>${bV}<div class="detail-nav-screw prev-screw" id="imgPrev"></div><div class="detail-nav-screw next-screw" id="imgNext"></div></div>`;
+      html += `<div class="detail-mobile-row image-row">${bV}<div class="detail-mobile-cell image-cell"><div class="detail-img-loader" id="detailImgLoader"><svg width="80" height="80" viewBox="0 0 80 80"><defs><radialGradient id="il-screw" cx="38%" cy="32%" r="65%"><stop offset="0%" stop-color="#e8ecef"/><stop offset="50%" stop-color="#8f969d"/><stop offset="100%" stop-color="#3a4048"/></radialGradient><linearGradient id="il-steel" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a6068"/><stop offset="20%" stop-color="#b0b6bc"/><stop offset="50%" stop-color="#f2f2f2"/><stop offset="80%" stop-color="#b0b6bc"/><stop offset="100%" stop-color="#5a6068"/></linearGradient></defs><g class="bolt-spin"><path d="M40,12 L64.25,26 L64.25,54 L40,68 L15.75,54 L15.75,26 Z" fill="url(#il-steel)" stroke="#555" stroke-width="0.5"/><path d="M40,20 L56.25,29.5 L56.25,50.5 L40,60 L23.75,50.5 L23.75,29.5 Z" fill="url(#il-screw)" stroke="none"/><circle cx="40" cy="40" r="6" fill="#3e4347"/><circle cx="40" cy="40" r="3" fill="#7d848b"/><line x1="40" y1="20" x2="40" y2="60" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/><line x1="23.75" y1="29.5" x2="56.25" y2="50.5" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/><line x1="56.25" y1="29.5" x2="23.75" y2="50.5" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/></g></svg></div><img id="detailImg" src="${student.images[0]}" alt="Project image 1"></div>${bV}<div class="detail-nav-screw prev-screw" id="imgPrev"></div><div class="detail-nav-screw next-screw" id="imgNext"></div></div>`;
       html += bH;
-      html += `<div class="detail-mobile-row">${bV}<div class="detail-mobile-cell desc-cell"><p>${student.descriptionShort}</p></div>${bV}</div>`;
+      html += `<div class="detail-mobile-row">${bV}<div class="detail-mobile-cell desc-cell"><div class="desc-scroll-wrap"><div class="desc-scroll-content" id="descScroll"><p>${student.description}</p></div></div></div>${bV}</div>`;
       html += bH;
       html += `<div class="detail-mobile-row">${bV}<div class="detail-mobile-cell link-cell"><a href="${student.links[0].url}" target="_blank">${student.links[0].label}</a></div>${bV}<div class="detail-mobile-cell link-cell"><a href="${student.links[1].url}" target="_blank">${student.links[1].label}</a></div>${bV}</div>`;
       html += bH;
     } else {
       html += bH;
-      html += `<div class="detail-top-row">${bV}<div class="detail-image-area"><img id="detailImg" src="${student.images[0]}" alt="Project image 1"></div>${bV}<div class="detail-nav-screw prev-screw" id="imgPrev"></div><div class="detail-nav-screw next-screw" id="imgNext"></div></div>`;
+      html += `<div class="detail-top-row">${bV}<div class="detail-image-area"><div class="detail-img-loader" id="detailImgLoader"><svg width="80" height="80" viewBox="0 0 80 80"><defs><radialGradient id="il-screw" cx="38%" cy="32%" r="65%"><stop offset="0%" stop-color="#e8ecef"/><stop offset="50%" stop-color="#8f969d"/><stop offset="100%" stop-color="#3a4048"/></radialGradient><linearGradient id="il-steel" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a6068"/><stop offset="20%" stop-color="#b0b6bc"/><stop offset="50%" stop-color="#f2f2f2"/><stop offset="80%" stop-color="#b0b6bc"/><stop offset="100%" stop-color="#5a6068"/></linearGradient></defs><g class="bolt-spin"><path d="M40,12 L64.25,26 L64.25,54 L40,68 L15.75,54 L15.75,26 Z" fill="url(#il-steel)" stroke="#555" stroke-width="0.5"/><path d="M40,20 L56.25,29.5 L56.25,50.5 L40,60 L23.75,50.5 L23.75,29.5 Z" fill="url(#il-screw)" stroke="none"/><circle cx="40" cy="40" r="6" fill="#3e4347"/><circle cx="40" cy="40" r="3" fill="#7d848b"/><line x1="40" y1="20" x2="40" y2="60" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/><line x1="23.75" y1="29.5" x2="56.25" y2="50.5" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/><line x1="56.25" y1="29.5" x2="23.75" y2="50.5" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/></g></svg></div><img id="detailImg" src="${student.images[0]}" alt="Project image 1"></div>${bV}<div class="detail-nav-screw prev-screw" id="imgPrev"></div><div class="detail-nav-screw next-screw" id="imgNext"></div></div>`;
       html += bH;
-      html += `<div class="detail-bottom-row">${bV}<div class="detail-split"><div class="detail-info-cell name-cell"><div class="student-name">${student.name}</div></div>${bH}<div class="detail-info-cell project-cell"><div class="project-title">${student.projectTitle}</div></div></div>${bV}<div class="detail-info-cell desc-cell"><p>${student.description}</p></div>${bV}<div class="detail-split"><div class="detail-info-cell link-cell"><a href="${student.links[0].url}" target="_blank">${student.links[0].label}</a></div>${bH}<div class="detail-info-cell link-cell"><a href="${student.links[1].url}" target="_blank">${student.links[1].label}</a></div></div>${bV}</div>`;
+      html += `<div class="detail-bottom-row">${bV}<div class="detail-split"><div class="detail-info-cell name-cell"><div class="student-name">${student.name}</div></div>${bH}<div class="detail-info-cell project-cell"><div class="project-title">${student.projectTitle}</div></div></div>${bV}<div class="detail-info-cell desc-cell"><div class="desc-scroll-wrap"><div class="desc-scroll-content" id="descScroll"><p>${student.description}</p></div></div></div>${bV}<div class="detail-split"><div class="detail-info-cell link-cell"><a href="${student.links[0].url}" target="_blank">${student.links[0].label}</a></div>${bH}<div class="detail-info-cell link-cell"><a href="${student.links[1].url}" target="_blank">${student.links[1].label}</a></div></div>${bV}</div>`;
       html += bH;
     }
 
@@ -1837,11 +2042,91 @@ body {
     const imgEl = document.getElementById('detailImg');
     const prevBtn = document.getElementById('imgPrev');
     const nextBtn = document.getElementById('imgNext');
+    const imgLoader = document.getElementById('detailImgLoader');
+    const ROTATION_MS = 1200; // one full rotation duration
 
-    function updateImage() { if (imgEl && student.images.length > 0) { imgEl.src = student.images[currentImgIndex]; imgEl.alt = `Project image ${currentImgIndex + 1}`; } }
+    function showLoader() { if (imgLoader) imgLoader.classList.remove('hidden'); }
+    function hideLoader() { if (imgLoader) imgLoader.classList.add('hidden'); }
+
+    // Hide loader only after BOTH: image loaded AND one full rotation completed
+    let imgLoaded = false;
+    let rotationDone = false;
+    let rotationTimer = null;
+
+    function tryReveal() {
+      if (imgLoaded && rotationDone) hideLoader();
+    }
+
+    function startLoading() {
+      imgLoaded = false;
+      rotationDone = false;
+      showLoader();
+      if (rotationTimer) clearTimeout(rotationTimer);
+      rotationTimer = setTimeout(() => { rotationDone = true; tryReveal(); }, ROTATION_MS);
+    }
+
+    function onImgReady() {
+      imgLoaded = true;
+      tryReveal();
+    }
+
+    // Initial image
+    if (imgEl) {
+      if (imgEl.complete) {
+        hideLoader();
+      } else {
+        startLoading();
+        imgEl.addEventListener('load', onImgReady, { once: true });
+        imgEl.addEventListener('error', onImgReady, { once: true });
+      }
+    }
+
+    function updateImage() {
+      if (imgEl && student.images.length > 0) {
+        startLoading();
+        imgEl.src = student.images[currentImgIndex];
+        imgEl.alt = `Project image ${currentImgIndex + 1}`;
+        if (imgEl.complete) {
+          onImgReady();
+        } else {
+          imgEl.addEventListener('load', onImgReady, { once: true });
+          imgEl.addEventListener('error', onImgReady, { once: true });
+        }
+      }
+    }
 
     if (prevBtn) { prevBtn.addEventListener('click', (e) => { e.stopPropagation(); currentImgIndex = (currentImgIndex - 1 + student.images.length) % student.images.length; updateImage(); }); }
     if (nextBtn) { nextBtn.addEventListener('click', (e) => { e.stopPropagation(); currentImgIndex = (currentImgIndex + 1) % student.images.length; updateImage(); }); }
+
+    // Hoist scroll controls — will be wired to corner screws after placement
+    const descScroll = document.getElementById('descScroll');
+    const descScrollWrap = descScroll ? descScroll.parentElement : null;
+    const SCROLL_STEP = 40;
+    let hoistUp = null;
+    let hoistDown = null;
+
+    function updateHoistButtons() {
+      if (!descScroll) return;
+      const needsScroll = descScroll.scrollHeight > descScroll.clientHeight + 2;
+      const atTop = descScroll.scrollTop <= 0;
+      const atBottom = !needsScroll || (descScroll.scrollTop + descScroll.clientHeight >= descScroll.scrollHeight - 1);
+      if (hoistUp) hoistUp.classList.toggle('disabled', atTop);
+      if (hoistDown) hoistDown.classList.toggle('disabled', atBottom);
+      // Fade indicators
+      if (descScrollWrap) {
+        descScrollWrap.classList.toggle('fade-top', !atTop);
+        descScrollWrap.classList.toggle('fade-bottom', needsScroll && !atBottom);
+      }
+    }
+
+    if (descScroll) {
+      descScroll.addEventListener('scroll', updateHoistButtons, { passive: true });
+      // Initial fade state
+      requestAnimationFrame(() => {
+        const needsScroll = descScroll.scrollHeight > descScroll.clientHeight + 2;
+        if (descScrollWrap && needsScroll) descScrollWrap.classList.add('fade-bottom');
+      });
+    }
 
     requestAnimationFrame(() => {
       const frameRect = frame.getBoundingClientRect();
@@ -1883,7 +2168,82 @@ body {
         if (dist < minDist) { minDist = dist; topLeftScrew = s; }
       });
       if (topLeftScrew) { topLeftScrew.classList.add('close-screw'); }
+
+      // Find desc-cell and convert its top-right and bottom-right corner screws to hoist buttons
+      const descCell = frame.querySelector('.desc-cell');
+      if (descCell && descScroll) {
+        const descRect = descCell.getBoundingClientRect();
+        const targetX = descRect.right - frameRect.left;
+        const targetTopY = descRect.top - frameRect.top;
+        const targetBottomY = descRect.bottom - frameRect.top;
+
+        let closestUp = null, closestDown = null;
+        let minDistUp = Infinity, minDistDown = Infinity;
+
+        allDetailScrews.forEach(s => {
+          if (s.classList.contains('close-screw')) return;
+          const sx = parseFloat(s.style.left);
+          const sy = parseFloat(s.style.top);
+          const distUp = Math.abs(sx - targetX) + Math.abs(sy - targetTopY);
+          const distDown = Math.abs(sx - targetX) + Math.abs(sy - targetBottomY);
+          if (distUp < minDistUp) { minDistUp = distUp; closestUp = s; }
+          if (distDown < minDistDown) { minDistDown = distDown; closestDown = s; }
+        });
+
+        if (closestUp) {
+          closestUp.classList.add('hoist-screw', 'hoist-btn-up', 'disabled');
+          hoistUp = closestUp;
+          closestUp.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (descScroll) descScroll.scrollTop -= SCROLL_STEP;
+            updateHoistButtons();
+          });
+          closestUp.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (descScroll) descScroll.scrollTop -= SCROLL_STEP;
+            updateHoistButtons();
+          });
+        }
+
+        if (closestDown && closestDown !== closestUp) {
+          closestDown.classList.add('hoist-screw', 'hoist-btn-down');
+          hoistDown = closestDown;
+          closestDown.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (descScroll) descScroll.scrollTop += SCROLL_STEP;
+            updateHoistButtons();
+          });
+          closestDown.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (descScroll) descScroll.scrollTop += SCROLL_STEP;
+            updateHoistButtons();
+          });
+        }
+
+        updateHoistButtons();
+      }
     });
+
+    // Mobile: frame-level touch handler for hoist screws (bypasses stacking issues)
+    frame.addEventListener('touchstart', (e) => {
+      if (!hoistUp && !hoistDown) return;
+      const touch = e.touches[0];
+      const PAD = 8; // expand touch target
+      [hoistUp, hoistDown].forEach(btn => {
+        if (!btn || btn.classList.contains('disabled')) return;
+        const rect = btn.getBoundingClientRect();
+        if (touch.clientX >= rect.left - PAD && touch.clientX <= rect.right + PAD &&
+            touch.clientY >= rect.top - PAD && touch.clientY <= rect.bottom + PAD) {
+          e.preventDefault();
+          e.stopPropagation();
+          const isUp = btn.classList.contains('hoist-btn-up');
+          descScroll.scrollTop += isUp ? -SCROLL_STEP : SCROLL_STEP;
+          updateHoistButtons();
+        }
+      });
+    }, { passive: false });
 
     // Only close on close-screw click
     frame.addEventListener('click', (e) => {
@@ -2073,26 +2433,36 @@ body {
     }, revealTime);
   });
 
+  let cachedSearchTop = null;
+
   function positionSearchBar() {
     const sb = document.getElementById('searchBlueprint');
     if (!sb || sb.classList.contains('unassembled')) return;
     const isMobile = window.innerWidth <= 768;
     const gap = isMobile ? 12 : 24;
     const rightRect = document.querySelector('.filter-right').getBoundingClientRect();
+    const viewH = window.innerHeight;
+
+    // Cache top position only when buttons are visible in viewport
+    if (rightRect.top < viewH && rightRect.bottom > 0) {
+      cachedSearchTop = rightRect.top;
+    }
+
+    if (cachedSearchTop !== null) {
+      sb.style.top = cachedSearchTop + 'px';
+    }
+    sb.style.bottom = '0px';
+    sb.style.height = '';
+
+    // Horizontal positioning from bounding rects
     if (isMobile) {
       const sideGap = 32;
       sb.style.left = sideGap + 'px';
       sb.style.width = (rightRect.left - sideGap - gap) + 'px';
-      sb.style.height = 'auto';
-      sb.style.top = rightRect.top + 'px';
-      sb.style.bottom = '0px';
     } else {
       const leftRect = document.querySelector('.filter-left').getBoundingClientRect();
       sb.style.left = (leftRect.right + gap) + 'px';
       sb.style.width = (rightRect.left - leftRect.right - gap * 2) + 'px';
-      sb.style.height = 'auto';
-      sb.style.top = leftRect.top + 'px';
-      sb.style.bottom = '0px';
     }
   }
 
@@ -2168,7 +2538,6 @@ body {
   }
 
   window.addEventListener('scroll', updatePulley, { passive: true });
-  window.addEventListener('scroll', positionSearchBar, { passive: true });
   window.addEventListener('resize', updatePulley);
 
   carriage.addEventListener('mousedown', (e) => { e.preventDefault(); dragging = true; dragStartY = e.clientY; dragStartScroll = window.scrollY; document.body.style.userSelect = 'none'; });
@@ -2199,10 +2568,11 @@ body {
   /* ================= CRANE HOVER ================= */
 
   const craneEl = document.getElementById('crane');
+  const craneHoverZone = document.getElementById('craneHoverZone');
   const craneGroupTop = craneEl.querySelector('.crane-group-top');
   const craneTopChains = craneGroupTop.querySelectorAll('.crane-chain');
 
-  craneEl.addEventListener('mouseenter', () => {
+  craneHoverZone.addEventListener('mouseenter', () => {
     craneEl.classList.add('hovered');
 
     // Find top of first grid cell
@@ -2212,7 +2582,11 @@ body {
 
     // i-beam flange starts at 44px inside the group
     const flangeOffset = 44;
-    const newTop = cellTop - flangeOffset;
+    const gridAlignTop = cellTop - flangeOffset;
+
+    // If grid is far below, drop beam to align with grid top
+    // If grid is close or overlapping, nudge beam UP to separate from REQUIRED
+    const newTop = gridAlignTop > 20 ? gridAlignTop : -20;
 
     craneGroupTop.style.top = newTop + 'px';
 
@@ -2225,7 +2599,7 @@ body {
     }
   });
 
-  craneEl.addEventListener('mouseleave', () => {
+  craneHoverZone.addEventListener('mouseleave', () => {
     craneEl.classList.remove('hovered');
     craneGroupTop.style.top = '';
     craneTopChains.forEach(chain => {
