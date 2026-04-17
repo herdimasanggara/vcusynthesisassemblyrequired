@@ -1949,7 +1949,7 @@ body {
     'example_image_04.png','example_image_05.png','example_image_06.png','example_image_07.png'
   ];
 
-  const PLACEHOLDER_DESC = `Clank, clank, clank. Bolt by bolt, beam by beam, each piece locks into something bigger than itself. What you see here was built from the ground up, assembled by hand, held together by the structure around it. Every joint was measured twice, cut once, and welded into place. The scaffolding rose before the walls did. The framework came before the finish. Nothing here is decorative — every element is load-bearing, every connection is structural. You don't see the blueprint anymore, but it's in here, buried under layers of steel and intention. Assembly required. What holds it all together isn't just hardware — it's the hours, the decisions, the second-guessing, the starting over, the refusing to start over, the moment it finally clicks. This is what it looks like when you build something from nothing and trust the structure to hold.`;
+  const PLACEHOLDER_DESC = `Clank, clank, clank, then a sharp ping, a dull thud, a scrape that drags a half-inch too far, metal talking back every time you try to force it, bolt by bolt, click, click, tighten, slip, tighten again, each piece either seats or resists, no in-between, the structure grows out of that argument, not out of ease, beams drop into place with a heavy thunk, braces grind into alignment with a slow skrrrkk, something rattles, something settles, you pause, listen, adjust, keep going, the scaffolding creaks, nyik nyik, holds, shifts, holds again, the frame carries weight before anything looks finished, nothing here plays decorative, every joint earns its keep or gets cut out, the blueprint is gone but you can hear it in the rhythm, tap tap tap, measure, tap again, a correction buried in every sound, assembly required is less a suggestion and more the condition of staying with it through the noise, through the near-misses, through the moments where it almost locks but doesn't, until finally there is a clean, quiet click, not loud, not dramatic, just enough, and the whole thing stands, still humming with everything it took to get there.`;
 
   // Initialize with placeholder data — will be replaced by API fetch
   let students = Array.from({ length: 69 }, (_, i) => ({
@@ -2482,6 +2482,7 @@ body {
     const pattern = generateMeshPattern(cellSize);
     document.querySelectorAll('.mesh').forEach(m => { m.style.backgroundImage = `url(${pattern})`; });
   }
+
 
   /* ================= RIGHT BUTTONS ================= */
 
