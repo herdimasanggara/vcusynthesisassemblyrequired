@@ -664,8 +664,11 @@ body {
   position: absolute; inset: 0;
   background-size: cover;
   background-position: center;
+  background-color: #1e4d8c;
+  background-blend-mode: screen;
   opacity: 0; z-index: 1;
   pointer-events: none;
+  filter: grayscale(1) contrast(1.2);
 }
 
 .mesh {
@@ -688,7 +691,8 @@ body {
 .cell.hidden { display: none; }
 
 .force-mesh .cell-image { opacity: 1 !important; }
-.force-mesh .mesh { opacity: 1 !important; }
+.force-mesh .mesh { opacity: 0 !important; }
+.force-mesh .cell:hover .mesh { opacity: 1 !important; }
 .force-mesh .screw-left,
 .force-mesh .screw-right { display: none !important; }
 
@@ -1428,7 +1432,7 @@ body {
 
 .detail-nav-screw.prev-screw:hover {
   background: radial-gradient(circle at 35% 35%, #FFF4A0 0%, #FFE040 30%, #FFCD00 65%, #D4A800 100%);
-  transform: translate(-50%, -50%) rotate(-20deg);
+  transform: translate(-50%, -50%);
 }
 
 .detail-nav-screw.next-screw {
@@ -1444,7 +1448,7 @@ body {
 
 .detail-nav-screw.next-screw:hover {
   background: radial-gradient(circle at 35% 35%, #FFF4A0 0%, #FFE040 30%, #FFCD00 65%, #D4A800 100%);
-  transform: translate(50%, -50%) rotate(20deg);
+  transform: translate(50%, -50%);
 }
 
 .detail-bottom-row {
@@ -1497,12 +1501,50 @@ body {
 
 .detail-info-cell.link-cell a {
   color: #ffffff;
-  text-decoration: none;
+  text-decoration: underline;
   font-size: clamp(11px, 1.3vw, 16px);
   font-weight: 400;
 }
 
 .detail-info-cell.link-cell a:hover { text-decoration: underline; }
+
+/* Plus-beam cover for empty link cells */
+.link-meshed {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(to bottom, #c2d7fc, var(--orange)) !important;
+}
+
+.link-meshed a { visibility: hidden; }
+
+/* Horizontal + vertical beams using --beam-thick */
+.link-meshed::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom,
+      transparent calc(50% - var(--beam-thick) / 2),
+      var(--tube-dark) calc(50% - var(--beam-thick) / 2),
+      var(--tube-mid) calc(50% - var(--beam-thick) / 4),
+      var(--tube-light) 50%,
+      var(--tube-mid) calc(50% + var(--beam-thick) / 4),
+      var(--tube-dark) calc(50% + var(--beam-thick) / 2),
+      transparent calc(50% + var(--beam-thick) / 2)
+    ),
+    linear-gradient(to right,
+      transparent calc(50% - var(--beam-thick) / 2),
+      var(--tube-dark) calc(50% - var(--beam-thick) / 2),
+      var(--tube-mid) calc(50% - var(--beam-thick) / 4),
+      var(--tube-light) 50%,
+      var(--tube-mid) calc(50% + var(--beam-thick) / 4),
+      var(--tube-dark) calc(50% + var(--beam-thick) / 2),
+      transparent calc(50% + var(--beam-thick) / 2)
+    );
+  pointer-events: none;
+  z-index: 2;
+}
 
 @media (max-width: 768px) {
   .detail-overlay.active { overflow-y: hidden; overflow-x: visible; }
@@ -1567,7 +1609,7 @@ body {
   .detail-mobile-cell.desc-cell p { margin: 0; font-size: 11px; color: #ffffff; line-height: 1.5; }
 
   .detail-mobile-cell.link-cell { display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; }
-  .detail-mobile-cell.link-cell a { color: #ffffff; text-decoration: none; font-size: 11px; font-weight: 400; }
+  .detail-mobile-cell.link-cell a { color: #ffffff; text-decoration: underline; font-size: 11px; font-weight: 400; }
   .detail-mobile-cell.link-cell a:hover { text-decoration: underline; }
 }
 
@@ -1658,14 +1700,14 @@ body {
     height: 26px !important;
   }
   .detail-screw.hoist-screw::after {
-    border-left-width: 6px !important;
-    border-right-width: 6px !important;
+    border-left-width: 7px !important;
+    border-right-width: 7px !important;
   }
   .detail-screw.hoist-btn-up::after {
-    border-bottom-width: 8px !important;
+    border-bottom-width: 10px !important;
   }
   .detail-screw.hoist-btn-down::after {
-    border-top-width: 8px !important;
+    border-top-width: 10px !important;
   }
 }
 
@@ -1959,6 +2001,8 @@ body {
     description: PLACEHOLDER_DESC,
     drive: screwTypes[i % screwTypes.length],
     links: [{ label: '@handle', url: '#' }, { label: 'Portfolio', url: '#' }],
+    hasInstagram: false,
+    hasPortfolio: false,
     images: projectImages
   }));
 
@@ -1997,14 +2041,16 @@ body {
 
         // Build links
         const links = [];
-        if (instagram) {
+        const hasIg = instagram && instagram.toLowerCase() !== 'n';
+        const hasPort = portfolio && portfolio.toLowerCase() !== 'n';
+        if (hasIg) {
           const igHandle = instagram.startsWith('@') ? instagram : `@${instagram}`;
           const igUrl = instagram.startsWith('http') ? instagram : `https://instagram.com/${instagram.replace('@', '')}`;
           links.push({ label: igHandle, url: igUrl });
         } else {
           links.push({ label: '@handle', url: '#' });
         }
-        if (portfolio) {
+        if (hasPort) {
           const pUrl = portfolio.startsWith('http') ? portfolio : `https://${portfolio}`;
           links.push({ label: 'Portfolio', url: pUrl });
         } else {
@@ -2018,6 +2064,8 @@ body {
           description: description || PLACEHOLDER_DESC,
           drive: drive,
           links: links,
+          hasInstagram: hasIg,
+          hasPortfolio: hasPort,
           images: rawImages.length > 0 ? rawImages : projectImages
         };
       });
@@ -2032,6 +2080,8 @@ body {
           description: PLACEHOLDER_DESC,
           drive: screwTypes[i % screwTypes.length],
           links: [{ label: '@handle', url: '#' }, { label: 'Portfolio', url: '#' }],
+          hasInstagram: false,
+          hasPortfolio: false,
           images: projectImages
         });
       }
@@ -2135,6 +2185,8 @@ body {
     const bH = `<div class="detail-beam-h"></div>`;
     const bV = `<div class="detail-beam-v"></div>`;
     let html = `<div class="detail-frame" data-drive="${driveType}">`;
+    const igMesh = student.hasInstagram ? '' : ' link-meshed';
+    const pfMesh = student.hasPortfolio ? '' : ' link-meshed';
 
     if (isMobile) {
       html += bH;
@@ -2144,13 +2196,13 @@ body {
       html += bH;
       html += `<div class="detail-mobile-row">${bV}<div class="detail-mobile-cell desc-cell"><div class="desc-scroll-wrap"><div class="desc-scroll-content" id="descScroll"><p>${student.description}</p></div></div></div>${bV}</div>`;
       html += bH;
-      html += `<div class="detail-mobile-row">${bV}<div class="detail-mobile-cell link-cell"><a href="${student.links[0].url}" target="_blank">${student.links[0].label}</a></div>${bV}<div class="detail-mobile-cell link-cell"><a href="${student.links[1].url}" target="_blank">${student.links[1].label}</a></div>${bV}</div>`;
+      html += `<div class="detail-mobile-row">${bV}<div class="detail-mobile-cell link-cell${igMesh}"><a href="${student.links[0].url}" target="_blank">${student.links[0].label}</a></div>${bV}<div class="detail-mobile-cell link-cell${pfMesh}"><a href="${student.links[1].url}" target="_blank">${student.links[1].label}</a></div>${bV}</div>`;
       html += bH;
     } else {
       html += bH;
       html += `<div class="detail-top-row">${bV}<div class="detail-image-area"><div class="detail-img-loader" id="detailImgLoader"><svg width="80" height="80" viewBox="0 0 80 80"><defs><radialGradient id="il-screw" cx="38%" cy="32%" r="65%"><stop offset="0%" stop-color="#e8ecef"/><stop offset="50%" stop-color="#8f969d"/><stop offset="100%" stop-color="#3a4048"/></radialGradient><linearGradient id="il-steel" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a6068"/><stop offset="20%" stop-color="#b0b6bc"/><stop offset="50%" stop-color="#f2f2f2"/><stop offset="80%" stop-color="#b0b6bc"/><stop offset="100%" stop-color="#5a6068"/></linearGradient></defs><g class="bolt-spin"><path d="M40,12 L64.25,26 L64.25,54 L40,68 L15.75,54 L15.75,26 Z" fill="url(#il-steel)" stroke="#555" stroke-width="0.5"/><path d="M40,20 L56.25,29.5 L56.25,50.5 L40,60 L23.75,50.5 L23.75,29.5 Z" fill="url(#il-screw)" stroke="none"/><circle cx="40" cy="40" r="6" fill="#3e4347"/><circle cx="40" cy="40" r="3" fill="#7d848b"/><line x1="40" y1="20" x2="40" y2="60" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/><line x1="23.75" y1="29.5" x2="56.25" y2="50.5" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/><line x1="56.25" y1="29.5" x2="23.75" y2="50.5" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/></g></svg></div><img id="detailImg" src="${student.images[0]}" alt="Project image 1"></div>${bV}<div class="detail-nav-screw prev-screw" id="imgPrev"></div><div class="detail-nav-screw next-screw" id="imgNext"></div></div>`;
       html += bH;
-      html += `<div class="detail-bottom-row">${bV}<div class="detail-split"><div class="detail-info-cell name-cell"><div class="student-name">${student.name}</div></div>${bH}<div class="detail-info-cell project-cell"><div class="project-title">${student.projectTitle}</div></div></div>${bV}<div class="detail-info-cell desc-cell"><div class="desc-scroll-wrap"><div class="desc-scroll-content" id="descScroll"><p>${student.description}</p></div></div></div>${bV}<div class="detail-split"><div class="detail-info-cell link-cell"><a href="${student.links[0].url}" target="_blank">${student.links[0].label}</a></div>${bH}<div class="detail-info-cell link-cell"><a href="${student.links[1].url}" target="_blank">${student.links[1].label}</a></div></div>${bV}</div>`;
+      html += `<div class="detail-bottom-row">${bV}<div class="detail-split"><div class="detail-info-cell name-cell"><div class="student-name">${student.name}</div></div>${bH}<div class="detail-info-cell link-cell${pfMesh}"><a href="${student.links[1].url}" target="_blank">${student.links[1].label}</a></div></div>${bV}<div class="detail-info-cell desc-cell"><div class="desc-scroll-wrap"><div class="desc-scroll-content" id="descScroll"><p>${student.description}</p></div></div></div>${bV}<div class="detail-split"><div class="detail-info-cell project-cell"><div class="project-title">${student.projectTitle}</div></div>${bH}<div class="detail-info-cell link-cell${igMesh}"><a href="${student.links[0].url}" target="_blank">${student.links[0].label}</a></div></div>${bV}</div>`;
       html += bH;
     }
 
@@ -2279,17 +2331,70 @@ body {
         });
       });
 
-      // Find the top-left screw and mark it as the close button
-      const allDetailScrews = frame.querySelectorAll('.detail-screw');
-      let topLeftScrew = null;
-      let minDist = Infinity;
-      allDetailScrews.forEach(s => {
-        const x = parseFloat(s.style.left);
-        const y = parseFloat(s.style.top);
-        const dist = x + y;
-        if (dist < minDist) { minDist = dist; topLeftScrew = s; }
+      // Add screws for + beam cells (link-meshed)
+      frame.querySelectorAll('.link-meshed').forEach(cell => {
+        const cr = cell.getBoundingClientRect();
+        const cx = cr.left + cr.width / 2 - frameRect.left;
+        const cy = cr.top + cr.height / 2 - frameRect.top;
+        const cellTop = cr.top - frameRect.top;
+        const cellBottom = cr.bottom - frameRect.top;
+        const cellLeft = cr.left - frameRect.left;
+        const cellRight = cr.right - frameRect.left;
+
+        // Center screw
+        const ck = `${Math.round(cx)},${Math.round(cy)}`;
+        if (!placed.has(ck)) { placed.add(ck); addScrew(cx, cy); }
+
+        // Top & bottom: find closest h-beams to cell top/bottom edges
+        hInfos.forEach(h => {
+          if (h.left <= cx && h.right >= cx) {
+            if (Math.abs(h.y - cellTop) < beamT + 2) {
+              const k = `${Math.round(cx)},${Math.round(h.y)}`;
+              if (!placed.has(k)) { placed.add(k); addScrew(cx, h.y); }
+            }
+            if (Math.abs(h.y - cellBottom) < beamT + 2) {
+              const k = `${Math.round(cx)},${Math.round(h.y)}`;
+              if (!placed.has(k)) { placed.add(k); addScrew(cx, h.y); }
+            }
+          }
+        });
+
+        // Left & right: find closest v-beams to cell left/right edges
+        vInfos.forEach(v => {
+          if (v.top <= cy && v.bottom >= cy) {
+            if (Math.abs(v.x - cellLeft) < beamT + 2) {
+              const k = `${Math.round(v.x)},${Math.round(cy)}`;
+              if (!placed.has(k)) { placed.add(k); addScrew(v.x, cy); }
+            }
+            if (Math.abs(v.x - cellRight) < beamT + 2) {
+              const k = `${Math.round(v.x)},${Math.round(cy)}`;
+              if (!placed.has(k)) { placed.add(k); addScrew(v.x, cy); }
+            }
+          }
+        });
       });
-      if (topLeftScrew) { topLeftScrew.classList.add('close-screw'); }
+
+      // Find all 4 corner screws and mark them as close buttons
+      const allDetailScrews = frame.querySelectorAll('.detail-screw');
+      const frameW = frameRect.width;
+      const frameH = frameRect.height;
+      const corners = [
+        { tx: 0, ty: 0 },
+        { tx: frameW, ty: 0 },
+        { tx: 0, ty: frameH },
+        { tx: frameW, ty: frameH }
+      ];
+      corners.forEach(corner => {
+        let closest = null;
+        let minDist = Infinity;
+        allDetailScrews.forEach(s => {
+          const x = parseFloat(s.style.left);
+          const y = parseFloat(s.style.top);
+          const dist = Math.abs(x - corner.tx) + Math.abs(y - corner.ty);
+          if (dist < minDist) { minDist = dist; closest = s; }
+        });
+        if (closest) closest.classList.add('close-screw');
+      });
 
       // Find desc-cell and convert its top-right and bottom-right corner screws to hoist buttons
       const descCell = frame.querySelector('.desc-cell');
