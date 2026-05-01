@@ -1398,6 +1398,31 @@ body {
   font-family: 'Work Sans', sans-serif;
 }
 
+/* ================= MEDIA WRAPPER (img + youtube iframe) ================= */
+
+.detail-media-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  position: relative;
+}
+
+.detail-media-wrap img,
+.detail-media-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.detail-media-wrap img {
+  object-fit: cover;
+  object-position: center;
+}
+
 .detail-nav-screw {
   position: absolute;
   top: 50%;
@@ -1736,7 +1761,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
   background: linear-gradient(
     to bottom,
@@ -1954,6 +1979,31 @@ body {
   const MIN_CELLS = 69;
   const screwTypes = ["slotted", "cross", "robertson", "hex", "spanner"];
 
+  /* ================= YOUTUBE HELPERS ================= */
+
+  function isYouTubeURL(url) {
+    return typeof url === 'string' && /(?:youtube\.com\/(?:watch|embed|shorts|v)|youtu\.be\/)/i.test(url);
+  }
+
+  function getYouTubeId(url) {
+    if (!url) return null;
+    const patterns = [
+      /youtube\.com\/watch\?v=([^&\s]+)/i,
+      /youtu\.be\/([^?&\s]+)/i,
+      /youtube\.com\/embed\/([^?&\s]+)/i,
+      /youtube\.com\/shorts\/([^?&\s]+)/i,
+      /youtube\.com\/v\/([^?&\s]+)/i
+    ];
+    for (const p of patterns) {
+      const m = url.match(p);
+      if (m) return m[1];
+    }
+    return null;
+  }
+
+  const ytThumb = id => `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+  const ytEmbed = id => `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1&playsinline=1`;
+
   const palettes = [
     ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51'],
     ['#003049', '#d62828', '#f77f00', '#fcbf49', '#eae2b7'],
@@ -2101,10 +2151,13 @@ body {
       const s = students[studentIdx];
       // Update screw drive type
       cell.setAttribute('data-drive', s.drive);
-      // Update background image to student's image_01
+      // Update background image to student's first media (use YT thumbnail if it's a video)
       const cellImage = cell.querySelector('.cell-image');
       if (cellImage) {
-        cellImage.style.backgroundImage = `url('${s.images[0]}')`;
+        const firstMedia = s.images[0];
+        const ytId = isYouTubeURL(firstMedia) ? getYouTubeId(firstMedia) : null;
+        const bgUrl = ytId ? ytThumb(ytId) : firstMedia;
+        cellImage.style.backgroundImage = `url('${bgUrl}')`;
       }
     });
     // Re-apply filters in case drive types changed
@@ -2192,7 +2245,7 @@ body {
       html += bH;
       html += `<div class="detail-mobile-row">${bV}<div class="detail-mobile-cell name-cell"><div class="student-name">${student.name}</div></div>${bV}<div class="detail-mobile-cell project-cell"><div class="project-title">${student.projectTitle}</div></div>${bV}</div>`;
       html += bH;
-      html += `<div class="detail-mobile-row image-row">${bV}<div class="detail-mobile-cell image-cell"><div class="detail-img-loader" id="detailImgLoader"><svg width="80" height="80" viewBox="0 0 80 80"><defs><radialGradient id="il-screw" cx="38%" cy="32%" r="65%"><stop offset="0%" stop-color="#e8ecef"/><stop offset="50%" stop-color="#8f969d"/><stop offset="100%" stop-color="#3a4048"/></radialGradient><linearGradient id="il-steel" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a6068"/><stop offset="20%" stop-color="#b0b6bc"/><stop offset="50%" stop-color="#f2f2f2"/><stop offset="80%" stop-color="#b0b6bc"/><stop offset="100%" stop-color="#5a6068"/></linearGradient></defs><g class="bolt-spin"><path d="M40,12 L64.25,26 L64.25,54 L40,68 L15.75,54 L15.75,26 Z" fill="url(#il-steel)" stroke="#555" stroke-width="0.5"/><path d="M40,20 L56.25,29.5 L56.25,50.5 L40,60 L23.75,50.5 L23.75,29.5 Z" fill="url(#il-screw)" stroke="none"/><circle cx="40" cy="40" r="6" fill="#3e4347"/><circle cx="40" cy="40" r="3" fill="#7d848b"/><line x1="40" y1="20" x2="40" y2="60" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/><line x1="23.75" y1="29.5" x2="56.25" y2="50.5" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/><line x1="56.25" y1="29.5" x2="23.75" y2="50.5" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/></g></svg></div><img id="detailImg" src="${student.images[0]}" alt="Project image 1"></div>${bV}<div class="detail-nav-screw prev-screw" id="imgPrev"></div><div class="detail-nav-screw next-screw" id="imgNext"></div></div>`;
+      html += `<div class="detail-mobile-row image-row">${bV}<div class="detail-mobile-cell image-cell"><div class="detail-img-loader" id="detailImgLoader"><svg width="80" height="80" viewBox="0 0 80 80"><defs><radialGradient id="il-screw" cx="38%" cy="32%" r="65%"><stop offset="0%" stop-color="#e8ecef"/><stop offset="50%" stop-color="#8f969d"/><stop offset="100%" stop-color="#3a4048"/></radialGradient><linearGradient id="il-steel" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a6068"/><stop offset="20%" stop-color="#b0b6bc"/><stop offset="50%" stop-color="#f2f2f2"/><stop offset="80%" stop-color="#b0b6bc"/><stop offset="100%" stop-color="#5a6068"/></linearGradient></defs><g class="bolt-spin"><path d="M40,12 L64.25,26 L64.25,54 L40,68 L15.75,54 L15.75,26 Z" fill="url(#il-steel)" stroke="#555" stroke-width="0.5"/><path d="M40,20 L56.25,29.5 L56.25,50.5 L40,60 L23.75,50.5 L23.75,29.5 Z" fill="url(#il-screw)" stroke="none"/><circle cx="40" cy="40" r="6" fill="#3e4347"/><circle cx="40" cy="40" r="3" fill="#7d848b"/><line x1="40" y1="20" x2="40" y2="60" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/><line x1="23.75" y1="29.5" x2="56.25" y2="50.5" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/><line x1="56.25" y1="29.5" x2="23.75" y2="50.5" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/></g></svg></div><div id="detailMedia" class="detail-media-wrap"></div></div>${bV}<div class="detail-nav-screw prev-screw" id="imgPrev"></div><div class="detail-nav-screw next-screw" id="imgNext"></div></div>`;
       html += bH;
       html += `<div class="detail-mobile-row">${bV}<div class="detail-mobile-cell desc-cell"><div class="desc-scroll-wrap"><div class="desc-scroll-content" id="descScroll"><p>${student.description}</p></div></div></div>${bV}</div>`;
       html += bH;
@@ -2200,7 +2253,7 @@ body {
       html += bH;
     } else {
       html += bH;
-      html += `<div class="detail-top-row">${bV}<div class="detail-image-area"><div class="detail-img-loader" id="detailImgLoader"><svg width="80" height="80" viewBox="0 0 80 80"><defs><radialGradient id="il-screw" cx="38%" cy="32%" r="65%"><stop offset="0%" stop-color="#e8ecef"/><stop offset="50%" stop-color="#8f969d"/><stop offset="100%" stop-color="#3a4048"/></radialGradient><linearGradient id="il-steel" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a6068"/><stop offset="20%" stop-color="#b0b6bc"/><stop offset="50%" stop-color="#f2f2f2"/><stop offset="80%" stop-color="#b0b6bc"/><stop offset="100%" stop-color="#5a6068"/></linearGradient></defs><g class="bolt-spin"><path d="M40,12 L64.25,26 L64.25,54 L40,68 L15.75,54 L15.75,26 Z" fill="url(#il-steel)" stroke="#555" stroke-width="0.5"/><path d="M40,20 L56.25,29.5 L56.25,50.5 L40,60 L23.75,50.5 L23.75,29.5 Z" fill="url(#il-screw)" stroke="none"/><circle cx="40" cy="40" r="6" fill="#3e4347"/><circle cx="40" cy="40" r="3" fill="#7d848b"/><line x1="40" y1="20" x2="40" y2="60" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/><line x1="23.75" y1="29.5" x2="56.25" y2="50.5" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/><line x1="56.25" y1="29.5" x2="23.75" y2="50.5" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/></g></svg></div><img id="detailImg" src="${student.images[0]}" alt="Project image 1"></div>${bV}<div class="detail-nav-screw prev-screw" id="imgPrev"></div><div class="detail-nav-screw next-screw" id="imgNext"></div></div>`;
+      html += `<div class="detail-top-row">${bV}<div class="detail-image-area"><div class="detail-img-loader" id="detailImgLoader"><svg width="80" height="80" viewBox="0 0 80 80"><defs><radialGradient id="il-screw" cx="38%" cy="32%" r="65%"><stop offset="0%" stop-color="#e8ecef"/><stop offset="50%" stop-color="#8f969d"/><stop offset="100%" stop-color="#3a4048"/></radialGradient><linearGradient id="il-steel" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a6068"/><stop offset="20%" stop-color="#b0b6bc"/><stop offset="50%" stop-color="#f2f2f2"/><stop offset="80%" stop-color="#b0b6bc"/><stop offset="100%" stop-color="#5a6068"/></linearGradient></defs><g class="bolt-spin"><path d="M40,12 L64.25,26 L64.25,54 L40,68 L15.75,54 L15.75,26 Z" fill="url(#il-steel)" stroke="#555" stroke-width="0.5"/><path d="M40,20 L56.25,29.5 L56.25,50.5 L40,60 L23.75,50.5 L23.75,29.5 Z" fill="url(#il-screw)" stroke="none"/><circle cx="40" cy="40" r="6" fill="#3e4347"/><circle cx="40" cy="40" r="3" fill="#7d848b"/><line x1="40" y1="20" x2="40" y2="60" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/><line x1="23.75" y1="29.5" x2="56.25" y2="50.5" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/><line x1="56.25" y1="29.5" x2="23.75" y2="50.5" stroke="#6b7278" stroke-width="0.5" opacity="0.3"/></g></svg></div><div id="detailMedia" class="detail-media-wrap"></div></div>${bV}<div class="detail-nav-screw prev-screw" id="imgPrev"></div><div class="detail-nav-screw next-screw" id="imgNext"></div></div>`;
       html += bH;
       html += `<div class="detail-bottom-row">${bV}<div class="detail-split"><div class="detail-info-cell name-cell"><div class="student-name">${student.name}</div></div>${bH}<div class="detail-info-cell link-cell${pfMesh}"><a href="${student.links[1].url}" target="_blank">${student.links[1].label}</a></div></div>${bV}<div class="detail-info-cell desc-cell"><div class="desc-scroll-wrap"><div class="desc-scroll-content" id="descScroll"><p>${student.description}</p></div></div></div>${bV}<div class="detail-split"><div class="detail-info-cell project-cell"><div class="project-title">${student.projectTitle}</div></div>${bH}<div class="detail-info-cell link-cell${igMesh}"><a href="${student.links[0].url}" target="_blank">${student.links[0].label}</a></div></div>${bV}</div>`;
       html += bH;
@@ -2213,23 +2266,19 @@ body {
     const frame = detailInner.querySelector('.detail-frame');
 
     let currentImgIndex = 0;
-    const imgEl = document.getElementById('detailImg');
+    const mediaEl = document.getElementById('detailMedia');
     const prevBtn = document.getElementById('imgPrev');
     const nextBtn = document.getElementById('imgNext');
     const imgLoader = document.getElementById('detailImgLoader');
     const ROTATION_MS = 1200; // one full rotation duration
 
-    function showLoader() { if (imgLoader) imgLoader.classList.remove('hidden'); }
-    function hideLoader() { if (imgLoader) imgLoader.classList.add('hidden'); }
-
-    // Hide loader only after BOTH: image loaded AND one full rotation completed
     let imgLoaded = false;
     let rotationDone = false;
     let rotationTimer = null;
 
-    function tryReveal() {
-      if (imgLoaded && rotationDone) hideLoader();
-    }
+    const showLoader = () => imgLoader && imgLoader.classList.remove('hidden');
+    const hideLoader = () => imgLoader && imgLoader.classList.add('hidden');
+    const tryReveal = () => { if (imgLoaded && rotationDone) hideLoader(); };
 
     function startLoading() {
       imgLoaded = false;
@@ -2239,38 +2288,45 @@ body {
       rotationTimer = setTimeout(() => { rotationDone = true; tryReveal(); }, ROTATION_MS);
     }
 
-    function onImgReady() {
+    function onMediaReady() {
       imgLoaded = true;
       tryReveal();
     }
 
-    // Initial image
-    if (imgEl) {
-      if (imgEl.complete) {
-        hideLoader();
-      } else {
-        startLoading();
-        imgEl.addEventListener('load', onImgReady, { once: true });
-        imgEl.addEventListener('error', onImgReady, { once: true });
-      }
-    }
+    function renderMedia() {
+      const src = student.images[currentImgIndex];
+      if (!src || !mediaEl) return;
+      startLoading();
+      mediaEl.innerHTML = '';
 
-    function updateImage() {
-      if (imgEl && student.images.length > 0) {
-        startLoading();
-        imgEl.src = student.images[currentImgIndex];
-        imgEl.alt = `Project image ${currentImgIndex + 1}`;
-        if (imgEl.complete) {
-          onImgReady();
-        } else {
-          imgEl.addEventListener('load', onImgReady, { once: true });
-          imgEl.addEventListener('error', onImgReady, { once: true });
+      if (isYouTubeURL(src)) {
+        const ytId = getYouTubeId(src);
+        if (ytId) {
+          const iframe = document.createElement('iframe');
+          iframe.src = ytEmbed(ytId);
+          iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+          iframe.allowFullscreen = true;
+          iframe.title = `Project video ${currentImgIndex + 1}`;
+          iframe.addEventListener('load', onMediaReady, { once: true });
+          mediaEl.appendChild(iframe);
+          return;
         }
       }
+
+      const img = document.createElement('img');
+      img.alt = `Project image ${currentImgIndex + 1}`;
+      img.addEventListener('load', onMediaReady, { once: true });
+      img.addEventListener('error', onMediaReady, { once: true });
+      img.src = src;
+      mediaEl.appendChild(img);
+      if (img.complete) onMediaReady();
     }
 
-    if (prevBtn) { prevBtn.addEventListener('click', (e) => { e.stopPropagation(); currentImgIndex = (currentImgIndex - 1 + student.images.length) % student.images.length; updateImage(); }); }
-    if (nextBtn) { nextBtn.addEventListener('click', (e) => { e.stopPropagation(); currentImgIndex = (currentImgIndex + 1) % student.images.length; updateImage(); }); }
+    // Initial render
+    renderMedia();
+
+    if (prevBtn) { prevBtn.addEventListener('click', (e) => { e.stopPropagation(); currentImgIndex = (currentImgIndex - 1 + student.images.length) % student.images.length; renderMedia(); }); }
+    if (nextBtn) { nextBtn.addEventListener('click', (e) => { e.stopPropagation(); currentImgIndex = (currentImgIndex + 1) % student.images.length; renderMedia(); }); }
 
     // Hoist scroll controls — will be wired to corner screws after placement
     const descScroll = document.getElementById('descScroll');
@@ -2543,7 +2599,13 @@ body {
       cell.className = 'cell';
       cell.setAttribute("data-drive", driveType);
       cell.setAttribute("data-student", studentIdx);
-      const cellImg = students[studentIdx] && students[studentIdx].images[0] ? students[studentIdx].images[0] : 'fifth-harmony.png';
+      // Determine first-media URL — use YouTube thumbnail if it's a video link
+      const firstMedia = students[studentIdx] && students[studentIdx].images[0];
+      let cellImg = 'fifth-harmony.png';
+      if (firstMedia) {
+        const ytId = isYouTubeURL(firstMedia) ? getYouTubeId(firstMedia) : null;
+        cellImg = ytId ? ytThumb(ytId) : firstMedia;
+      }
       cell.innerHTML = `<div class="beam-top"></div><div class="beam-bottom"></div><div class="braces"></div><div class="cell-image" style="background-image: url('${cellImg}');"></div><div class="mesh"></div><div class="screw-left"></div><div class="screw-right"></div>`;
       cell.style.cursor = 'pointer';
       cell.addEventListener('click', () => openDetail(studentIdx, driveType));
