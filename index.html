@@ -44,6 +44,7 @@
 .mesh-toggle,
 .info-btn,
 .cell,
+.cell *,
 .detail-screw.close-screw,
 .detail-screw.hoist-screw,
 .detail-info-cell.links-cell a,
@@ -359,7 +360,7 @@ body {
   outline: none;
   color: rgba(255,255,255,0.9);
   font-family: 'tekton-pro-extended', 'Work Sans', sans-serif;
-  font-size: clamp(14px, 1.8vw, 20px);
+  font-size: 13px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   padding: 0 12px;
@@ -1074,6 +1075,37 @@ body {
 
 @media (max-width: 768px) {
   .blue-tarp { left: calc(var(--side-gap) - 8px); right: calc(var(--side-gap) - 8px); }
+}
+
+/* ================= CELL HOVER TOOLTIP ================= */
+
+.cell-tooltip {
+  position: fixed;
+  z-index: 150;
+  pointer-events: none;
+  padding: 15px 18px;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 6px, rgba(255,255,255,0.06) 6px, rgba(255,255,255,0.06) 7px),
+    repeating-linear-gradient(90deg, transparent, transparent 6px, rgba(255,255,255,0.06) 6px, rgba(255,255,255,0.06) 7px),
+    rgba(0, 60, 130, 0.95);
+  border: var(--filter-stroke) solid rgba(100, 170, 255, 0.4);
+  color: #ffffff;
+  font-family: 'tekton-pro-extended', 'Work Sans', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  display: none;
+  transform: translate(-50%, 0);
+  top: 0;
+  left: 0;
+}
+
+.cell-tooltip.visible { display: block; }
+
+@media (max-width: 768px) {
+  .cell-tooltip { display: none !important; }
 }
 
 /* ================= LOADER ================= */
@@ -1910,6 +1942,8 @@ body {
   <div class="detail-inner" id="detailInner"></div>
 </div>
 
+<div class="cell-tooltip" id="cellTooltip"></div>
+
 <div class="safety-overlay" id="safetyOverlay">
   <div class="safety-tape">
     <div class="safety-stripe"></div>
@@ -2232,6 +2266,9 @@ body {
   function openDetail(studentIndex, driveType) {
     const student = students[studentIndex];
     if (!student) return;
+    // Hide hover tooltip when entering detail view
+    const tip = document.getElementById('cellTooltip');
+    if (tip) tip.classList.remove('visible');
     currentDetailIndex = studentIndex;
     currentDetailDrive = driveType;
     const isMobile = window.innerWidth <= 768;
@@ -2609,6 +2646,39 @@ body {
       cell.innerHTML = `<div class="beam-top"></div><div class="beam-bottom"></div><div class="braces"></div><div class="cell-image" style="background-image: url('${cellImg}');"></div><div class="mesh"></div><div class="screw-left"></div><div class="screw-right"></div>`;
       cell.style.cursor = 'pointer';
       cell.addEventListener('click', () => openDetail(studentIdx, driveType));
+
+      // Desktop-only hover tooltip with student name
+      cell.addEventListener('mouseenter', () => {
+        if (window.innerWidth <= 768) return;
+        if (!assembled) return;
+        const s = students[studentIdx];
+        if (!s) return;
+        const tip = document.getElementById('cellTooltip');
+        tip.textContent = s.name;
+        tip.classList.add('visible');
+      });
+      cell.addEventListener('mousemove', (e) => {
+        if (window.innerWidth <= 768) return;
+        const tip = document.getElementById('cellTooltip');
+        if (!tip.classList.contains('visible')) return;
+        // Below cursor, horizontally centered on the cursor's x.
+        // CSS uses transform: translate(-50%, 0), so we set left = cursorX directly.
+        let x = e.clientX;
+        let y = e.clientY + 30;
+        // Clamp horizontally so the tooltip never spills off-screen
+        const halfW = tip.offsetWidth / 2;
+        if (x - halfW < 8) x = halfW + 8;
+        if (x + halfW > window.innerWidth - 8) x = window.innerWidth - halfW - 8;
+        // If there's no room below the cursor, flip above it
+        if (y + tip.offsetHeight > window.innerHeight - 8) y = e.clientY - tip.offsetHeight - 12;
+        tip.style.left = x + 'px';
+        tip.style.top = y + 'px';
+      });
+      cell.addEventListener('mouseleave', () => {
+        const tip = document.getElementById('cellTooltip');
+        tip.classList.remove('visible');
+      });
+
       wrapper.appendChild(cell);
     }
     layoutGrid();
